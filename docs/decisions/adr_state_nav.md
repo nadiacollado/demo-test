@@ -62,6 +62,8 @@ While Riverpod MVVM Clean initially seemed promising, our previous implementatio
 Riverpod Architecture, designed by Andrea Bizzotto, is an architecture designed specifically to work with Riverpod. 
 Note: It is not endorsed by Remi Rousselet (the author of Riverpod)
 
+![Riverpod Architecture](../assets/architecture_riverpod.png)
+
 ##### Overview
 The architecture separates features into 4 layers:
 - Presentation  
@@ -98,6 +100,7 @@ Contains 3 types of classes:
 #### Riverpod MVVM Clean
 ##### Overview
 Riverpod is the most recommended state management solution. MVVM Clean is a popular app architecture recommended by Principle Engineer Barry Geipel. Combining the two initially seems to be a viable approach to implementing the app architecture to enable separation of concerns, enhancing testability and reliability. This method has already been implemented in the ~Pourri Loyalty App.
+![MVVM Clean Architecture](../assets/architecture_mvvm.png)
 ##### Pros
 - Follow clean code principles, separate concerns into layers, which makes this easier to scale as app grows
 - Enables easier unit and integration testing
@@ -115,6 +118,7 @@ Riverpod is the most recommended state management solution. MVVM Clean is a popu
 
 #### Bloc
 Bloc follows a three layer architecture that includes presentation (UI), business logic (bloc), and data.
+![Bloc Architecture](../assets/architecture_bloc.png)
 
 ##### Overview
 - Bloc is an event driven state management library that separates presentation from business logic, allowing fast, easy to test, and reusable code.
@@ -137,6 +141,7 @@ Bloc follows a three layer architecture that includes presentation (UI), busines
 #### Stacked
 ##### Overview
 Stacked is a flutter architecture that follows MVVM, where business logic, presentation, and data models are separated.
+![Architecture Stacked](../assets/architecture_stacked.png)
 
 - Stacked follows the traditional implementation of MVVM where the ViewModel is injected as a dependency to a widget. 
 - Employs BaseViewModel for state management, automatically notifying listeners of state changes.

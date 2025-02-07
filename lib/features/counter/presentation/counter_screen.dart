@@ -10,7 +10,8 @@ class CounterScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final counterState = ref.watch(counterScreenControllerProvider);
-
+    final counterScreenControllerNotifier =
+        ref.read(counterScreenControllerProvider.notifier);
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -24,10 +25,8 @@ class CounterScreen extends ConsumerWidget {
           CounterStepper(
             iconSize: 32.0,
             direction: CounterStepperDirection.horizontal,
-            onIncrement: () =>
-                ref.read(counterScreenControllerProvider.notifier).increment(),
-            onDecrement: () =>
-                ref.read(counterScreenControllerProvider.notifier).decrement(),
+            onIncrement: () => counterScreenControllerNotifier.increment(),
+            onDecrement: () => counterScreenControllerNotifier.decrement(),
           ),
         ],
       ),

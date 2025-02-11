@@ -1,27 +1,26 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'counter_repository.dart';
+part of 'app_router.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$counterRepositoryHash() => r'67cf6fc1d2ae3b97c66de375e6a1699e1ae7137a';
+String _$goRouterHash() => r'9d26e92921d48a7079dffacf3c06132233e35021';
 
-/// See also [counterRepository].
-@ProviderFor(counterRepository)
-final counterRepositoryProvider = Provider<CounterRepository>.internal(
-  counterRepository,
-  name: r'counterRepositoryProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$counterRepositoryHash,
+/// See also [goRouter].
+@ProviderFor(goRouter)
+final goRouterProvider = Provider<GoRouter>.internal(
+  goRouter,
+  name: r'goRouterProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$goRouterHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef CounterRepositoryRef = ProviderRef<CounterRepository>;
+typedef GoRouterRef = ProviderRef<GoRouter>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

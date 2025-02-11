@@ -8,7 +8,6 @@ const rl = readline.createInterface({
 });
 
 rl.question("Enter the new app name: ", (appName) => {
-  downloadInitialPackages();
   updateAppName(appName);
 
   rl.close();

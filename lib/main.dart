@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import './common_widgets/common_scaffold.dart';
-import './features/counter/presentation/counter_screen.dart';
+
+import 'features/routing/app_router.dart';
 
 void main() {
   runApp(
@@ -11,19 +11,25 @@ void main() {
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
+  static const primaryColor = Colors.blue;
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
+  Widget build(BuildContext context, WidgetRef ref) {
+    final router = ref.watch(goRouterProvider);
+    return MaterialApp.router(
+      routerConfig: router,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: CommonScaffold(
-        title: 'Flutter Template App',
-        body: CounterScreen(),
-        backgroundColor: Colors.white,
+        colorSchemeSeed: primaryColor,
+        unselectedWidgetColor: Colors.grey,
+        appBarTheme: const AppBarTheme(
+          backgroundColor: primaryColor,
+          foregroundColor: Colors.white,
+          elevation: 2.0,
+          centerTitle: true,
+        ),
+        scaffoldBackgroundColor: Colors.grey[200],
       ),
     );
   }

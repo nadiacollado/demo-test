@@ -14,13 +14,17 @@ class AuthRepository {
   Future<UserCredential> signInWithEmailPassword(
       String email, String password) async {
     return await _auth.signInWithEmailAndPassword(
-        email: email, password: password);
+      email: email,
+      password: password,
+    );
   }
 
   Future<UserCredential> signUpWithEmailPassword(
       String email, String password) async {
     return await _auth.createUserWithEmailAndPassword(
-        email: email, password: password);
+      email: email,
+      password: password,
+    );
   }
 
   Future<void> signOut() async {

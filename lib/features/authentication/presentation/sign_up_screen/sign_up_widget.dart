@@ -6,15 +6,16 @@ import '../../../../common_widgets/common_button.dart';
 class SignUpWidget extends ConsumerStatefulWidget {
   final ValueChanged<String> onEmailChanged;
   final ValueChanged<String> onPasswordChanged;
-  final VoidCallback onCreateAccount;
+  final void Function() onCreateAccount;
   final VoidCallback onLogin;
 
-  const SignUpWidget(
-      {super.key,
-      required this.onCreateAccount,
-      required this.onEmailChanged,
-      required this.onPasswordChanged,
-      required this.onLogin});
+  const SignUpWidget({
+    super.key,
+    required this.onCreateAccount,
+    required this.onEmailChanged,
+    required this.onPasswordChanged,
+    required this.onLogin,
+  });
   @override
   ConsumerState<SignUpWidget> createState() => _SignUpWidgetState();
 }
@@ -49,7 +50,7 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget> {
         ),
         CommonButton(
           text: "Create Account",
-          onPressed: () => widget.onCreateAccount,
+          onPressed: widget.onCreateAccount,
           type: ButtonType.primary,
           isFullWidth: true,
         ),

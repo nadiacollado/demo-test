@@ -10,10 +10,17 @@ class LoginScreenController extends _$LoginScreenController {
     // no op
   }
 
-    Future<void> signInWithEmailPassword(String email, String password) async {
+  Future<AsyncValue<void>> signInWithEmailPassword(
+      String email, String password) async {
     final authRepository = ref.read(authRepositoryProvider);
     state = const AsyncLoading();
-    state = await AsyncValue.guard(
-        () => authRepository.signInWithEmailPassword(email, password));
+
+    final result = await AsyncValue.guard(() async {
+      await authRepository.signInWithEmailPassword(email, password);
+    });
+
+    state = result;
+
+    return result;
   }
 }

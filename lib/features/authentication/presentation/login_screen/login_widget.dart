@@ -5,7 +5,7 @@ import '../../../../common_widgets/common_button.dart';
 import '../../../../common_widgets/common_text_form_field.dart';
 
 class LoginWidget extends ConsumerStatefulWidget {
-  final void onLogin;
+  final void Function() onLogin;
   final ValueChanged<String> onEmailChanged;
   final ValueChanged<String> onPasswordChanged;
   final VoidCallback onCreateAccount;
@@ -44,7 +44,7 @@ class _LoginWidgetState extends ConsumerState<LoginWidget> {
         ),
         CommonButton(
           text: "Login",
-          onPressed: () => widget.onLogin,
+          onPressed: widget.onLogin,
           type: ButtonType.primary,
           isFullWidth: true,
         ),

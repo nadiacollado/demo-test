@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_starter_kit/features/counter/presentation/counter_screen.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../common_widgets/common_scaffold.dart';
@@ -29,6 +30,12 @@ GoRouter goRouter(Ref ref) {
           name: AppRoute.signUp.name,
           pageBuilder: (context, state) => const NoTransitionPage(
               child: CommonScaffold(body: SignUpScreen())),
+        ),
+        GoRoute(
+          path: '/counter',
+          name: AppRoute.counter.name,
+          pageBuilder: (context, state) => const NoTransitionPage(
+              child: CommonScaffold(body: CounterScreen())),
         ),
       ]);
 }

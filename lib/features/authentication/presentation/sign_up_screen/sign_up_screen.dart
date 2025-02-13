@@ -15,11 +15,8 @@ class _SignUpState extends ConsumerState<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Center(
-        child: ConstrainedBox(
-            constraints: BoxConstraints(
-              maxWidth: 400,
-              maxHeight: 600,
-            ),
+        child: SingleChildScrollView(
+            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
             child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: SignUpWidget(

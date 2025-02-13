@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../../../common_widgets/primary_button.dart';
+import '../../../../common_widgets/common_text_form_field.dart';
+import '../../../../common_widgets/common_button.dart';
 
 class SignUpWidget extends ConsumerStatefulWidget {
   final ValueChanged<String> onEmailChanged;
@@ -27,46 +27,36 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget> {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        TextField(
-          decoration: InputDecoration(
-            labelText: 'Email',
-            hintText: 'Please enter your username',
-            prefixIcon: Icon(Icons.person),
-            border: OutlineInputBorder(),
-          ),
-          onChanged: widget.onEmailChanged,
+        CommonTextformField(
+          labelText: 'Email',
+          inputHint: 'Please enter your username',
+          onChange: widget.onEmailChanged,
         ),
         const SizedBox(height: 16),
-        TextField(
-          decoration: InputDecoration(
-            labelText: 'Password',
-            hintText: 'Please enter your password',
-            prefixIcon: Icon(Icons.lock),
-            border: OutlineInputBorder(),
-          ),
+        CommonTextformField(
+          labelText: 'Password',
+          inputHint: 'Please enter your password',
+          icon: Icons.lock,
           obscureText: true,
-          onChanged: widget.onPasswordChanged,
+          onChange: widget.onPasswordChanged,
         ),
         const SizedBox(height: 16),
-        TextField(
-          decoration: InputDecoration(
-            labelText: 'Confirm Password',
-            hintText: 'Please reenter your password',
-            prefixIcon: Icon(Icons.lock),
-            border: OutlineInputBorder(),
-          ),
+        CommonTextformField(
+          labelText: 'Confirm Password',
+          inputHint: 'Please reenter your password',
+          icon: Icons.lock,
           obscureText: true,
-          onChanged: widget.onPasswordChanged,
+          onChange: widget.onPasswordChanged,
         ),
         const SizedBox(height: 16),
-        PrimaryButton(
+        CommonButton(
           text: "Create Account",
           onPressed: () => widget.onCreateAccount,
           type: ButtonType.primary,
           isFullWidth: true,
         ),
         const SizedBox(height: 16), // Space between buttons
-        PrimaryButton(
+        CommonButton(
           text: "Have an Account? Login",
           onPressed: widget.onLogin,
           type: ButtonType.transparent,

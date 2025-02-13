@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../common_widgets/primary_button.dart';
+import '../../../../common_widgets/common_button.dart';
+import '../../../../common_widgets/common_text_form_field.dart';
 
 class LoginWidget extends ConsumerStatefulWidget {
   final void onLogin;
@@ -9,12 +10,13 @@ class LoginWidget extends ConsumerStatefulWidget {
   final ValueChanged<String> onPasswordChanged;
   final VoidCallback onCreateAccount;
 
-  const LoginWidget(
-      {super.key,
-      required this.onLogin,
-      required this.onEmailChanged,
-      required this.onPasswordChanged,
-      required this.onCreateAccount});
+  const LoginWidget({
+    super.key,
+    required this.onLogin,
+    required this.onEmailChanged,
+    required this.onPasswordChanged,
+    required this.onCreateAccount,
+  });
   @override
   ConsumerState<LoginWidget> createState() => _LoginWidgetState();
 }
@@ -26,36 +28,27 @@ class _LoginWidgetState extends ConsumerState<LoginWidget> {
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.stretch,
+      spacing: 16.0,
       children: [
-        TextField(
-          decoration: InputDecoration(
-            labelText: 'Email',
-            hintText: 'Please enter your username',
-            prefixIcon: Icon(Icons.person),
-            border: OutlineInputBorder(),
-          ),
-          onChanged: widget.onEmailChanged,
+        CommonTextformField(
+          labelText: 'Please enter your username',
+          inputHint: 'Please enter your username',
+          onChange: widget.onEmailChanged,
         ),
-        const SizedBox(height: 16),
-        TextField(
-          decoration: InputDecoration(
-            labelText: 'Password',
-            hintText: 'Please enter your password',
-            prefixIcon: Icon(Icons.lock),
-            border: OutlineInputBorder(),
-          ),
+        CommonTextformField(
+          labelText: 'Password',
+          inputHint: 'Please enter your password',
+          icon: Icons.lock,
           obscureText: true,
-          onChanged: widget.onPasswordChanged,
+          onChange: widget.onPasswordChanged,
         ),
-        const SizedBox(height: 16),
-        PrimaryButton(
+        CommonButton(
           text: "Login",
           onPressed: () => widget.onLogin,
           type: ButtonType.primary,
           isFullWidth: true,
         ),
-        const SizedBox(height: 16), // Space between buttons
-        PrimaryButton(
+        CommonButton(
           text: "Create an Account",
           onPressed: widget.onCreateAccount,
           type: ButtonType.transparent,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 enum ButtonType { primary, secondary, danger, transparent }
 
-class PrimaryButton extends StatelessWidget {
+class CommonButton extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
   final ButtonType type;
@@ -10,7 +10,7 @@ class PrimaryButton extends StatelessWidget {
   final IconData? icon;
   final bool isFullWidth;
 
-  const PrimaryButton({
+  const CommonButton({
     super.key,
     required this.text,
     required this.onPressed,
@@ -23,13 +23,13 @@ class PrimaryButton extends StatelessWidget {
   Color _getBackgroundColor(BuildContext context) {
     switch (type) {
       case ButtonType.primary:
-        return Colors.blue;
+        return Theme.of(context).colorScheme.primary;
       case ButtonType.secondary:
-        return Colors.grey;
+        return Theme.of(context).colorScheme.secondary;
       case ButtonType.transparent:
         return Colors.white.withAlpha(0);
       case ButtonType.danger:
-        return Colors.red;
+        return Theme.of(context).colorScheme.error;
     }
   }
 

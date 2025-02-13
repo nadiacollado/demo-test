@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_starter_kit/features/authentication/presentation/sign_up_screen/sign_up_widget.dart';
-import 'package:flutter_starter_kit/features/routing/app_router.dart';
+import '../../../../features/authentication/presentation/sign_up_screen/sign_up_widget.dart';
+import '../../../../features/routing/app_router.dart';
 import 'package:go_router/go_router.dart';
 
 class SignUpScreen extends ConsumerStatefulWidget {

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_starter_kit/common_widgets/common_scaffold.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import '../../common_widgets/common_scaffold.dart';
 import '../../features/authentication/presentation/login_screen/login_screen.dart';
 import '../../features/authentication/presentation/sign_up_screen/sign_up_screen.dart';
 

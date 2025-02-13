@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 
-class TextformField extends StatelessWidget {
-  const TextformField({
-    super.key,
-    required this.initialValue,
-    required this.inputHint,
-    required this.onChange,
-    required this.labelText,
-  });
-
-  final String initialValue;
+class CommonTextformField extends StatelessWidget {
   final String inputHint;
   final ValueChanged<String> onChange;
   final String labelText;
+  final bool obscureText;
+  final IconData? icon;
+
+  const CommonTextformField({
+    super.key,
+    required this.inputHint,
+    required this.onChange,
+    required this.labelText,
+    this.obscureText = false,
+    this.icon,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -20,9 +22,10 @@ class TextformField extends StatelessWidget {
       decoration: InputDecoration(
         labelText: labelText,
         hintText: inputHint,
-        prefixIcon: Icon(Icons.person),
+        prefixIcon: icon != null ? Icon(icon) : null,
         border: OutlineInputBorder(),
       ),
+      obscureText: obscureText,
       onChanged: onChange,
     );
   }

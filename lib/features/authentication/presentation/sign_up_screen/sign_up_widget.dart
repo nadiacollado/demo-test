@@ -26,13 +26,13 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget> {
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.stretch,
+      spacing: 16,
       children: [
         CommonTextformField(
           labelText: 'Email',
           inputHint: 'Please enter your email',
           onChange: widget.onEmailChanged,
         ),
-        const SizedBox(height: 16),
         CommonTextformField(
           labelText: 'Password',
           inputHint: 'Please enter your password',
@@ -40,7 +40,6 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget> {
           obscureText: true,
           onChange: widget.onPasswordChanged,
         ),
-        const SizedBox(height: 16),
         CommonTextformField(
           labelText: 'Confirm Password',
           inputHint: 'Please reenter your password',
@@ -48,14 +47,12 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget> {
           obscureText: true,
           onChange: widget.onPasswordChanged,
         ),
-        const SizedBox(height: 16),
         CommonButton(
           text: "Create Account",
           onPressed: () => widget.onCreateAccount,
           type: ButtonType.primary,
           isFullWidth: true,
         ),
-        const SizedBox(height: 16), // Space between buttons
         CommonButton(
           text: "Have an Account? Login",
           onPressed: widget.onLogin,

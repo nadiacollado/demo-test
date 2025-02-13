@@ -17,7 +17,7 @@ class CommonScaffold extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
         backgroundColor: backgroundColor,
-        appBar: AppBar(title: Text(title ?? 'Flutter App Template')),
+        appBar: AppBar(title: Text(title ?? 'RetroSpace')),
         body: body);
   }
 }

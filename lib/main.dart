@@ -1,7 +1,9 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+
 import 'features/routing/app_router.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
 Future<void> initFirebase() async {
@@ -24,11 +26,11 @@ Future<void> main() async {
 
 class MyApp extends ConsumerWidget {
   const MyApp({super.key});
-  static const primaryColor = Colors.blue;
+  static const MaterialColor primaryColor = Colors.blue;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final router = ref.watch(goRouterProvider);
+    final GoRouter router = ref.watch(goRouterProvider);
     return MaterialApp.router(
       routerConfig: router,
       theme: ThemeData(

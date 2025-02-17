@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../../common_widgets/common_text_form_field.dart';
+
 import '../../../../common_widgets/common_button.dart';
+import '../../../../common_widgets/common_text_form_field.dart';
 
 class SignUpWidget extends ConsumerStatefulWidget {
+  const SignUpWidget({
+    super.key,
+    required this.onCreateAccount,
+    required this.onEmailChanged,
+    required this.onPasswordChanged,
+    required this.onLogin,
+  });
+
   final ValueChanged<String> onEmailChanged;
   final ValueChanged<String> onPasswordChanged;
   final VoidCallback onCreateAccount;
   final VoidCallback onLogin;
 
-  const SignUpWidget(
-      {super.key,
-      required this.onCreateAccount,
-      required this.onEmailChanged,
-      required this.onPasswordChanged,
-      required this.onLogin});
   @override
   ConsumerState<SignUpWidget> createState() => _SignUpWidgetState();
 }
@@ -27,7 +30,7 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget> {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       spacing: 16,
-      children: [
+      children: <Widget>[
         CommonTextformField(
           labelText: 'Email',
           inputHint: 'Please enter your email',
@@ -48,13 +51,12 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget> {
           onChange: widget.onPasswordChanged,
         ),
         CommonButton(
-          text: "Create Account",
+          text: 'Create Account',
           onPressed: () => widget.onCreateAccount,
-          type: ButtonType.primary,
           isFullWidth: true,
         ),
         CommonButton(
-          text: "Have an Account? Login",
+          text: 'Have an Account? Login',
           onPressed: widget.onLogin,
           type: ButtonType.transparent,
           isFullWidth: true,

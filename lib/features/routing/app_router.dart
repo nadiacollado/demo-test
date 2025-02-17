@@ -8,27 +8,32 @@ import '../../features/authentication/presentation/sign_up_screen/sign_up_screen
 
 part 'app_router.g.dart';
 
-final _rootNavigatorKey = GlobalKey<NavigatorState>();
+final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
 
 enum AppRoute { counter, login, signUp }
 
 @Riverpod(keepAlive: true)
 GoRouter goRouter(Ref ref) {
   return GoRouter(
-      initialLocation: '/login',
-      navigatorKey: _rootNavigatorKey,
-      routes: [
-        GoRoute(
-          path: '/login',
-          name: AppRoute.login.name,
-          pageBuilder: (context, state) => const NoTransitionPage(
-              child: CommonScaffold(body: LoginScreen())),
+    initialLocation: '/login',
+    navigatorKey: _rootNavigatorKey,
+    routes: <RouteBase>[
+      GoRoute(
+        path: '/login',
+        name: AppRoute.login.name,
+        pageBuilder: (BuildContext context, GoRouterState state) =>
+            const NoTransitionPage<dynamic>(
+          child: CommonScaffold(body: LoginScreen()),
         ),
-        GoRoute(
-          path: '/signUp',
-          name: AppRoute.signUp.name,
-          pageBuilder: (context, state) => const NoTransitionPage(
-              child: CommonScaffold(body: SignUpScreen())),
+      ),
+      GoRoute(
+        path: '/signUp',
+        name: AppRoute.signUp.name,
+        pageBuilder: (BuildContext context, GoRouterState state) =>
+            const NoTransitionPage<dynamic>(
+          child: CommonScaffold(body: SignUpScreen()),
         ),
-      ]);
+      ),
+    ],
+  );
 }

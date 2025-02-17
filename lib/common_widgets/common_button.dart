@@ -3,13 +3,6 @@ import 'package:flutter/material.dart';
 enum ButtonType { primary, secondary, danger, transparent }
 
 class CommonButton extends StatelessWidget {
-  final String text;
-  final VoidCallback onPressed;
-  final ButtonType type;
-  final bool isDisabled;
-  final IconData? icon;
-  final bool isFullWidth;
-
   const CommonButton({
     super.key,
     required this.text,
@@ -19,6 +12,13 @@ class CommonButton extends StatelessWidget {
     this.isFullWidth = false,
     this.icon,
   });
+
+  final String text;
+  final VoidCallback onPressed;
+  final ButtonType type;
+  final bool isDisabled;
+  final IconData? icon;
+  final bool isFullWidth;
 
   Color _getBackgroundColor(BuildContext context) {
     switch (type) {
@@ -54,8 +54,8 @@ class CommonButton extends StatelessWidget {
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
-          children: [
-            if (icon != null) ...[
+          children: <Widget>[
+            if (icon != null) ...<Widget>[
               Icon(icon, size: 18),
               const SizedBox(width: 8),
             ],

@@ -15,18 +15,21 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Center(
-        child: ConstrainedBox(
-            constraints: BoxConstraints(
-              maxWidth: 400,
-              maxHeight: 600,
-            ),
-            child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: LoginWidget(
-                  onLogin: (value) => {},
-                  onEmailChanged: (value) => {},
-                  onPasswordChanged: (value) => {},
-                  onCreateAccount: () => context.goNamed(AppRoute.signUp.name),
-                ))));
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(
+          maxWidth: 400,
+          maxHeight: 600,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: LoginWidget(
+            onLogin: (String value) {},
+            onEmailChanged: (String value) {},
+            onPasswordChanged: (String value) {},
+            onCreateAccount: () => context.goNamed(AppRoute.signUp.name),
+          ),
+        ),
+      ),
+    );
   }
 }

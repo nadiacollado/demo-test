@@ -1,0 +1,71 @@
+name: Run Analysis and Tests
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  analyzer:
+    name: Flutter Analyzer
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Set up Flutter
+        uses: 8thlight/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version-file: pubspec.yaml
+      - run: flutter pub get
+      # - name: create .env
+      #   run: cp env_template .env
+      - name: build generated code
+        run: dart run build_runner build --delete-conflicting-outputs
+      - name: Analyze Dart
+        uses: 8thlight/github-actions-analyze-dart@v2
+      - name: Analyze Flutter
+        run: flutter analyze
+  drive:
+    name: Unit Tests with Coverage
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Set up Flutter
+        uses: 8thlight/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version-file: pubspec.yaml
+      - run: flutter pub get
+      - name: Install lcov
+        run: sudo apt-get install lcov
+      # - name: create .env
+      #   run: cp env_template .env
+      - name: Build generated code
+        run: dart run build_runner build --delete-conflicting-outputs
+      - run: flutter test --coverage
+      - name: Filter Coverage Report
+        run: |
+          lcov --remove coverage/lcov.info 'lib/**/*.g.dart' 'lib/core/analytics/*' 'lib/env/*' -o coverage/filtered_lcov.info
+      - name: Generate Coverage Report
+        run: |
+          mkdir -p coverage
+          genhtml -o coverage coverage/filtered_lcov.info --quiet
+          coverage_percentage=$(grep -Po 'headerCovTableEntryLo.*?>\K[0-9.]+(?=&nbsp;%)' coverage/index.html | head -n 1)
+          if [ -z "$coverage_percentage" ]; then
+            coverage_percentage="0"
+          fi
+          echo "$coverage_percentage" > coverage_percentage.txt
+      - name: Add Coverage Comment to PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const coveragePercentage = fs.readFileSync('coverage_percentage.txt', 'utf8').trim();
+            const commentBody = `## Code Coverage\n- ${coveragePercentage}%`;
+            github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.payload.pull_request.number,
+              body: commentBody,
+            });

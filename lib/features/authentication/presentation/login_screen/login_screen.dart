@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_starter_kit/features/authentication/presentation/login_screen/login_screen_controller.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../utils/auth_status.dart';
+import '../../../../utils/firebase_auth_exception_handler.dart';
 import '../../../../common_widgets/common_dialog.dart';
 import '../../../../features/authentication/presentation/login_screen/login_widget.dart';
 import '../../../../features/routing/app_router.dart';
@@ -20,16 +22,26 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         .signInWithEmailPassword();
 
     result.when(
-      data: (_) {
-        if (mounted) {
-          context.goNamed(AppRoute.counter.name);
+      data: (authStatus) {
+        if (authStatus == AuthStatus.successful) {
+          if (mounted) {
+            context.goNamed(AppRoute.counter.name);
+          }
+        } else {
+          showCommonDialog(
+            context: context,
+            title: 'Unable to Login',
+            content:
+                FirebaseAuthExceptionHandler.generateErrorMessage(authStatus),
+            primaryButtonText: 'Dismiss',
+          );
         }
       },
       error: (err, stack) {
         showCommonDialog(
           context: context,
-          title: 'Unable to Login',
-          content: 'Email or password is invalid',
+          title: 'Error',
+          content: 'An unexpected error occurred. Please try again later.',
           primaryButtonText: 'Dismiss',
         );
       },

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_starter_kit/features/authentication/presentation/sign_up_screen/sign_up_screen_controller.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../common_widgets/common_dialog.dart';
 import '../../../../features/authentication/presentation/sign_up_screen/sign_up_widget.dart';
 import '../../../../features/routing/app_router.dart';
-import 'package:go_router/go_router.dart';
+
+import '../../../../utils/auth_status.dart';
+import '../../../../utils/firebase_auth_exception_handler.dart';
 
 class SignUpScreen extends ConsumerStatefulWidget {
   const SignUpScreen({super.key});
@@ -20,16 +23,26 @@ class _SignUpState extends ConsumerState<SignUpScreen> {
         .signUpWithEmailPassword();
 
     result.when(
-      data: (_) {
-        if (mounted) {
-          context.goNamed(AppRoute.login.name);
+      data: (authStatus) {
+        if (authStatus == AuthStatus.successful) {
+          if (mounted) {
+            context.goNamed(AppRoute.login.name);
+          }
+        } else {
+          showCommonDialog(
+            context: context,
+            title: 'Unable to Create Account',
+            content:
+                FirebaseAuthExceptionHandler.generateErrorMessage(authStatus),
+            primaryButtonText: 'Dismiss',
+          );
         }
       },
       error: (err, stack) {
         showCommonDialog(
           context: context,
           title: 'Unable to Create Account',
-          content: 'Email is invalid',
+          content: 'Unexpected Error',
           primaryButtonText: 'Dismiss',
         );
       },

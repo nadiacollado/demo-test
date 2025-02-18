@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'firebase_auth_repository.g.dart';
 
@@ -12,16 +12,20 @@ class AuthRepository {
   User? get currentUser => _auth.currentUser;
 
   Future<UserCredential> signInWithEmailPassword(
-      String email, String password) async {
-    return await _auth.signInWithEmailAndPassword(
+    String email,
+    String password,
+  ) async {
+    return _auth.signInWithEmailAndPassword(
       email: email,
       password: password,
     );
   }
 
   Future<UserCredential> signUpWithEmailPassword(
-      String email, String password) async {
-    return await _auth.createUserWithEmailAndPassword(
+    String email,
+    String password,
+  ) async {
+    return _auth.createUserWithEmailAndPassword(
       email: email,
       password: password,
     );

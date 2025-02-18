@@ -1,5 +1,6 @@
-import 'package:flutter_starter_kit/features/authentication/data/firebase_auth_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+import '../../data/firebase_auth_repository.dart';
 
 part 'login_screen_controller.g.dart';
 
@@ -11,11 +12,13 @@ class LoginScreenController extends _$LoginScreenController {
   }
 
   Future<AsyncValue<void>> signInWithEmailPassword(
-      String email, String password) async {
-    final authRepository = ref.read(authRepositoryProvider);
-    state = const AsyncLoading();
+    String email,
+    String password,
+  ) async {
+    final AuthRepository authRepository = ref.read(authRepositoryProvider);
+    state = const AsyncLoading<void>();
 
-    final result = await AsyncValue.guard(() async {
+    final AsyncValue<void> result = await AsyncValue.guard(() async {
       await authRepository.signInWithEmailPassword(email, password);
     });
 

@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+# dart format
+printf "\e[33;1m%s\e[0m\n" 'Running dart format'
+
+# Get all staged files
+staged_files=$(git diff --cached --name-only --diff-filter=ACM)
+
+dart format --set-exit-if-changed .
+# Check if there are any changes
+if [ $? -eq 0 ]; then
+  printf "\e[32;1m%s\e[0m\n" 'No changes needed'
+else
+  printf "\e[32;1m%s\e[0m\n" 'Applying changes'
+  git add $staged_files
+fi
+
+printf "\e[32;1m%s\e[0m\n" 'Finished running dart format'
+printf "\e[31;1m%s\e[0m\n" 'Please run "flutter analyze" and "flutter test" to ensure that there are no issues before pushing.'
+printf "\e[0;33m%s\e[0m\n" 'Make any changes "flutter analyze" asks for and run again until there is nothing to fix and no issues found.'

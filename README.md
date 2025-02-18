@@ -6,13 +6,19 @@
 
 ## Getting Started
 
+Ensure that you have your git hooks set up to help make certain that code you push up meets our code quality standards by running the following command in your terminal:
+
+```shell
+git config --local core.hooksPath githooks/
+```
+
 Before you can begin to run the app. You must create `.env`. See [Environment Variables](#environment-variables) for further details.
 
 ## Environment Variables
 
 Before building the app, create a file called `.env` in the base directory. The contents of the file can be found in 1Password for this project. Then run these commands in the terminal:
 
-```dart
+```shell
 dart run build_runner clean
 dart run build_runner build --delete-conflicting-outputs
 ```
@@ -32,7 +38,7 @@ Then update the file `lib/env/env.dart with your new variable following this for
 
 Then re-run build
 
-```dart
+```shell
 dart run build_runner clean
 dart run build_runner build --delete-conflicting-outputs
 ```

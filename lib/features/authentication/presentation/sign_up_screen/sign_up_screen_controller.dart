@@ -1,5 +1,6 @@
 import 'package:flutter_starter_kit/features/authentication/data/firebase_auth_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import '../../../../utils/auth_status.dart';
 
 part 'sign_up_screen_controller.g.dart';
 
@@ -34,12 +35,18 @@ class SignUpScreenController extends _$SignUpScreenController {
     _confirmPassword = confirmPassword;
   }
 
-  Future<AsyncValue<void>> signUpWithEmailPassword() async {
+  Future<AsyncValue<AuthStatus>> signUpWithEmailPassword() async {
     final authRepository = ref.read(authRepositoryProvider);
     state = const AsyncLoading();
 
-    final result = await AsyncValue.guard(() async {
-      await authRepository.signUpWithEmailPassword(_email, _password);
+    final result = await AsyncValue.guard<AuthStatus>(() async {
+      try {
+        final result =
+            await authRepository.signUpWithEmailPassword(_email, _password);
+        return result;
+      } catch (e) {
+        return AuthStatus.unknown;
+      }
     });
 
     state = result;

@@ -1,5 +1,8 @@
 import 'package:flutter_starter_kit/features/authentication/data/firebase_auth_repository.dart';
+import 'package:flutter_starter_kit/utils/auth_status.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+import '../../../../utils/firebase_auth_exception_handler.dart';
 
 part 'login_screen_controller.g.dart';
 
@@ -7,7 +10,7 @@ part 'login_screen_controller.g.dart';
 class LoginScreenController extends _$LoginScreenController {
   @override
   FutureOr<void> build() {
-    // no op
+    // Initialize state
   }
 
   String _email = '';
@@ -24,16 +27,21 @@ class LoginScreenController extends _$LoginScreenController {
     _password = password;
   }
 
-  Future<AsyncValue<void>> signInWithEmailPassword() async {
+  Future<AsyncValue<AuthStatus>> signInWithEmailPassword() async {
     final authRepository = ref.read(authRepositoryProvider);
     state = const AsyncLoading();
 
-    final result = await AsyncValue.guard(() async {
-      await authRepository.signInWithEmailPassword(_email, _password);
+    final result = await AsyncValue.guard<AuthStatus>(() async {
+      try {
+        final result =
+            await authRepository.signInWithEmailPassword(_email, _password);
+        return result;
+      } catch (e) {
+        return AuthStatus.unknown;
+      }
     });
 
     state = result;
-
     return result;
   }
 }

@@ -10,10 +10,40 @@ class SignUpScreenController extends _$SignUpScreenController {
     // no op
   }
 
-  Future<void> signUpWithEmailPassword(String email, String password) async {
+  String _email = '';
+  String _password = '';
+  String _confirmPassword = '';
+
+  bool get isSignUpDisabled =>
+      _email.isEmpty ||
+      _password.isEmpty ||
+      _confirmPassword.isEmpty ||
+      _password != _confirmPassword ||
+      _password.length < 6 ||
+      _confirmPassword.length < 6;
+
+  void updateEmail(String email) {
+    _email = email;
+  }
+
+  void updatePassword(String password) {
+    _password = password;
+  }
+
+  void updateConfirmPassword(String confirmPassword) {
+    _confirmPassword = confirmPassword;
+  }
+
+  Future<AsyncValue<void>> signUpWithEmailPassword() async {
     final authRepository = ref.read(authRepositoryProvider);
     state = const AsyncLoading();
-    state = await AsyncValue.guard(
-        () => authRepository.signUpWithEmailPassword(email, password));
+
+    final result = await AsyncValue.guard(() async {
+      await authRepository.signUpWithEmailPassword(_email, _password);
+    });
+
+    state = result;
+
+    return result;
   }
 }

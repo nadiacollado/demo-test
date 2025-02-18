@@ -5,12 +5,6 @@ import '../../../../common_widgets/common_button.dart';
 import '../../../../common_widgets/common_text_form_field.dart';
 
 class LoginWidget extends ConsumerStatefulWidget {
-  final void Function() onLogin;
-  final ValueChanged<String> onEmailChanged;
-  final ValueChanged<String> onPasswordChanged;
-  final bool isLoginDisabled;
-  final VoidCallback onCreateAccount;
-
   const LoginWidget({
     super.key,
     required this.onLogin,
@@ -19,6 +13,13 @@ class LoginWidget extends ConsumerStatefulWidget {
     required this.onCreateAccount,
     this.isLoginDisabled = false,
   });
+
+  final void Function() onLogin;
+  final ValueChanged<String> onEmailChanged;
+  final ValueChanged<String> onPasswordChanged;
+  final bool isLoginDisabled;
+  final VoidCallback onCreateAccount;
+
   @override
   ConsumerState<LoginWidget> createState() => _LoginWidgetState();
 }
@@ -31,7 +32,7 @@ class _LoginWidgetState extends ConsumerState<LoginWidget> {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       spacing: 16.0,
-      children: [
+      children: <Widget>[
         CommonTextformField(
           labelText: 'Email',
           inputHint: 'Please enter your email',
@@ -46,14 +47,13 @@ class _LoginWidgetState extends ConsumerState<LoginWidget> {
           onChange: widget.onPasswordChanged,
         ),
         CommonButton(
-          text: "Login",
+          text: 'Login',
           isDisabled: widget.isLoginDisabled,
           onPressed: widget.onLogin,
-          type: ButtonType.primary,
           isFullWidth: true,
         ),
         CommonButton(
-          text: "Create an Account",
+          text: 'Create an Account',
           onPressed: widget.onCreateAccount,
           type: ButtonType.transparent,
           isFullWidth: true,

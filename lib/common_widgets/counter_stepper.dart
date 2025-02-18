@@ -32,7 +32,7 @@ class CounterStepper extends StatelessWidget {
   }
 
   List<Widget> _buildButtons() {
-    final buttons = [
+    final List<IconButton> buttons = <IconButton>[
       IconButton(
         icon: Icon(Icons.remove, size: iconSize, color: iconColor),
         onPressed: onDecrement,

@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
 
 class CommonTextformField extends StatelessWidget {
-  final String inputHint;
-  final ValueChanged<String> onChange;
-  final String labelText;
-  final bool obscureText;
-  final IconData? icon;
-
   const CommonTextformField({
     super.key,
     required this.inputHint,
@@ -16,6 +10,12 @@ class CommonTextformField extends StatelessWidget {
     this.icon,
   });
 
+  final String inputHint;
+  final ValueChanged<String> onChange;
+  final String labelText;
+  final bool obscureText;
+  final IconData? icon;
+
   @override
   Widget build(BuildContext context) {
     return TextField(
@@ -23,7 +23,7 @@ class CommonTextformField extends StatelessWidget {
         labelText: labelText,
         hintText: inputHint,
         prefixIcon: icon != null ? Icon(icon) : null,
-        border: OutlineInputBorder(),
+        border: const OutlineInputBorder(),
       ),
       obscureText: obscureText,
       onChanged: onChange,

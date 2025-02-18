@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_starter_kit/utils/firebase_auth_exception_handler.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../utils/auth_status.dart';
+import '../../../utils/firebase_auth_exception_handler.dart';
 
 part 'firebase_auth_repository.g.dart';
 
@@ -16,7 +16,9 @@ class AuthRepository {
   User? get currentUser => _auth.currentUser;
 
   Future<AuthStatus> signInWithEmailPassword(
-      String email, String password) async {
+    String email,
+    String password,
+  ) async {
     try {
       await _auth.signInWithEmailAndPassword(
         email: email,
@@ -30,7 +32,9 @@ class AuthRepository {
   }
 
   Future<AuthStatus> signUpWithEmailPassword(
-      String email, String password) async {
+    String email,
+    String password,
+  ) async {
     try {
       await _auth.createUserWithEmailAndPassword(
         email: email,

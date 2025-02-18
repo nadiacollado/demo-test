@@ -1,41 +1,36 @@
+// ignore_for_file: no_default_cases
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_starter_kit/utils/auth_status.dart';
+import 'auth_status.dart';
 
 class FirebaseAuthExceptionHandler {
-  static handleAuthException(FirebaseAuthException e) {
+  static AuthStatus handleAuthException(FirebaseAuthException e) {
     AuthStatus status;
 
     switch (e.code) {
       case 'invalid-email':
         status = AuthStatus.invalidEmail;
-        break;
       case 'invalid-credential':
         status = AuthStatus.wrongPassword;
-        break;
       case 'email-already-in-use':
         status = AuthStatus.emailAlreadyExists;
-        break;
       default:
         status = AuthStatus.unknown;
     }
     return status;
   }
 
-  static String generateErrorMessage(error) {
+  static String generateErrorMessage(AuthStatus error) {
     String errorMessage;
 
     switch (error) {
       case AuthStatus.invalidEmail:
-        errorMessage = "Invalid email address.";
-        break;
+        errorMessage = 'Invalid email address.';
       case AuthStatus.wrongPassword:
-        errorMessage = "Your email or password is wrong.";
-        break;
+        errorMessage = 'Your email or password is wrong.';
       case AuthStatus.emailAlreadyExists:
-        errorMessage = "The email address is already in use.";
-        break;
+        errorMessage = 'The email address is already in use.';
       default:
-        errorMessage = "An error occured. Please try again later.";
+        errorMessage = 'An error occured. Please try again later.';
     }
     return errorMessage;
   }

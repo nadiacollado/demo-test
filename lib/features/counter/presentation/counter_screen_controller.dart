@@ -9,28 +9,28 @@ part 'counter_screen_controller.g.dart';
 class CounterScreenController extends _$CounterScreenController {
   @override
   FutureOr<Counter> build() {
-    final repository = ref.read(counterRepositoryProvider);
+    final CounterRepository repository = ref.read(counterRepositoryProvider);
     return repository.counter;
   }
 
   Future<void> increment() async {
-    final repository = ref.read(counterRepositoryProvider);
+    final CounterRepository repository = ref.read(counterRepositoryProvider);
 
-    state = const AsyncLoading();
+    state = const AsyncLoading<Counter>();
 
     state = await AsyncValue.guard(() async {
-      final updatedCounter = await repository.increment();
+      final Counter updatedCounter = await repository.increment();
       return updatedCounter;
     });
   }
 
   Future<void> decrement() async {
-    final repository = ref.read(counterRepositoryProvider);
+    final CounterRepository repository = ref.read(counterRepositoryProvider);
 
-    state = const AsyncLoading();
+    state = const AsyncLoading<Counter>();
 
     state = await AsyncValue.guard(() async {
-      final updatedCounter = await repository.decrement();
+      final Counter updatedCounter = await repository.decrement();
       return updatedCounter;
     });
   }

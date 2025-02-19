@@ -36,4 +36,31 @@ void main() {
       expect(find.text('Counter: 1'), findsOneWidget);
     },
   );
+
+  testWidgets(
+    'Counter decrements correctly',
+    (WidgetTester tester) async {
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: ProviderScope(
+            child: CounterScreen(),
+          ),
+        ),
+      );
+
+      expect(find.text('Counter: 0'), findsOneWidget);
+
+      await tester.tap(find.byIcon(Icons.add));
+      await tester.pump();
+      await tester.tap(find.byIcon(Icons.add));
+      await tester.pump();
+
+      expect(find.text('Counter: 2'), findsOneWidget);
+
+      await tester.tap(find.byIcon(Icons.remove));
+      await tester.pump();
+
+      expect(find.text('Counter: 1'), findsNothing);
+    },
+  );
 }

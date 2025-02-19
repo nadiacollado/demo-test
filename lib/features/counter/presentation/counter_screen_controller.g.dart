@@ -7,7 +7,7 @@ part of 'counter_screen_controller.dart';
 // **************************************************************************
 
 String _$counterScreenControllerHash() =>
-    r'605d4632137f3b7bb070e3c8697935394283d58b';
+    r'e02c2efb445bcb3f3e3b9125d369b8b60c0eae2e';
 
 /// See also [CounterScreenController].
 @ProviderFor(CounterScreenController)

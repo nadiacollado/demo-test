@@ -34,6 +34,10 @@ class CounterScreen extends ConsumerWidget {
             onIncrement: () => counterScreenControllerNotifier.increment(),
             onDecrement: () => counterScreenControllerNotifier.decrement(),
           ),
+          TextButton(
+            onPressed: () => throw Exception(),
+            child: const Text('Throw Test Exception'),
+          ),
         ],
       ),
     );

@@ -1,8 +1,16 @@
 {
   "@@locale": "en",
-  "appTitle": "RetroSpace",
-  "@appTitle": {
+  "@_GLOBAL": {},
+  "global_title": "RetroSpace",
+  "@global_title": {
     "description": "The title of the app",
     "type": "text"
-  }
+  },
+  "@_AUTHENTICATION": {},
+  "auth_email": "Email",
+  "auth_enterEmail": "Please enter your email",
+  "auth_password": "Password",
+  "auth_enterPassword": "Please enter your password",
+  "auth_login": "Login",
+  "auth_createAccount": "Create an Account"
 }

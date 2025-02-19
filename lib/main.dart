@@ -36,7 +36,7 @@ class MyApp extends ConsumerWidget {
     final GoRouter router = ref.watch(goRouterProvider);
     return MaterialApp.router(
       routerConfig: router,
-      onGenerateTitle: (BuildContext context) => context.t.appTitle,
+      onGenerateTitle: (BuildContext context) => context.t.global_title,
       localizationsDelegates: const <LocalizationsDelegate<dynamic>>[
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,

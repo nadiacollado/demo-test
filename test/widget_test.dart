@@ -60,7 +60,7 @@ void main() {
       await tester.tap(find.byIcon(Icons.remove));
       await tester.pump();
 
-      expect(find.text('Counter: 1'), findsNothing);
+      expect(find.text('Counter: 1'), findsOneWidget);
     },
   );
 }

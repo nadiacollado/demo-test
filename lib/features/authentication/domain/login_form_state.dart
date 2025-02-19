@@ -1,27 +1,25 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../../utils/auth_status.dart';
-
 class LoginFormState {
-  LoginFormState({
+  const LoginFormState({
     this.email = '',
     this.password = '',
-    this.status = const AsyncData<AuthStatus>(AuthStatus.unknown),
+    this.isLoading = false,
   });
   final String email;
   final String password;
-  final AsyncValue<AuthStatus> status;
+  final bool isLoading;
 
-  // `copyWith` method to update the state
+  bool get isLoginDisabled =>
+      email.isEmpty || password.isEmpty || password.length < 6;
+
   LoginFormState copyWith({
     String? email,
     String? password,
-    AsyncValue<AuthStatus>? status,
+    bool? isLoading,
   }) {
     return LoginFormState(
       email: email ?? this.email,
       password: password ?? this.password,
-      status: status ?? this.status,
+      isLoading: isLoading ?? this.isLoading,
     );
   }
 }

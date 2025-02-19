@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../l10n/translate.dart';
+
 class CommonScaffold extends ConsumerWidget {
   const CommonScaffold({
     super.key,
@@ -17,7 +19,7 @@ class CommonScaffold extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       backgroundColor: backgroundColor,
-      appBar: AppBar(title: Text(title ?? 'RetroSpace')),
+      appBar: AppBar(title: Text(title ?? context.t.global_title)),
       body: body,
     );
   }

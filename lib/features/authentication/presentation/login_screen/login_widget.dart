@@ -50,7 +50,7 @@ class _LoginWidgetState extends ConsumerState<LoginWidget> {
           isFullWidth: true,
         ),
         CommonButton(
-          text: context.t.auth_createAccount,
+          text: context.t.auth_createAnAccount,
           onPressed: widget.onCreateAccount,
           type: ButtonType.transparent,
           isFullWidth: true,

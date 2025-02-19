@@ -38,10 +38,10 @@ class MyApp extends ConsumerWidget {
       routerConfig: router,
       onGenerateTitle: (BuildContext context) => context.t.global_title,
       localizationsDelegates: const <LocalizationsDelegate<dynamic>>[
+        AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
-        AppLocalizations.delegate,
       ],
       // 'en' is the language code. We could optionally provide a country code as the second param,
       // e.g. Locale('en', 'US'). If we do that, we may want to provide an additional app_en_US.arb

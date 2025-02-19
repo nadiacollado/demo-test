@@ -7,6 +7,7 @@ import '../../../../features/authentication/presentation/sign_up_screen/sign_up_
 import '../../../../features/routing/app_router.dart';
 import '../../../../utils/auth_status.dart';
 import '../../../../utils/firebase_auth_exception_handler.dart';
+import '../../domain/sign_up_form_state.dart';
 import 'sign_up_screen_controller.dart';
 
 class SignUpScreen extends ConsumerStatefulWidget {
@@ -52,7 +53,7 @@ class _SignUpState extends ConsumerState<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final AsyncValue<void> state = ref.watch(signUpScreenControllerProvider);
+    final SignUpFormState state = ref.watch(signUpScreenControllerProvider);
     final SignUpScreenController controller =
         ref.read(signUpScreenControllerProvider.notifier);
 
@@ -62,7 +63,7 @@ class _SignUpState extends ConsumerState<SignUpScreen> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: SignUpWidget(
-            isCreateAccountDisabled: controller.isSignUpDisabled,
+            isCreateAccountDisabled: state.isSignUpDisabled,
             onCreateAccount: () {
               if (!state.isLoading) {
                 _onSignUp();

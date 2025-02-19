@@ -7,6 +7,7 @@ import '../../../../features/authentication/presentation/login_screen/login_widg
 import '../../../../features/routing/app_router.dart';
 import '../../../../utils/auth_status.dart';
 import '../../../../utils/firebase_auth_exception_handler.dart';
+import '../../domain/login_form_state.dart';
 import 'login_screen_controller.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
@@ -52,7 +53,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final AsyncValue<void> state = ref.watch(loginScreenControllerProvider);
+    final LoginFormState state = ref.watch(loginScreenControllerProvider);
+
     final LoginScreenController controller =
         ref.read(loginScreenControllerProvider.notifier);
 
@@ -65,7 +67,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: LoginWidget(
-            isLoginDisabled: controller.isLoginDisabled,
+            isLoginDisabled: state.isLoginDisabled,
             onLogin: () {
               if (!state.isLoading) {
                 _onLogin();

@@ -2,33 +2,49 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../domain/auth_status.dart';
+import '../domain/firebase_auth_exception_handler.dart';
+
 part 'firebase_auth_repository.g.dart';
 
 class AuthRepository {
   AuthRepository(this._auth);
   final FirebaseAuth _auth;
+  AuthStatus _status = AuthStatus.unknown;
 
   Stream<User?> authStateChanges() => _auth.authStateChanges();
   User? get currentUser => _auth.currentUser;
 
-  Future<UserCredential> signInWithEmailPassword(
+  Future<AuthStatus> signInWithEmailPassword(
     String email,
     String password,
   ) async {
-    return _auth.signInWithEmailAndPassword(
-      email: email,
-      password: password,
-    );
+    try {
+      await _auth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      _status = AuthStatus.successful;
+    } on FirebaseAuthException catch (e) {
+      _status = FirebaseAuthExceptionHandler.handleAuthException(e);
+    }
+    return _status;
   }
 
-  Future<UserCredential> signUpWithEmailPassword(
+  Future<AuthStatus> signUpWithEmailPassword(
     String email,
     String password,
   ) async {
-    return _auth.createUserWithEmailAndPassword(
-      email: email,
-      password: password,
-    );
+    try {
+      await _auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      _status = AuthStatus.successful;
+    } on FirebaseAuthException catch (e) {
+      _status = FirebaseAuthExceptionHandler.handleAuthException(e);
+    }
+    return _status;
   }
 
   Future<void> signOut() async {

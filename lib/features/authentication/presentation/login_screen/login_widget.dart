@@ -11,11 +11,13 @@ class LoginWidget extends ConsumerStatefulWidget {
     required this.onEmailChanged,
     required this.onPasswordChanged,
     required this.onCreateAccount,
+    this.isLoginDisabled = false,
   });
 
   final void Function() onLogin;
   final ValueChanged<String> onEmailChanged;
   final ValueChanged<String> onPasswordChanged;
+  final bool isLoginDisabled;
   final VoidCallback onCreateAccount;
 
   @override
@@ -34,6 +36,7 @@ class _LoginWidgetState extends ConsumerState<LoginWidget> {
         CommonTextformField(
           labelText: 'Email',
           inputHint: 'Please enter your email',
+          icon: Icons.email,
           onChange: widget.onEmailChanged,
         ),
         CommonTextformField(
@@ -45,6 +48,7 @@ class _LoginWidgetState extends ConsumerState<LoginWidget> {
         ),
         CommonButton(
           text: 'Login',
+          isDisabled: widget.isLoginDisabled,
           onPressed: widget.onLogin,
           isFullWidth: true,
         ),

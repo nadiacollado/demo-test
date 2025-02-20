@@ -10,12 +10,17 @@ class SignUpWidget extends ConsumerStatefulWidget {
     required this.onCreateAccount,
     required this.onEmailChanged,
     required this.onPasswordChanged,
+    required this.onConfirmedPasswordChanged,
     required this.onLogin,
+    this.isCreateAccountDisabled = false,
   });
 
   final ValueChanged<String> onEmailChanged;
   final ValueChanged<String> onPasswordChanged;
+  final ValueChanged<String> onConfirmedPasswordChanged;
   final void Function() onCreateAccount;
+  final bool isCreateAccountDisabled;
+
   final VoidCallback onLogin;
 
   @override
@@ -34,6 +39,7 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget> {
         CommonTextformField(
           labelText: 'Email',
           inputHint: 'Please enter your email',
+          icon: Icons.email,
           onChange: widget.onEmailChanged,
         ),
         CommonTextformField(
@@ -48,10 +54,11 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget> {
           inputHint: 'Please reenter your password',
           icon: Icons.lock,
           obscureText: true,
-          onChange: widget.onPasswordChanged,
+          onChange: widget.onConfirmedPasswordChanged,
         ),
         CommonButton(
           text: 'Create Account',
+          isDisabled: widget.isCreateAccountDisabled,
           onPressed: widget.onCreateAccount,
           isFullWidth: true,
         ),

@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../common_widgets/common_dialog.dart';
 import '../../../../features/authentication/presentation/sign_up_screen/sign_up_widget.dart';
 import '../../../../features/routing/app_router.dart';
+import '../../domain/auth_status.dart';
+import '../../domain/firebase_auth_exception_handler.dart';
+import '../../domain/sign_up_form_state.dart';
 import 'sign_up_screen_controller.dart';
 
 class SignUpScreen extends ConsumerStatefulWidget {
@@ -14,24 +18,44 @@ class SignUpScreen extends ConsumerStatefulWidget {
 }
 
 class _SignUpState extends ConsumerState<SignUpScreen> {
-  String _email = '';
-  String _password = '';
-
   Future<void> _onSignUp() async {
-    if (_email.isNotEmpty && _password.isNotEmpty) {
-      await ref
-          .read(signUpScreenControllerProvider.notifier)
-          .signUpWithEmailPassword(_email, _password);
-    }
+    final AsyncValue<AuthStatus> result = await ref
+        .read(signUpScreenControllerProvider.notifier)
+        .signUpWithEmailPassword();
 
-    if (mounted) {
-      context.goNamed(AppRoute.login.name);
-    }
+    result.when(
+      data: (AuthStatus authStatus) {
+        if (authStatus == AuthStatus.successful) {
+          if (mounted) {
+            context.goNamed(AppRoute.login.name);
+          }
+        } else {
+          showCommonDialog(
+            context: context,
+            title: 'Unable to Create Account',
+            content:
+                FirebaseAuthExceptionHandler.generateErrorMessage(authStatus),
+            primaryButtonText: 'Dismiss',
+          );
+        }
+      },
+      error: (Object err, StackTrace stack) {
+        showCommonDialog(
+          context: context,
+          title: 'Unable to Create Account',
+          content: 'Unexpected Error',
+          primaryButtonText: 'Dismiss',
+        );
+      },
+      loading: () {},
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    final AsyncValue<void> state = ref.watch(signUpScreenControllerProvider);
+    final SignUpFormState state = ref.watch(signUpScreenControllerProvider);
+    final SignUpScreenController controller =
+        ref.read(signUpScreenControllerProvider.notifier);
 
     return Center(
       child: SingleChildScrollView(
@@ -39,14 +63,18 @@ class _SignUpState extends ConsumerState<SignUpScreen> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: SignUpWidget(
+            isCreateAccountDisabled: state.isSignUpDisabled,
             onCreateAccount: () {
               if (!state.isLoading) {
                 _onSignUp();
               }
             },
-            onEmailChanged: (String value) => setState(() => _email = value),
+            onEmailChanged: (String value) =>
+                setState(() => controller.updateEmail(value)),
             onPasswordChanged: (String value) =>
-                setState(() => _password = value),
+                setState(() => controller.updatePassword(value)),
+            onConfirmedPasswordChanged: (String value) =>
+                setState(() => controller.updateConfirmPassword(value)),
             onLogin: () => context.goNamed(AppRoute.login.name),
           ),
         ),

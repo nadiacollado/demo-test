@@ -47,6 +47,19 @@ class AuthRepository {
     return _status;
   }
 
+  Future<AuthStatus> resetPassword(String email) async {
+    try {
+      _auth.sendPasswordResetEmail(email: email);
+      _status = AuthStatus.successful;
+    } on FirebaseAuthException catch (e) {
+      _status = FirebaseAuthExceptionHandler.handleAuthException(e);
+    } catch (e) {
+      _status = AuthStatus.unknown;
+    }
+
+    return _status;
+  }
+
   Future<void> signOut() async {
     await _auth.signOut();
   }

@@ -55,7 +55,7 @@ jobs:
         run: |
           mkdir -p coverage
           genhtml -o coverage coverage/filtered_lcov.info --quiet
-          coverage_percentage=$(grep -Po 'headerCovTableEntryLo.*?>\K[0-9.]+(?=&nbsp;%)' coverage/index.html | head -n 1)
+          coverage_percentage=$(grep -Po '(headerCovTableEntryLo|headerCovTableEntryMed).*?>\K[0-9.]+(?=&nbsp;%)' coverage/index.html | head -n 1)
           if [ -z "$coverage_percentage" ]; then
             coverage_percentage="0"
           fi

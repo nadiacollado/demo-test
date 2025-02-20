@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../common_widgets/counter_stepper.dart';
 import '../../../features/counter/presentation/counter_screen_controller.dart';
+import '../../../l10n/translate.dart';
 import '../domain/counter.dart';
 
 class CounterScreen extends ConsumerWidget {
@@ -21,7 +22,7 @@ class CounterScreen extends ConsumerWidget {
         children: <Widget>[
           counterState.when(
             data: (Counter counter) => Text(
-              'Counter: ${counter.value}',
+              context.t.count_counter(counter.value),
               style: const TextStyle(fontSize: 24),
             ),
             loading: () => const CircularProgressIndicator(),

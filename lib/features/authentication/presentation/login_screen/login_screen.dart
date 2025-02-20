@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../common_widgets/common_dialog.dart';
 import '../../../../features/authentication/presentation/login_screen/login_widget.dart';
 import '../../../../features/routing/app_router.dart';
+import '../../domain/auth_status.dart';
+import '../../domain/firebase_auth_exception_handler.dart';
+import '../../domain/login_form_state.dart';
 import 'login_screen_controller.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
@@ -14,36 +18,45 @@ class LoginScreen extends ConsumerStatefulWidget {
 }
 
 class _LoginScreenState extends ConsumerState<LoginScreen> {
-  String _email = '';
-  String _password = '';
-
   Future<void> _onLogin() async {
-    if (_email.isNotEmpty && _password.isNotEmpty) {
-      final AsyncValue<void> result = await ref
-          .read(loginScreenControllerProvider.notifier)
-          .signInWithEmailPassword(_email, _password);
+    final AsyncValue<AuthStatus> result = await ref
+        .read(loginScreenControllerProvider.notifier)
+        .signInWithEmailPassword();
 
-      result.when(
-        data: (_) {
+    result.when(
+      data: (AuthStatus authStatus) {
+        if (authStatus == AuthStatus.successful) {
           if (mounted) {
             context.goNamed(AppRoute.counter.name);
           }
-        },
-        error: (Object err, StackTrace stack) {
-          // ignore: avoid_print
-          print('Login failed: $err');
-        },
-        loading: () {},
-      );
-    } else {
-      // ignore: avoid_print
-      print('Error: Email and password cannot be empty.');
-    }
+        } else {
+          showCommonDialog(
+            context: context,
+            title: 'Unable to Login',
+            content:
+                FirebaseAuthExceptionHandler.generateErrorMessage(authStatus),
+            primaryButtonText: 'Dismiss',
+          );
+        }
+      },
+      error: (Object err, StackTrace stack) {
+        showCommonDialog(
+          context: context,
+          title: 'Error',
+          content: 'An unexpected error occurred. Please try again later.',
+          primaryButtonText: 'Dismiss',
+        );
+      },
+      loading: () {},
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    final AsyncValue<void> state = ref.watch(loginScreenControllerProvider);
+    final LoginFormState state = ref.watch(loginScreenControllerProvider);
+
+    final LoginScreenController controller =
+        ref.read(loginScreenControllerProvider.notifier);
 
     return Center(
       child: ConstrainedBox(
@@ -54,14 +67,16 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: LoginWidget(
+            isLoginDisabled: state.isLoginDisabled,
             onLogin: () {
               if (!state.isLoading) {
                 _onLogin();
               }
             },
-            onEmailChanged: (String value) => setState(() => _email = value),
+            onEmailChanged: (String value) =>
+                setState(() => controller.updateEmail(value)),
             onPasswordChanged: (String value) =>
-                setState(() => _password = value),
+                setState(() => controller.updatePassword(value)),
             onCreateAccount: () => context.goNamed(AppRoute.signUp.name),
           ),
         ),

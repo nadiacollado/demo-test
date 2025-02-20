@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../common_widgets/common_button.dart';
 import '../../../../common_widgets/common_text_form_field.dart';
+import '../../../../l10n/translate.dart';
 
 class SignUpWidget extends ConsumerStatefulWidget {
   const SignUpWidget({
@@ -10,12 +11,17 @@ class SignUpWidget extends ConsumerStatefulWidget {
     required this.onCreateAccount,
     required this.onEmailChanged,
     required this.onPasswordChanged,
+    required this.onConfirmedPasswordChanged,
     required this.onLogin,
+    this.isCreateAccountDisabled = false,
   });
 
   final ValueChanged<String> onEmailChanged;
   final ValueChanged<String> onPasswordChanged;
+  final ValueChanged<String> onConfirmedPasswordChanged;
   final void Function() onCreateAccount;
+  final bool isCreateAccountDisabled;
+
   final VoidCallback onLogin;
 
   @override
@@ -32,31 +38,33 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget> {
       spacing: 16,
       children: <Widget>[
         CommonTextformField(
-          labelText: 'Email',
-          inputHint: 'Please enter your email',
+          labelText: context.t.auth_email,
+          inputHint: context.t.auth_enterEmail,
+          icon: Icons.email,
           onChange: widget.onEmailChanged,
         ),
         CommonTextformField(
-          labelText: 'Password',
-          inputHint: 'Please enter your password',
+          labelText: context.t.auth_password,
+          inputHint: context.t.auth_enterPassword,
           icon: Icons.lock,
           obscureText: true,
           onChange: widget.onPasswordChanged,
         ),
         CommonTextformField(
-          labelText: 'Confirm Password',
-          inputHint: 'Please reenter your password',
+          labelText: context.t.auth_confirmPassword,
+          inputHint: context.t.auth_reenterPassword,
           icon: Icons.lock,
           obscureText: true,
-          onChange: widget.onPasswordChanged,
+          onChange: widget.onConfirmedPasswordChanged,
         ),
         CommonButton(
-          text: 'Create Account',
+          text: context.t.auth_createAccount,
+          isDisabled: widget.isCreateAccountDisabled,
           onPressed: widget.onCreateAccount,
           isFullWidth: true,
         ),
         CommonButton(
-          text: 'Have an Account? Login',
+          text: context.t.auth_haveAccountLogin,
           onPressed: widget.onLogin,
           type: ButtonType.transparent,
           isFullWidth: true,

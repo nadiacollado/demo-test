@@ -1,0 +1,31 @@
+{
+  "@@locale": "en",
+  "@_GLOBAL": {},
+  "global_title": "RetroSpace",
+  "@global_title": {
+    "description": "The title of the app",
+    "type": "text"
+  },
+  "@_AUTHENTICATION": {},
+  "auth_email": "Email",
+  "auth_enterEmail": "Please enter your email",
+  "auth_password": "Password",
+  "auth_enterPassword": "Please enter your password",
+  "auth_confirmPassword": "Confirm Password",
+  "auth_reenterPassword": "Please reenter your password",
+  "auth_login": "Login",
+  "auth_createAnAccount": "Create an Account",
+  "auth_createAccount": "Create Account",
+  "auth_haveAccountLogin": "Have an account? Login",
+  "@_COUNTER": {},
+  "count_counter": "Counter: {counter}",
+  "@count_counter": {
+    "placeholders": {
+      "counter": {
+        "type": "int",
+        "example": "5"
+      }
+    }
+  },
+  "@_END": {}
+}

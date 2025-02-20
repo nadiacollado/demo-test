@@ -6,61 +6,49 @@
 // tree, read text, and verify that the values of widget properties are correct.
 
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_starter_kit/features/counter/presentation/counter_screen.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'utils/localized_pump.dart';
 
 void main() {
   testWidgets(
     'Counter increments smoke test',
     (WidgetTester tester) async {
       // Build our app and trigger a frame.
-      await tester.pumpWidget(
-        const MaterialApp(
-          home: ProviderScope(
-            child: CounterScreen(),
-          ),
-        ),
-      );
+      await tester.localizedPump(const CounterScreen());
 
       // Verify that our counter starts at 0.
-      expect(find.text('Counter: 0'), findsOneWidget);
-      expect(find.text('Counter: 1'), findsNothing);
+      expect(find.text(tester.t.count_counter(0)), findsOneWidget);
+      expect(find.text(tester.t.count_counter(1)), findsNothing);
 
       // Tap the '+' icon and trigger a frame.
       await tester.tap(find.byIcon(Icons.add));
       await tester.pump();
 
       // Verify that our counter has incremented.
-      expect(find.text('Counter: 0'), findsNothing);
-      expect(find.text('Counter: 1'), findsOneWidget);
+      expect(find.text(tester.t.count_counter(0)), findsNothing);
+      expect(find.text(tester.t.count_counter(1)), findsOneWidget);
     },
   );
 
   testWidgets(
     'Counter decrements correctly',
     (WidgetTester tester) async {
-      await tester.pumpWidget(
-        const MaterialApp(
-          home: ProviderScope(
-            child: CounterScreen(),
-          ),
-        ),
-      );
+      await tester.localizedPump(const CounterScreen());
 
-      expect(find.text('Counter: 0'), findsOneWidget);
+      expect(find.text(tester.t.count_counter(0)), findsOneWidget);
 
       await tester.tap(find.byIcon(Icons.add));
       await tester.pump();
       await tester.tap(find.byIcon(Icons.add));
       await tester.pump();
 
-      expect(find.text('Counter: 2'), findsOneWidget);
+      expect(find.text(tester.t.count_counter(2)), findsOneWidget);
 
       await tester.tap(find.byIcon(Icons.remove));
       await tester.pump();
 
-      expect(find.text('Counter: 1'), findsOneWidget);
+      expect(find.text(tester.t.count_counter(1)), findsOneWidget);
     },
   );
 }

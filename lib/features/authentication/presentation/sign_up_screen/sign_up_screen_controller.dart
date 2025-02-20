@@ -1,6 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import '../../domain/auth_status.dart';
+
 import '../../data/firebase_auth_repository.dart';
+import '../../domain/auth_status.dart';
 import '../../domain/sign_up_form_state.dart';
 
 part 'sign_up_screen_controller.g.dart';

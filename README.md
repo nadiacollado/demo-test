@@ -4,11 +4,12 @@
 
 - [Requirements](#requirements)
 - [VS Code Extensions](#vs-code-extensions)
-- [Documentation](#documentation)
 - [Getting Started](#getting-started)
 - [Running the App](#running-the-app)
 - [Environment Variables](#environment-variables)
 - [Localizations](#localizations)
+- [Google Cloud Logging](#google-cloud-logging)
+- [Additional Documentation](#additional-documentation)
 
 ## Requirements
 
@@ -49,10 +50,6 @@ Some Flutter extensions for VS Code include:
 - JSON to Dart Model
 - Coverage Gutters
 
-## Documentation
-
-- [Wiki](https://github.com/8thlight/flutter-starter-kit/wiki)
-
 ## Getting Started
 
 1. Before you can begin to run the app. You must create `.env`. See [Environment Variables](#environment-variables) for further details.
@@ -71,6 +68,25 @@ flutter pub get
 4. Generate necessary files
 
 ```shell
+dart run build_runner clean
+dart run build_runner build --delete-conflicting-outputs
+```
+
+You will also need the following files for Android and iOS setup:
+
+**Android Setup**:
+
+- Download the `google-services.json` file from the Firebase dashboard for the desired environment.
+- Save the `google-services.json` file to `android/app/google-services.json`.
+
+**iOS Setup**:
+
+- Download the `GoogleService-Info.plist` file from the Firebase dashboard for the desired environment.
+- Save the `GoogleService-Info.plist` file to `ios/GoogleService-Info.plist`.
+
+After placing these files in the correct locations, run the following commands to clean and rebuild the project, ensuring the environment is properly set:
+
+```bash
 dart run build_runner clean
 dart run build_runner build --delete-conflicting-outputs
 ```
@@ -211,3 +227,18 @@ After installing the extension you will need to add the following to your settin
 ```
 
 You can adjust these colors as desired.
+
+## Google Cloud Logging
+
+To see logs in the Google Cloud console for this app, please add the Google Cloud Logging environment variables to the `.env` file. You will find these items in 1Password.
+
+Then re-run build
+
+```shell
+dart run build_runner clean
+dart run build_runner build --delete-conflicting-outputs
+```
+
+## Additional Documentation
+
+- [Wiki](https://github.com/8thlight/flutter-starter-kit/wiki)

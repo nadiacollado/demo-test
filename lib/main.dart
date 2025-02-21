@@ -17,7 +17,6 @@ import 'l10n/translate.dart';
 
 final GoogleCloudLoggingService googleCloudLoggingService =
     GoogleCloudLoggingService();
-// final Logger logger = Logger();
 
 Future<void> initFirebase() async {
   await Firebase.initializeApp(
@@ -38,8 +37,6 @@ Future<void> main() async {
     );
     debugPrint('Flutter Starter Kit will log output to Cloud Logging');
   });
-
-  // logger.i("Test Log");
 
   FlutterError.onError = (FlutterErrorDetails errorDetails) {
     FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);

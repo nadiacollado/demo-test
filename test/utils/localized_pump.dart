@@ -3,7 +3,11 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations_en.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_starter_kit/features/routing/app_router.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
+
+import 'test_router.dart';
 
 extension LocalizedPump on WidgetTester {
   /// Pumps the given widget within a [MaterialApp] that is
@@ -19,18 +23,49 @@ extension LocalizedPump on WidgetTester {
   ///
   /// You can also use the [t] getter to access the localized
   /// strings in the test.
-  Future<void> localizedPump(Widget widget) async {
+  Future<void> localizedPump(
+    Widget widget, {
+    List<Override> overrides = const <Override>[],
+    bool useRouter = false, // Optional flag to use the test router
+  }) async {
     await pumpWidget(
-      MaterialApp(
-        localizationsDelegates: const <LocalizationsDelegate<dynamic>>[
-          AppLocalizations.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
+      ProviderScope(
+        overrides: <Override>[
+          if (useRouter)
+            goRouterProvider.overrideWith(
+              (Ref<GoRouter> ref) => ref.watch(testRouterProvider),
+            ),
+          ...overrides,
         ],
-        supportedLocales: AppLocalizations.supportedLocales,
-        locale: const Locale('en'),
-        home: ProviderScope(child: widget),
+        child: Consumer(
+          builder: (BuildContext context, WidgetRef ref, _) {
+            return useRouter
+                ? MaterialApp.router(
+                    routerConfig: ref.read(testRouterProvider),
+                    localizationsDelegates: const <LocalizationsDelegate<
+                        dynamic>>[
+                      AppLocalizations.delegate,
+                      GlobalMaterialLocalizations.delegate,
+                      GlobalWidgetsLocalizations.delegate,
+                      GlobalCupertinoLocalizations.delegate,
+                    ],
+                    supportedLocales: AppLocalizations.supportedLocales,
+                    locale: const Locale('en'),
+                  )
+                : MaterialApp(
+                    home: widget,
+                    localizationsDelegates: const <LocalizationsDelegate<
+                        dynamic>>[
+                      AppLocalizations.delegate,
+                      GlobalMaterialLocalizations.delegate,
+                      GlobalWidgetsLocalizations.delegate,
+                      GlobalCupertinoLocalizations.delegate,
+                    ],
+                    supportedLocales: AppLocalizations.supportedLocales,
+                    locale: const Locale('en'),
+                  );
+          },
+        ),
       ),
     );
   }

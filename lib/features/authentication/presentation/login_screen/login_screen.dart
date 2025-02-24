@@ -57,27 +57,24 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     final LoginScreenController controller =
         ref.read(loginScreenControllerProvider.notifier);
 
-    return Scaffold(
-      body: SafeArea(
-        child: SizedBox.expand(
-          // Ensures `LoginWidget` takes full screen height
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: LoginWidget(
-              isLoginDisabled: state.isLoginDisabled,
-              onLogin: () {
-                if (!state.isLoading) {
-                  _onLogin();
-                }
-              },
-              onEmailChanged: (String value) =>
-                  setState(() => controller.updateEmail(value)),
-              onPasswordChanged: (String value) =>
-                  setState(() => controller.updatePassword(value)),
-              onCreateAccount: () => context.goNamed(AppRoute.signUp.name),
-              onForgotPassword: () =>
-                  context.pushNamed(AppRoute.forgotPassword.name),
-            ),
+    return SafeArea(
+      child: SizedBox.expand(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: LoginWidget(
+            isLoginDisabled: state.isLoginDisabled,
+            onLogin: () {
+              if (!state.isLoading) {
+                _onLogin();
+              }
+            },
+            onEmailChanged: (String value) =>
+                setState(() => controller.updateEmail(value)),
+            onPasswordChanged: (String value) =>
+                setState(() => controller.updatePassword(value)),
+            onCreateAccount: () => context.goNamed(AppRoute.signUp.name),
+            onForgotPassword: () =>
+                context.pushNamed(AppRoute.forgotPassword.name),
           ),
         ),
       ),

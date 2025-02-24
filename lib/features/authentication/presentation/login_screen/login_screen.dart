@@ -32,7 +32,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         } else {
           showCommonDialog(
             context: context,
-            title: 'Unable to Login',
+            title: 'Unable to log in',
             content:
                 FirebaseAuthExceptionHandler.generateErrorMessage(authStatus),
             primaryButtonText: 'Dismiss',

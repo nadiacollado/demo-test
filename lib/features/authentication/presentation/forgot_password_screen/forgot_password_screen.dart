@@ -2,16 +2,59 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../common_widgets/common_button.dart';
+import '../../../../common_widgets/common_dialog.dart';
 import '../../../../common_widgets/common_text_form_field.dart';
-import '../../data/firebase_auth_repository.dart';
+import '../../../../l10n/translate.dart';
+import '../../domain/auth_status.dart';
+import '../../domain/firebase_auth_exception_handler.dart';
 import '../../domain/forgot_password_form_state.dart';
 import 'forgot_password_screen_controller.dart';
 
-class ForgotPasswordScreen extends ConsumerWidget {
+class ForgotPasswordScreen extends ConsumerStatefulWidget {
   const ForgotPasswordScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ForgotPasswordScreen> createState() => _ForgotPasswordScreen();
+}
+
+class _ForgotPasswordScreen extends ConsumerState<ForgotPasswordScreen> {
+  Future<void> _onForgotPassword() async {
+    final AsyncValue<AuthStatus> result = await ref
+        .read(forgotPasswordScreenControllerProvider.notifier)
+        .resetPasswordWithEmail();
+    result.when(
+      data: (AuthStatus authStatus) {
+        if (authStatus == AuthStatus.successful) {
+          showCommonDialog(
+            context: context,
+            title: context.t.global_emailSent,
+            content: context.t.auth_forgotPasswordEmail,
+            primaryButtonText: context.t.dialog_dismiss,
+          );
+        } else {
+          showCommonDialog(
+            context: context,
+            title: context.t.auth_unableToResetPassword,
+            content:
+                FirebaseAuthExceptionHandler.generateErrorMessage(authStatus),
+            primaryButtonText: context.t.dialog_dismiss,
+          );
+        }
+      },
+      error: (Object err, StackTrace stack) {
+        showCommonDialog(
+          context: context,
+          title: context.t.auth_unableToResetPassword,
+          content: context.t.global_genericErrorMessage,
+          primaryButtonText: context.t.dialog_dismiss,
+        );
+      },
+      loading: () {},
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final ForgotPasswordFormState state =
         ref.watch(forgotPasswordScreenControllerProvider);
     final ForgotPasswordScreenController controller =
@@ -24,15 +67,18 @@ class ForgotPasswordScreen extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           spacing: 16,
           children: <Widget>[
-            const Text('Forgot Your Password?'),
+            Text(
+              context.t.auth_forgotPassword,
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
             CommonTextformField(
-              inputHint: 'Enter email',
+              inputHint: context.t.auth_enterEmail,
               onChange: controller.updateEmail,
-              labelText: 'Email',
+              labelText: context.t.auth_email,
             ),
             CommonButton(
-              text: 'Reset Password',
-              onPressed: () => controller.resetPasswordWithEmail(state.email),
+              text: context.t.auth_resetPassword,
+              onPressed: () => _onForgotPassword(),
               isFullWidth: true,
               isDisabled: state.isResetPasswordDisabled,
             ),

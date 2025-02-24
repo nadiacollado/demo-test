@@ -49,7 +49,7 @@ class AuthRepository {
 
   Future<AuthStatus> resetPassword(String email) async {
     try {
-      _auth.sendPasswordResetEmail(email: email);
+      await _auth.sendPasswordResetEmail(email: email);
       _status = AuthStatus.successful;
     } on FirebaseAuthException catch (e) {
       _status = FirebaseAuthExceptionHandler.handleAuthException(e);

@@ -17,7 +17,7 @@ class ForgotPasswordScreenController extends _$ForgotPasswordScreenController {
     );
   }
 
-  Future<AsyncValue<AuthStatus>> resetPasswordWithEmail(String email) async {
+  Future<AsyncValue<AuthStatus>> resetPasswordWithEmail() async {
     final AuthRepository authRepository = ref.read(authRepositoryProvider);
     state = state.copyWith(isLoading: true);
 

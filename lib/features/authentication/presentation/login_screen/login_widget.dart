@@ -59,7 +59,7 @@ class _LoginWidgetState extends ConsumerState<LoginWidget> {
                 isFullWidth: true,
               ),
               CommonButton(
-                text: 'Forgot Password?',
+                text: context.t.auth_forgotPassword,
                 type: ButtonType.transparent,
                 onPressed: widget.onForgotPassword,
               ),

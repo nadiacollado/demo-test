@@ -2,6 +2,8 @@
   "@@locale": "en",
   "@_GLOBAL": {},
   "global_title": "RetroSpace",
+  "global_genericErrorMessage": "Please try again Later",
+  "global_emailSent": "Email Sent",
   "@global_title": {
     "description": "The title of the app",
     "type": "text"
@@ -13,10 +15,16 @@
   "auth_enterPassword": "Please enter your password",
   "auth_confirmPassword": "Confirm Password",
   "auth_reenterPassword": "Please reenter your password",
+  "auth_unableToResetPassword": "Unable to Reset Password",
+  "auth_resetPassword": "Reset Password",
+  "auth_forgotPassword": "Forgot Your Password?",
+  "auth_forgotPasswordEmail": "Check your email to reset your password",
   "auth_login": "Login",
   "auth_createAnAccount": "Create an Account",
   "auth_createAccount": "Create Account",
   "auth_haveAccountLogin": "Have an account? Login",
+  "@_DIALOG": {},
+  "dialog_dismiss": "Dismiss",
   "@_COUNTER": {},
   "count_counter": "Counter: {counter}",
   "@count_counter": {

@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../core/logger/logger.dart';
 import '../domain/auth_status.dart';
 import '../domain/firebase_auth_exception_handler.dart';
 
@@ -25,8 +26,12 @@ class AuthRepository {
         password: password,
       );
       _status = AuthStatus.successful;
-    } on FirebaseAuthException catch (e) {
+      logger.info(
+        message: 'User sign-in successful: ${_auth.currentUser?.uid}',
+      );
+    } on FirebaseAuthException catch (e, stackTrace) {
       _status = FirebaseAuthExceptionHandler.handleAuthException(e);
+      logger.error(message: e.toString(), stack: stackTrace);
     }
     return _status;
   }
@@ -41,14 +46,28 @@ class AuthRepository {
         password: password,
       );
       _status = AuthStatus.successful;
-    } on FirebaseAuthException catch (e) {
+      logger.info(
+        message: 'User sign-up successful: ${_auth.currentUser?.uid}',
+      );
+    } on FirebaseAuthException catch (e, stackTrace) {
       _status = FirebaseAuthExceptionHandler.handleAuthException(e);
+      logger.error(message: e.toString(), stack: stackTrace);
     }
     return _status;
   }
 
   Future<void> signOut() async {
-    await _auth.signOut();
+    try {
+      await _auth.signOut();
+      logger.info(
+        message: 'User signed out successfully',
+      );
+    } catch (e, stackTrace) {
+      logger.error(
+        message: e.toString(),
+        stack: stackTrace,
+      );
+    }
   }
 }
 

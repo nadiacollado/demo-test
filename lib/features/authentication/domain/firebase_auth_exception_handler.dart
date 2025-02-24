@@ -30,7 +30,7 @@ class FirebaseAuthExceptionHandler {
       case AuthStatus.emailAlreadyExists:
         errorMessage = 'The email address is already in use.';
       default:
-        errorMessage = 'An error occured. Please try again later.';
+        errorMessage = 'An error occurred. Please try again later.';
     }
     return errorMessage;
   }

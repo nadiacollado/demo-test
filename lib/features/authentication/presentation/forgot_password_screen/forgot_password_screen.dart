@@ -30,6 +30,9 @@ class _ForgotPasswordScreen extends ConsumerState<ForgotPasswordScreen> {
             title: context.t.global_emailSent,
             content: context.t.auth_forgotPasswordEmail,
             primaryButtonText: context.t.dialog_dismiss,
+            onPrimaryPressed: () {
+              Navigator.of(context).pop();
+            },
           );
         } else {
           showCommonDialog(

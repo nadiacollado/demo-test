@@ -6,10 +6,11 @@ import 'package:flutter_starter_kit/features/authentication/presentation/sign_up
 import 'package:flutter_starter_kit/features/counter/presentation/counter_screen.dart';
 import 'package:go_router/go_router.dart';
 
-final Provider<GoRouter> testRouterProvider =
-    Provider<GoRouter>((Ref<GoRouter> ref) {
+final ProviderFamily<GoRouter, String> testRouterProvider =
+    Provider.family<GoRouter, String>(
+        (Ref<GoRouter> ref, String initialLocation) {
   return GoRouter(
-    initialLocation: '/login',
+    initialLocation: initialLocation,
     routes: <RouteBase>[
       GoRoute(
         path: '/login',

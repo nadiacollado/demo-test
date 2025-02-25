@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../common_widgets/common_dialog.dart';
 import '../../../../features/authentication/presentation/login_screen/login_widget.dart';
 import '../../../../features/routing/app_router.dart';
+import '../../../../l10n/translate.dart';
 import '../../domain/auth_status.dart';
 import '../../domain/firebase_auth_exception_handler.dart';
 import '../../domain/login_form_state.dart';
@@ -32,7 +33,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         } else {
           showCommonDialog(
             context: context,
-            title: 'Unable to Login',
+            title: context.t.auth_unableToLogin,
             content:
                 FirebaseAuthExceptionHandler.generateErrorMessage(authStatus),
             primaryButtonText: 'Dismiss',

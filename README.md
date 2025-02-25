@@ -9,6 +9,7 @@
 - [Environment Variables](#environment-variables)
 - [Localizations](#localizations)
 - [Google Cloud Logging](#google-cloud-logging)
+- [Running Integration Tests](#running-integration-tests)
 - [Additional Documentation](#additional-documentation)
 
 ## Requirements
@@ -238,6 +239,32 @@ Then re-run build
 dart run build_runner clean
 dart run build_runner build --delete-conflicting-outputs
 ```
+
+## Running Integration Tests
+
+This project uses the integration_test package for integration testing. There are two ways to run integration tests: using flutter test (recommended) or flutter drive (optional).
+
+### Using flutter test (Recommended)
+
+For most use cases, you can run integration tests using `flutter test`, which does not require a separate test driver:
+
+```shell
+flutter test integration_test/app_test.dart
+```
+
+### Using Flutter drive (Optional)
+
+If you need to run integration tests on a real device or emulator in a separate process, you can use flutter drive:
+
+```shell
+flutter drive --driver=test_driver/integration_test.dart --target=integration_test/app_test.dart
+```
+
+Use flutter drive when:
+
+- You need to run tests on a real device or emulator (instead of a simulated test environment).
+- You need to profile performance metrics, such as frame rendering times and memory usage.
+- You want to test background behavior or deep linking in a separate process.
 
 ## Additional Documentation
 

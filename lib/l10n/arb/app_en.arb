@@ -17,6 +17,8 @@
   "auth_createAnAccount": "Create an Account",
   "auth_createAccount": "Create Account",
   "auth_haveAccountLogin": "Have an account? Login",
+  "auth_unableToLogin": "Unable to log in",
+  "auth_unableToCreateAccount": "Unable to Create Account",
   "@_COUNTER": {},
   "count_counter": "Counter: {counter}",
   "@count_counter": {

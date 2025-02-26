@@ -28,7 +28,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       data: (AuthStatus authStatus) {
         if (authStatus == AuthStatus.authenticated) {
           if (mounted) {
-            context.goNamed(AppRoute.counter.name);
+            context.goNamed(AppRoute.profile.name);
           }
         } else if (authStatus == AuthStatus.emailNotVerified) {
           context.goNamed(AppRoute.verifyEmail.name);

@@ -1,6 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../data/user_repository.dart';
+import '../../../core/user/data/user_repository.dart';
+import '../../../core/user/domain/user.dart';
 import '../domain/user_profile_form_state.dart';
 
 part 'user_profile_screen_controller.g.dart';
@@ -17,9 +18,13 @@ class UserProfileScreenController extends _$UserProfileScreenController {
   }
 
   Future<void> _loadUserData() async {
-    final String? username = await _userRepository.getCurrentUsername();
-    if (username != null) {
-      state = state.copyWith(username: username);
+    final User? user = await _userRepository.getUser();
+    if (user != null) {
+      state = state.copyWith(
+        originalUser: user,
+        email: user.email,
+        username: user.username,
+      );
     }
   }
 
@@ -27,7 +32,10 @@ class UserProfileScreenController extends _$UserProfileScreenController {
     state = state.copyWith(username: username);
   }
 
-  Future<void> save() async {
-    await _userRepository.updateUsername(state.username);
+  Future<void> saveProfile() async {
+    final Map<String, dynamic> updates = state.getChangedFields();
+    if (updates.isNotEmpty) {
+      await _userRepository.updateUserProfile(updates);
+    }
   }
 }

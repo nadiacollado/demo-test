@@ -22,7 +22,7 @@ class UserProfileScreen extends ConsumerWidget {
           child: UserProfileWidget(
             username: state.username,
             onUsernameChanged: controller.updateUsername,
-            onSave: controller.save,
+            onSave: controller.saveProfile,
           ),
         ),
       ),

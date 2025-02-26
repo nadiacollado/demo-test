@@ -11,9 +11,11 @@ class UserProfileWidget extends ConsumerStatefulWidget {
     required this.onUsernameChanged,
     required this.onSave,
     this.username,
+    this.email,
   });
   final ValueChanged<String> onUsernameChanged;
   final String? username;
+  final String? email;
   final VoidCallback onSave;
 
   @override
@@ -21,6 +23,12 @@ class UserProfileWidget extends ConsumerStatefulWidget {
 }
 
 class _UserProfileWidgetState extends ConsumerState<UserProfileWidget> {
+  String getGreeting() {
+    return widget.username != null
+        ? 'Hello ${widget.username}!'
+        : 'Hello ${widget.email}!';
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -29,17 +37,16 @@ class _UserProfileWidgetState extends ConsumerState<UserProfileWidget> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       spacing: 16,
       children: <Widget>[
+        Text(getGreeting()),
         Text(context.t.profile_editUsername.toUpperCase()),
         CommonTextformField(
           labelText: widget.username ?? '',
           inputHint: context.t.profile_username,
-          icon: Icons.person,
           onChange: widget.onUsernameChanged,
         ),
         CommonButton(
           text: context.t.profile_save,
           onPressed: widget.onSave,
-          type: ButtonType.transparent,
           isFullWidth: true,
         ),
       ],

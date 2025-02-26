@@ -2,23 +2,27 @@ import '../../../core/user/domain/user.dart';
 
 class UserProfileFormState {
   const UserProfileFormState({
-    this.originalUser,
+    this.isLoading = false,
     this.email,
     this.username,
+    this.originalUser,
   });
-  final User? originalUser;
+  final bool isLoading;
   final String? email;
   final String? username;
+  final User? originalUser;
 
   UserProfileFormState copyWith({
-    User? originalUser,
+    bool? isLoading,
     String? email,
     String? username,
+    User? originalUser,
   }) {
     return UserProfileFormState(
-      originalUser: originalUser ?? this.originalUser,
+      isLoading: isLoading ?? this.isLoading,
       email: email ?? this.email,
       username: username ?? this.username,
+      originalUser: originalUser ?? this.originalUser,
     );
   }
 

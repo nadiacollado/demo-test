@@ -14,12 +14,17 @@ class UserProfileScreen extends ConsumerWidget {
     final UserProfileScreenController controller =
         ref.read(userProfileScreenControllerProvider.notifier);
 
+    if (state.isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
     return Center(
       child: SingleChildScrollView(
         keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: UserProfileWidget(
+            email: state.email,
             username: state.username,
             onUsernameChanged: controller.updateUsername,
             onSave: controller.saveProfile,

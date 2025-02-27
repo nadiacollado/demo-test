@@ -5,7 +5,7 @@ import 'package:flutter_starter_kit/features/authentication/presentation/forgot_
 
 import 'package:flutter_test/flutter_test.dart';
 
-import '../../../utils/localized_pump.dart';
+import '../../../../utils/localized_pump.dart';
 
 void main() {
   Future<Widget> createWidgetUnderTest(WidgetTester tester) async {

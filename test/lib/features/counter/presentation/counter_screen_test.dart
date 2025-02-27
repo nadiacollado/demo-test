@@ -8,7 +8,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_starter_kit/features/counter/presentation/counter_screen.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'utils/localized_pump.dart';
+import '../../../../utils/localized_pump.dart';
 
 void main() {
   testWidgets(

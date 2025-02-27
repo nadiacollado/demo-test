@@ -4,6 +4,7 @@
 
 - [Requirements](#requirements)
 - [VS Code Extensions](#vs-code-extensions)
+- [Creating a New Project](#creating-a-new-project)
 - [Getting Started](#getting-started)
 - [Running the App](#running-the-app)
 - [Environment Variables](#environment-variables)
@@ -50,6 +51,16 @@ Some Flutter extensions for VS Code include:
 - Markdownlint
 - JSON to Dart Model
 - Coverage Gutters
+
+## Creating a New Project
+
+To create a new project, run the following command in your terminal from the starter kit's root directory:
+
+```shell
+dart run bin/template/setup.dart
+```
+
+This script will replace the name of this project with the name of the project you want to create, and prepare this repository to be your new project.
 
 ## Getting Started
 

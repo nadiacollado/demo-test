@@ -15,7 +15,7 @@ class UserProfileScreen extends ConsumerWidget {
         ref.read(userProfileScreenControllerProvider.notifier);
     final AsyncValue<User?> userAsyncValue = ref.watch(userStreamProvider);
 
-    void _showDialog({
+    void showStatusDialog({
       required bool success,
     }) {
       showDialog<void>(
@@ -50,7 +50,7 @@ class UserProfileScreen extends ConsumerWidget {
               onSave: () async {
                 final bool status = await controller.saveProfile();
                 if (!context.mounted) return;
-                _showDialog(success: status);
+                showStatusDialog(success: status);
               },
             ),
           ),

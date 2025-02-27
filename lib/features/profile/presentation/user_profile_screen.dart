@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/user/data/user_repository.dart';
 import '../../../core/user/domain/user.dart';
 
+import '../../../l10n/translate.dart';
 import 'user_profile_screen_controller.dart';
 import 'user_profile_widget.dart';
 
@@ -21,16 +22,18 @@ class UserProfileScreen extends ConsumerWidget {
       showDialog<void>(
         context: context,
         builder: (BuildContext context) => AlertDialog(
-          title: Text(success ? 'Success' : 'Error'),
+          title: Text(
+            success ? context.t.profile_success : context.t.profile_error,
+          ),
           content: Text(
             success
-                ? 'Profile updated successfully!'
-                : 'Failed to update profile. Please try again.',
+                ? context.t.profile_successMessage
+                : context.t.profile_errorMessage,
           ),
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('OK'),
+              child: Text(context.t.profile_ok),
             ),
           ],
         ),
@@ -56,7 +59,8 @@ class UserProfileScreen extends ConsumerWidget {
           ),
         ),
         loading: () => const CircularProgressIndicator(),
-        error: (Object error, StackTrace stackTrace) => Text('Error: $error'),
+        error: (Object error, StackTrace stackTrace) =>
+            Text('${context.t.profile_error} $error'),
       ),
     );
   }

@@ -25,8 +25,8 @@ class UserProfileWidget extends ConsumerStatefulWidget {
 class _UserProfileWidgetState extends ConsumerState<UserProfileWidget> {
   String getGreeting() {
     return widget.username != null
-        ? 'Hello ${widget.username}!'
-        : 'Hello ${widget.email}!';
+        ? '${context.t.profile_hello} ${widget.username}!'
+        : '${context.t.profile_hello} ${widget.email}!';
   }
 
   @override

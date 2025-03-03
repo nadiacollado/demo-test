@@ -5,6 +5,7 @@ enum AuthStatus {
   invalidEmail,
   unknown,
   emailNotVerified,
+  tooManyRequests,
   unauthenticated,
   authenticated,
 }

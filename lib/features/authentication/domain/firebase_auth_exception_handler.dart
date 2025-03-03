@@ -13,6 +13,8 @@ class FirebaseAuthExceptionHandler {
         status = AuthStatus.wrongPassword;
       case 'email-already-in-use':
         status = AuthStatus.emailAlreadyExists;
+      case 'too-many-requests':
+        status = AuthStatus.tooManyRequests;
       default:
         status = AuthStatus.unknown;
     }
@@ -29,6 +31,8 @@ class FirebaseAuthExceptionHandler {
         errorMessage = 'Your email or password is wrong.';
       case AuthStatus.emailAlreadyExists:
         errorMessage = 'The email address is already in use.';
+      case AuthStatus.tooManyRequests:
+        errorMessage = "You've made too many requests in a short period";
       default:
         errorMessage = 'An error occurred. Please try again later.';
     }

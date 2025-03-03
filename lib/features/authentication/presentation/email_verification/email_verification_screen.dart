@@ -14,7 +14,8 @@ class EmailVerificationScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final EmailVerificationScreenController controller =
-        ref.read(emailVerificationScreenControllerProvider.notifier);
+        ref.watch(emailVerificationScreenControllerProvider.notifier);
+
     return Center(
       child: EmailVerificationWidget(
         onSendEmail: () async {

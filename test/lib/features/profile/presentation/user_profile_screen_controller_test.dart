@@ -1,5 +1,3 @@
-// ignore_for_file: always_specify_types
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_starter_kit/core/user/data/user_repository.dart';
 import 'package:flutter_starter_kit/core/user/domain/user.dart';
@@ -75,7 +73,7 @@ void main() {
     const User user = User(email: 'test@example.com', username: 'testUser');
 
     when(() => mockUserRepository.getUserStream())
-        .thenAnswer((_) => Stream.value(user));
+        .thenAnswer((_) => Stream<User?>.value(user));
 
     final Stream<User?> stream = controller.getUser();
 

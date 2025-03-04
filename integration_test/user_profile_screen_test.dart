@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_mixin, always_specify_types
+// ignore_for_file: prefer_mixin
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -36,7 +36,7 @@ void main() {
   testWidgets('Displays loading indicator when fetching user data',
       (WidgetTester tester) async {
     when(() => mockUserRepository.getUserStream())
-        .thenAnswer((_) => Stream.value(null));
+        .thenAnswer((_) => Stream<User?>.value(null));
 
     await tester.localizedPump(
       const UserProfileScreen(),
@@ -53,7 +53,7 @@ void main() {
     const User testUser = User(email: 'test@example.com', username: 'testUser');
 
     when(() => mockUserRepository.getUserStream())
-        .thenAnswer((_) => Stream.value(testUser));
+        .thenAnswer((_) => Stream<User?>.value(testUser));
 
     await tester.localizedPump(
       const UserProfileScreen(),
@@ -69,7 +69,7 @@ void main() {
   testWidgets('Displays error message when user stream fails',
       (WidgetTester tester) async {
     when(() => mockUserRepository.getUserStream())
-        .thenAnswer((_) => Stream.error(tester.t.profile_error));
+        .thenAnswer((_) => Stream<User?>.error(tester.t.profile_error));
 
     await tester.localizedPump(
       const UserProfileScreen(),
@@ -90,7 +90,7 @@ void main() {
     when(() => mockUserRepository.updateUserProfile(any()))
         .thenAnswer((_) async {});
     when(() => mockController.getUser())
-        .thenAnswer((_) => Stream.value(testUser));
+        .thenAnswer((_) => Stream<User?>.value(testUser));
     when(() => mockController.saveProfile()).thenAnswer((_) async => true);
 
     await tester.localizedPump(
@@ -118,7 +118,7 @@ void main() {
     const User testUser = User(email: 'test@example.com', username: 'testUser');
 
     when(() => mockController.getUser())
-        .thenAnswer((_) => Stream.value(testUser));
+        .thenAnswer((_) => Stream<User?>.value(testUser));
     when(() => mockController.saveProfile()).thenAnswer((_) async => true);
 
     await tester.localizedPump(
@@ -147,7 +147,7 @@ void main() {
     const User testUser = User(email: 'test@example.com', username: 'testUser');
 
     when(() => mockController.getUser())
-        .thenAnswer((_) => Stream.value(testUser));
+        .thenAnswer((_) => Stream<User?>.value(testUser));
     when(() => mockController.saveProfile()).thenAnswer((_) async => false);
 
     await tester.localizedPump(

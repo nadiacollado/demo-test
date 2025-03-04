@@ -19,7 +19,7 @@ final ProviderFamily<GoRouter, String> testRouterProvider =
         name: 'login',
         pageBuilder: (BuildContext context, GoRouterState state) =>
             const NoTransitionPage<dynamic>(
-          child: CommonScaffold(body: LoginScreen()),
+          child: CommonScaffold(LoginScreen()),
         ),
       ),
       GoRoute(
@@ -27,7 +27,7 @@ final ProviderFamily<GoRouter, String> testRouterProvider =
         name: 'signUp',
         pageBuilder: (BuildContext context, GoRouterState state) =>
             const NoTransitionPage<dynamic>(
-          child: CommonScaffold(body: SignUpScreen()),
+          child: CommonScaffold(SignUpScreen()),
         ),
       ),
       GoRoute(
@@ -35,7 +35,7 @@ final ProviderFamily<GoRouter, String> testRouterProvider =
         name: 'counter',
         pageBuilder: (BuildContext context, GoRouterState state) =>
             const NoTransitionPage<dynamic>(
-          child: CommonScaffold(body: CounterScreen()),
+          child: CommonScaffold(CounterScreen()),
         ),
       ),
       GoRoute(

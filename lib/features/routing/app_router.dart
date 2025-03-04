@@ -27,7 +27,7 @@ GoRouter goRouter(Ref ref) {
         name: AppRoute.login.name,
         pageBuilder: (BuildContext context, GoRouterState state) =>
             const NoTransitionPage<dynamic>(
-          child: CommonScaffold(body: LoginScreen()),
+          child: CommonScaffold(LoginScreen()),
         ),
       ),
       GoRoute(
@@ -35,7 +35,7 @@ GoRouter goRouter(Ref ref) {
         name: AppRoute.signUp.name,
         pageBuilder: (BuildContext context, GoRouterState state) =>
             const NoTransitionPage<dynamic>(
-          child: CommonScaffold(body: SignUpScreen()),
+          child: CommonScaffold(SignUpScreen()),
         ),
       ),
       GoRoute(
@@ -43,7 +43,7 @@ GoRouter goRouter(Ref ref) {
         name: AppRoute.forgotPassword.name,
         pageBuilder: (BuildContext context, GoRouterState state) =>
             const NoTransitionPage<dynamic>(
-          child: CommonScaffold(body: ForgotPasswordScreen()),
+          child: CommonScaffold(ForgotPasswordScreen()),
         ),
       ),
       GoRoute(
@@ -59,7 +59,7 @@ GoRouter goRouter(Ref ref) {
         name: AppRoute.counter.name,
         pageBuilder: (BuildContext context, GoRouterState state) =>
             const NoTransitionPage<dynamic>(
-          child: CommonScaffold(body: CounterScreen()),
+          child: CommonScaffold(CounterScreen()),
         ),
       ),
     ],

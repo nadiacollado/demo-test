@@ -11,6 +11,8 @@ import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
 
 import 'core/logger/google_cloud_logging_service.dart';
+import 'core/theme/app_theme.dart';
+import 'core/theme/theme_controller.dart';
 import 'features/routing/app_router.dart';
 import 'firebase_options.dart';
 import 'l10n/translate.dart';
@@ -56,11 +58,12 @@ Future<void> main() async {
 
 class MyApp extends ConsumerWidget {
   const MyApp({super.key});
-  static const MaterialColor primaryColor = Colors.blue;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final GoRouter router = ref.watch(goRouterProvider);
+    final ThemeMode themeMode = ref.watch(themeControllerProvider);
+
     return MaterialApp.router(
       routerConfig: router,
       onGenerateTitle: (BuildContext context) => context.t.global_title,
@@ -79,17 +82,9 @@ class MyApp extends ConsumerWidget {
         // Locales added here should be added to ios/Runner/Info.plist as well, in the
         // CFBundleLocalizations array.
       ],
-      theme: ThemeData(
-        colorSchemeSeed: primaryColor,
-        unselectedWidgetColor: Colors.grey,
-        appBarTheme: const AppBarTheme(
-          backgroundColor: primaryColor,
-          foregroundColor: Colors.white,
-          elevation: 2.0,
-          centerTitle: true,
-        ),
-        scaffoldBackgroundColor: Colors.grey[200],
-      ),
+      theme: AppTheme.light,
+      darkTheme: AppTheme.dark,
+      themeMode: themeMode,
     );
   }
 }

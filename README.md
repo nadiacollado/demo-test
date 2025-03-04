@@ -251,6 +251,16 @@ dart run build_runner clean
 dart run build_runner build --delete-conflicting-outputs
 ```
 
+## Styling
+
+This project uses the FlexColorScheme package to handle the app's theme.
+
+### Customizing the Theme
+
+To customize the theme, you can change the `scheme` in `core/theme/app_theme.dart` to one of the available schemes or create your own. It is recommended to use the [FlexColorScheme Playground](https://rydmike.com/flexcolorscheme/themesplayground-latest/) to experiment and explore the available options and the affects that they have on the theme.
+
+More information about using the theme system in Flutter can be found in the [Flutter Starter Kit Wiki](https://github.com/8thlight/flutter-starter-kit/wiki/How-To-Use-Flutter-Theme).
+
 ## Running Integration Tests
 
 This project uses the integration_test package for integration testing. There are two ways to run integration tests: using flutter test (recommended) or flutter drive (optional).

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../common_widgets/common_button.dart';
+import '../../../../common_widgets/common_full_width.dart';
 import '../../../../common_widgets/common_text_form_field.dart';
 import '../../../../l10n/translate.dart';
 
@@ -30,6 +30,7 @@ class LoginWidget extends ConsumerStatefulWidget {
 class _LoginWidgetState extends ConsumerState<LoginWidget> {
   @override
   Widget build(BuildContext context) {
+    final bool enabled = !widget.isLoginDisabled;
     return SizedBox.expand(
       child: Column(
         children: <Widget>[
@@ -52,27 +53,26 @@ class _LoginWidgetState extends ConsumerState<LoginWidget> {
                 obscureText: true,
                 onChange: widget.onPasswordChanged,
               ),
-              CommonButton(
-                text: context.t.auth_login,
-                isDisabled: widget.isLoginDisabled,
-                onPressed: widget.onLogin,
-                isFullWidth: true,
+              CommonFullWidth(
+                child: FilledButton(
+                  onPressed: enabled ? widget.onLogin : null,
+                  child: Text(context.t.auth_login),
+                ),
               ),
-              CommonButton(
-                text: context.t.auth_forgotPassword,
-                type: ButtonType.transparent,
+              TextButton(
                 onPressed: widget.onForgotPassword,
+                child: Text(context.t.auth_forgotPassword),
               ),
             ],
           ),
           const Spacer(),
           Padding(
             padding: const EdgeInsets.only(bottom: 24),
-            child: CommonButton(
-              text: context.t.auth_createAnAccount,
-              onPressed: widget.onCreateAccount,
-              type: ButtonType.transparent,
-              isFullWidth: true,
+            child: CommonFullWidth(
+              child: TextButton(
+                onPressed: widget.onCreateAccount,
+                child: Text(context.t.auth_createAnAccount),
+              ),
             ),
           ),
         ],

@@ -49,6 +49,7 @@ dependencies:
   logger: ^2.5.0
   googleapis: ^13.2.0
   googleapis_auth: ^1.6.0
+  flex_color_scheme: ^8.1.1
   path: ^1.9.0
   args: ^2.6.0
 

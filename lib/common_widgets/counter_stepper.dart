@@ -9,14 +9,12 @@ class CounterStepper extends StatelessWidget {
     required this.onDecrement,
     this.direction = CounterStepperDirection.horizontal,
     this.iconSize = 24.0,
-    this.iconColor = Colors.black,
   });
 
   final VoidCallback onIncrement;
   final VoidCallback onDecrement;
   final CounterStepperDirection direction;
   final double iconSize;
-  final Color iconColor;
 
   @override
   Widget build(BuildContext context) {
@@ -34,11 +32,11 @@ class CounterStepper extends StatelessWidget {
   List<Widget> _buildButtons() {
     final List<IconButton> buttons = <IconButton>[
       IconButton(
-        icon: Icon(Icons.remove, size: iconSize, color: iconColor),
+        icon: Icon(Icons.remove, size: iconSize),
         onPressed: onDecrement,
       ),
       IconButton(
-        icon: Icon(Icons.add, size: iconSize, color: iconColor),
+        icon: Icon(Icons.add, size: iconSize),
         onPressed: onIncrement,
       ),
     ];

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../common_widgets/common_button.dart';
+import '../../../../common_widgets/common_full_width.dart';
 import '../../../../common_widgets/common_text_form_field.dart';
 import '../../../../l10n/translate.dart';
 
@@ -31,6 +31,7 @@ class SignUpWidget extends ConsumerStatefulWidget {
 class _SignUpWidgetState extends ConsumerState<SignUpWidget> {
   @override
   Widget build(BuildContext context) {
+    final bool enabled = !widget.isCreateAccountDisabled;
     return Column(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -57,17 +58,17 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget> {
           obscureText: true,
           onChange: widget.onConfirmedPasswordChanged,
         ),
-        CommonButton(
-          text: context.t.auth_createAccount,
-          isDisabled: widget.isCreateAccountDisabled,
-          onPressed: widget.onCreateAccount,
-          isFullWidth: true,
+        CommonFullWidth(
+          child: FilledButton(
+            onPressed: enabled ? widget.onCreateAccount : null,
+            child: Text(context.t.auth_createAccount),
+          ),
         ),
-        CommonButton(
-          text: context.t.auth_haveAccountLogin,
-          onPressed: widget.onLogin,
-          type: ButtonType.transparent,
-          isFullWidth: true,
+        CommonFullWidth(
+          child: TextButton(
+            onPressed: widget.onLogin,
+            child: Text(context.t.auth_haveAccountLogin),
+          ),
         ),
       ],
     );

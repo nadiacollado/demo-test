@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../common_widgets/common_button.dart';
 import '../../../../common_widgets/common_dialog.dart';
+import '../../../../common_widgets/common_full_width.dart';
 import '../../../../common_widgets/common_text_form_field.dart';
 import '../../../../l10n/translate.dart';
 import '../../domain/auth_status.dart';
@@ -63,6 +63,7 @@ class _ForgotPasswordScreen extends ConsumerState<ForgotPasswordScreen> {
         ref.watch(forgotPasswordScreenControllerProvider);
     final ForgotPasswordScreenController controller =
         ref.read(forgotPasswordScreenControllerProvider.notifier);
+    final bool enabled = !state.isResetPasswordDisabled;
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -80,11 +81,11 @@ class _ForgotPasswordScreen extends ConsumerState<ForgotPasswordScreen> {
               onChange: controller.updateEmail,
               labelText: context.t.auth_email,
             ),
-            CommonButton(
-              text: context.t.auth_resetPassword,
-              onPressed: () => _onForgotPassword(),
-              isFullWidth: true,
-              isDisabled: state.isResetPasswordDisabled,
+            CommonFullWidth(
+              child: FilledButton(
+                onPressed: enabled ? _onForgotPassword : null,
+                child: Text(context.t.auth_resetPassword),
+              ),
             ),
           ],
         ),

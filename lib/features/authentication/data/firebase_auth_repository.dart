@@ -3,14 +3,17 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/logger/logger.dart';
+import '../application/email_verification_service.dart';
 import '../domain/auth_status.dart';
 import '../domain/firebase_auth_exception_handler.dart';
 
 part 'firebase_auth_repository.g.dart';
 
 class AuthRepository {
-  AuthRepository(this._auth);
+  AuthRepository(this._auth, this._emailVerificationService);
   final FirebaseAuth _auth;
+  final EmailVerificationService _emailVerificationService;
+
   AuthStatus _status = AuthStatus.unknown;
 
   Stream<User?> authStateChanges() => _auth.authStateChanges();
@@ -21,11 +24,16 @@ class AuthRepository {
     String password,
   ) async {
     try {
-      await _auth.signInWithEmailAndPassword(
+      final UserCredential result = await _auth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
-      _status = AuthStatus.successful;
+      final bool isEmailVerified =
+          await _emailVerificationService.isEmailVerified(result.user);
+
+      _status = isEmailVerified
+          ? AuthStatus.authenticated
+          : AuthStatus.emailNotVerified;
       logger.info(
         message: 'User sign-in successful: ${_auth.currentUser?.uid}',
       );
@@ -45,7 +53,9 @@ class AuthRepository {
         email: email,
         password: password,
       );
-      _status = AuthStatus.successful;
+      _status = AuthStatus.emailNotVerified;
+      sendVerificationEmail();
+
       logger.info(
         message: 'User sign-up successful: ${_auth.currentUser?.uid}',
       );
@@ -66,6 +76,21 @@ class AuthRepository {
       _status = AuthStatus.unknown;
     }
 
+    return _status;
+  }
+
+  Future<AuthStatus> sendVerificationEmail() async {
+    final User? user = _auth.currentUser;
+    if (user != null && !user.emailVerified) {
+      try {
+        await user.sendEmailVerification();
+        _status = AuthStatus.successful;
+      } on FirebaseAuthException catch (e) {
+        _status = FirebaseAuthExceptionHandler.handleAuthException(e);
+      } catch (e) {
+        _status = AuthStatus.unknown;
+      }
+    }
     return _status;
   }
 
@@ -91,7 +116,11 @@ FirebaseAuth firebaseAuth(Ref ref) {
 
 @Riverpod(keepAlive: true)
 AuthRepository authRepository(Ref ref) {
-  return AuthRepository(ref.watch(firebaseAuthProvider));
+  final FirebaseAuth firebaseAuth = ref.watch(firebaseAuthProvider);
+  final EmailVerificationService emailVerificationService =
+      ref.watch(emailVerificationServiceProvider);
+
+  return AuthRepository(firebaseAuth, emailVerificationService);
 }
 
 @riverpod

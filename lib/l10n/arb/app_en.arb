@@ -4,6 +4,7 @@
   "global_title": "RetroSpace",
   "global_genericErrorMessage": "Please try again Later",
   "global_emailSent": "Email Sent",
+  "global_having_trouble": "Having Trouble?",
   "@global_title": {
     "description": "The title of the app",
     "type": "text"
@@ -11,6 +12,7 @@
   "@_AUTHENTICATION": {},
   "auth_email": "Email",
   "auth_enterEmail": "Please enter your email",
+  "auth_resend_email": "Resend Email",
   "auth_password": "Password",
   "auth_enterPassword": "Please enter your password",
   "auth_confirmPassword": "Confirm Password",
@@ -25,6 +27,8 @@
   "auth_haveAccountLogin": "Have an account? Login",
   "auth_unableToLogin": "Unable to log in",
   "auth_unableToCreateAccount": "Unable to Create Account",
+  "auth_please_verify_email": "Please verify your email address. A confirmation link has been sent to your email.",
+  "auth_verification_email_sent": "Verification email has been sent",
   "@_DIALOG": {},
   "dialog_dismiss": "Dismiss",
   "@_COUNTER": {},

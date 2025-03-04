@@ -4,4 +4,8 @@ enum AuthStatus {
   emailAlreadyExists,
   invalidEmail,
   unknown,
+  emailNotVerified,
+  tooManyRequests,
+  unauthenticated,
+  authenticated,
 }

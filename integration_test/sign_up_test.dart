@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_starter_kit/common_widgets/common_text_form_field.dart';
 import 'package:flutter_starter_kit/features/authentication/data/firebase_auth_repository.dart';
 import 'package:flutter_starter_kit/features/authentication/domain/auth_status.dart';
+import 'package:flutter_starter_kit/features/authentication/presentation/email_verification/email_verification_screen.dart';
 import 'package:flutter_starter_kit/features/authentication/presentation/sign_up_screen/sign_up_screen.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
@@ -27,7 +28,7 @@ void main() {
   testWidgets('Sign Up flow - success case', (WidgetTester tester) async {
     when(() => mockAuthRepository.signUpWithEmailPassword(any(), any()))
         .thenAnswer((_) async {
-      return AuthStatus.successful;
+      return AuthStatus.emailNotVerified;
     });
 
     await tester.localizedPump(
@@ -74,7 +75,7 @@ void main() {
 
     verify(() => mockAuthRepository.signUpWithEmailPassword(any(), any()))
         .called(1);
-    expect(find.text(tester.t.auth_login), findsOneWidget);
+    expect(find.byType(EmailVerificationScreen), findsOneWidget);
   });
 
   testWidgets('Sign Up flow - failure case', (WidgetTester tester) async {

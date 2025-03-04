@@ -26,9 +26,9 @@ class _SignUpState extends ConsumerState<SignUpScreen> {
 
     result.when(
       data: (AuthStatus authStatus) {
-        if (authStatus == AuthStatus.successful) {
+        if (authStatus == AuthStatus.emailNotVerified) {
           if (mounted) {
-            context.goNamed(AppRoute.login.name);
+            context.goNamed(AppRoute.verifyEmail.name);
           }
         } else {
           showCommonDialog(

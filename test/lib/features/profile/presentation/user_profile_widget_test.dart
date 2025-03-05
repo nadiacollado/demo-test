@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_starter_kit/common_widgets/common_button.dart';
 import 'package:flutter_starter_kit/common_widgets/common_text_form_field.dart';
 import 'package:flutter_starter_kit/features/profile/presentation/user_profile_widget.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -59,7 +58,7 @@ void main() {
         (WidgetTester tester) async {
       await createWidgetUnderTest(tester);
 
-      await tester.tap(find.byType(CommonButton));
+      await tester.tap(find.byType(TextButton));
       verify(() => mockSave()).called(1);
     });
   });

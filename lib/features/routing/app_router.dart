@@ -68,7 +68,7 @@ GoRouter goRouter(Ref ref) {
         name: AppRoute.profile.name,
         pageBuilder: (BuildContext context, GoRouterState state) =>
             const NoTransitionPage<dynamic>(
-          child: CommonScaffold(body: UserProfileScreen()),
+          child: CommonScaffold(UserProfileScreen()),
         ),
       ),
     ],

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../common_widgets/common_button.dart';
 import '../../../../common_widgets/common_text_form_field.dart';
 import '../../../../l10n/translate.dart';
 
@@ -45,10 +44,9 @@ class _UserProfileWidgetState extends ConsumerState<UserProfileWidget> {
           inputHint: context.t.profile_username,
           onChange: widget.onUsernameChanged,
         ),
-        CommonButton(
-          text: context.t.profile_save,
+        TextButton(
           onPressed: widget.onSave,
-          isFullWidth: true,
+          child: Text(context.t.profile_save),
         ),
       ],
     );

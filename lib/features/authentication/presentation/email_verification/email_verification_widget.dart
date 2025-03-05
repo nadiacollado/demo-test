@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../common_widgets/common_button.dart';
 import '../../../../l10n/translate.dart';
 
 class EmailVerificationWidget extends ConsumerWidget {
@@ -35,10 +34,9 @@ class EmailVerificationWidget extends ConsumerWidget {
                 textAlign: TextAlign.center,
                 style: const TextStyle(fontSize: 18),
               ),
-              CommonButton(
-                type: ButtonType.transparent,
-                text: context.t.auth_resend_email,
+              TextButton(
                 onPressed: () => onSendEmail(),
+                child: Text(context.t.auth_resend_email),
               ),
             ],
           ),

@@ -43,7 +43,7 @@ final ProviderFamily<GoRouter, String> testRouterProvider =
         name: AppRoute.verifyEmail.name,
         pageBuilder: (BuildContext context, GoRouterState state) =>
             const NoTransitionPage<dynamic>(
-          child: CommonScaffold(body: EmailVerificationScreen()),
+          child: CommonScaffold(EmailVerificationScreen()),
         ),
       ),
     ],

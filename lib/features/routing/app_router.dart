@@ -51,7 +51,7 @@ GoRouter goRouter(Ref ref) {
         name: AppRoute.verifyEmail.name,
         pageBuilder: (BuildContext context, GoRouterState state) =>
             const NoTransitionPage<dynamic>(
-          child: CommonScaffold(body: EmailVerificationScreen()),
+          child: CommonScaffold(EmailVerificationScreen()),
         ),
       ),
       GoRoute(

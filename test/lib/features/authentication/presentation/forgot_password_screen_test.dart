@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_starter_kit/common_widgets/common_text_form_field.dart';
+import 'package:flutter_starter_kit/core/common_widgets/common_text_form_field.dart';
 import 'package:flutter_starter_kit/features/authentication/presentation/forgot_password_screen/forgot_password_screen.dart';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -19,7 +19,7 @@ void main() {
     await createWidgetUnderTest(tester);
 
     expect(find.text('Forgot Your Password?'), findsOneWidget);
-    expect(find.byType(CommonTextformField), findsOneWidget);
+    expect(find.byType(CommonTextFormField), findsOneWidget);
     expect(find.byType(FilledButton), findsOneWidget);
   });
 
@@ -40,7 +40,7 @@ void main() {
     await createWidgetUnderTest(tester);
 
     // Find text field and enter text
-    final Finder textField = find.byType(CommonTextformField);
+    final Finder textField = find.byType(CommonTextFormField);
     await tester.enterText(textField, 'test@example.com');
     await tester.pump(); // Rebuild the widget tree
 

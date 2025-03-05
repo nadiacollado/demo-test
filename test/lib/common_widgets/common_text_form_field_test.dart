@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_starter_kit/common_widgets/common_text_form_field.dart';
+import 'package:flutter_starter_kit/core/common_widgets/common_text_form_field.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../utils/localized_pump.dart';
@@ -14,7 +14,7 @@ void main() {
     IconData? icon,
   }) async {
     await tester.localizedPump(
-      CommonTextformField(
+      CommonTextFormField(
         inputHint: inputHint,
         labelText: labelText,
         onChange: onChange ?? (String value) {},
@@ -22,7 +22,7 @@ void main() {
         icon: icon,
       ),
     );
-    return tester.firstWidget(find.byType(CommonTextformField));
+    return tester.firstWidget(find.byType(CommonTextFormField));
   }
 
   testWidgets('displays labelText, hintText, and icon',
@@ -60,9 +60,9 @@ void main() {
       labelText: labelText,
     );
 
-    final Finder textFieldFinder = find.byType(CommonTextformField);
-    final CommonTextformField textField =
-        tester.widget<CommonTextformField>(textFieldFinder);
+    final Finder textFieldFinder = find.byType(CommonTextFormField);
+    final CommonTextFormField textField =
+        tester.widget<CommonTextFormField>(textFieldFinder);
     expect(textField.obscureText, isFalse);
   });
 
@@ -78,9 +78,9 @@ void main() {
       obscureText: true,
     );
 
-    final Finder textFieldFinder = find.byType(CommonTextformField);
-    final CommonTextformField textField =
-        tester.widget<CommonTextformField>(textFieldFinder);
+    final Finder textFieldFinder = find.byType(CommonTextFormField);
+    final CommonTextFormField textField =
+        tester.widget<CommonTextFormField>(textFieldFinder);
     expect(textField.obscureText, true);
   });
 }

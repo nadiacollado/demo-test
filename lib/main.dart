@@ -13,7 +13,7 @@ import 'package:logger/logger.dart';
 import 'core/logger/google_cloud_logging_service.dart';
 import 'core/theme/app_theme.dart';
 import 'core/theme/theme_controller.dart';
-import 'features/routing/app_router.dart';
+import 'features/navigation/app_router.dart';
 import 'firebase_options.dart';
 import 'l10n/translate.dart';
 

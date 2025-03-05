@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../common_widgets/common_dialog.dart';
-import '../../../../common_widgets/common_full_width.dart';
-import '../../../../common_widgets/common_text_form_field.dart';
+import '../../../../core/common_widgets/common_dialog.dart';
+import '../../../../core/common_widgets/common_full_width.dart';
+import '../../../../core/common_widgets/common_text_form_field.dart';
 import '../../../../l10n/translate.dart';
 import '../../domain/auth_status.dart';
 import '../../domain/firebase_auth_exception_handler.dart';
@@ -76,7 +76,7 @@ class _ForgotPasswordScreen extends ConsumerState<ForgotPasswordScreen> {
               context.t.auth_forgotPassword,
               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            CommonTextformField(
+            CommonTextFormField(
               inputHint: context.t.auth_enterEmail,
               onChange: controller.updateEmail,
               labelText: context.t.auth_email,

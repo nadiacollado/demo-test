@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../common_widgets/common_dialog.dart';
+import '../../../../core/common_widgets/common_dialog.dart';
 import '../../../../features/authentication/presentation/sign_up_screen/sign_up_widget.dart';
-import '../../../../features/routing/app_router.dart';
 import '../../../../l10n/translate.dart';
+import '../../../navigation/app_router.dart';
 import '../../domain/auth_status.dart';
 import '../../domain/firebase_auth_exception_handler.dart';
 import '../../domain/sign_up_form_state.dart';

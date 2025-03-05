@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class CommonTextformField extends StatefulWidget {
-  const CommonTextformField({
+class CommonTextFormField extends StatefulWidget {
+  const CommonTextFormField({
     super.key,
     required this.onChange,
     required this.inputHint,
@@ -19,10 +19,10 @@ class CommonTextformField extends StatefulWidget {
   final IconData? icon;
 
   @override
-  _CommonTextformFieldState createState() => _CommonTextformFieldState();
+  _CommonTextFormFieldState createState() => _CommonTextFormFieldState();
 }
 
-class _CommonTextformFieldState extends State<CommonTextformField> {
+class _CommonTextFormFieldState extends State<CommonTextFormField> {
   late TextEditingController _controller;
 
   @override
@@ -32,7 +32,7 @@ class _CommonTextformFieldState extends State<CommonTextformField> {
   }
 
   @override
-  void didUpdateWidget(CommonTextformField oldWidget) {
+  void didUpdateWidget(CommonTextFormField oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.labelText != oldWidget.labelText) {
       _controller.text = widget.labelText;

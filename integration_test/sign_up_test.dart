@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_starter_kit/common_widgets/common_text_form_field.dart';
+import 'package:flutter_starter_kit/core/common_widgets/common_text_form_field.dart';
 import 'package:flutter_starter_kit/features/authentication/data/firebase_auth_repository.dart';
 import 'package:flutter_starter_kit/features/authentication/domain/auth_status.dart';
 import 'package:flutter_starter_kit/features/authentication/presentation/email_verification/email_verification_screen.dart';
@@ -43,7 +43,7 @@ void main() {
     // Enter email
     final Finder textFieldFinder = find
         .descendant(
-          of: find.byType(CommonTextformField),
+          of: find.byType(CommonTextFormField),
           matching: find.byType(TextField),
         )
         .at(0);
@@ -52,7 +52,7 @@ void main() {
     // Enter password
     final Finder passwordTextFieldFinder = find
         .descendant(
-          of: find.byType(CommonTextformField),
+          of: find.byType(CommonTextFormField),
           matching: find.byType(TextField),
         )
         .at(1);
@@ -61,7 +61,7 @@ void main() {
     // Confirm password
     final Finder confirmPasswordTextFieldFinder = find
         .descendant(
-          of: find.byType(CommonTextformField),
+          of: find.byType(CommonTextFormField),
           matching: find.byType(TextField),
         )
         .at(2);
@@ -95,7 +95,7 @@ void main() {
     // Enter email
     final Finder textFieldFinder = find
         .descendant(
-          of: find.byType(CommonTextformField),
+          of: find.byType(CommonTextFormField),
           matching: find.byType(TextField),
         )
         .at(0);
@@ -104,7 +104,7 @@ void main() {
     // Enter password
     final Finder passwordTextFieldFinder = find
         .descendant(
-          of: find.byType(CommonTextformField),
+          of: find.byType(CommonTextFormField),
           matching: find.byType(TextField),
         )
         .at(1);
@@ -113,7 +113,7 @@ void main() {
     // Confirm password
     final Finder confirmPasswordTextFieldFinder = find
         .descendant(
-          of: find.byType(CommonTextformField),
+          of: find.byType(CommonTextFormField),
           matching: find.byType(TextField),
         )
         .at(2);

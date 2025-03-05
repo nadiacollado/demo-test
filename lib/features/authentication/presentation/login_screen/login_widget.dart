@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../common_widgets/common_full_width.dart';
-import '../../../../common_widgets/common_text_form_field.dart';
+import '../../../../core/common_widgets/common_full_width.dart';
+import '../../../../core/common_widgets/common_text_form_field.dart';
 import '../../../../l10n/translate.dart';
 
 class LoginWidget extends ConsumerStatefulWidget {
@@ -40,13 +40,13 @@ class _LoginWidgetState extends ConsumerState<LoginWidget> {
             mainAxisSize: MainAxisSize.min,
             spacing: 16,
             children: <Widget>[
-              CommonTextformField(
+              CommonTextFormField(
                 labelText: context.t.auth_email,
                 inputHint: context.t.auth_enterEmail,
                 icon: Icons.email,
                 onChange: widget.onEmailChanged,
               ),
-              CommonTextformField(
+              CommonTextFormField(
                 labelText: context.t.auth_password,
                 inputHint: context.t.auth_enterPassword,
                 icon: Icons.lock,

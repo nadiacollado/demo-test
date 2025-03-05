@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../common_widgets/common_full_width.dart';
-import '../../../../common_widgets/common_text_form_field.dart';
+import '../../../../core/common_widgets/common_full_width.dart';
+import '../../../../core/common_widgets/common_text_form_field.dart';
 import '../../../../l10n/translate.dart';
 
 class SignUpWidget extends ConsumerStatefulWidget {
@@ -38,20 +38,20 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       spacing: 16,
       children: <Widget>[
-        CommonTextformField(
+        CommonTextFormField(
           labelText: context.t.auth_email,
           inputHint: context.t.auth_enterEmail,
           icon: Icons.email,
           onChange: widget.onEmailChanged,
         ),
-        CommonTextformField(
+        CommonTextFormField(
           labelText: context.t.auth_password,
           inputHint: context.t.auth_enterPassword,
           icon: Icons.lock,
           obscureText: true,
           onChange: widget.onPasswordChanged,
         ),
-        CommonTextformField(
+        CommonTextFormField(
           labelText: context.t.auth_confirmPassword,
           inputHint: context.t.auth_reenterPassword,
           icon: Icons.lock,

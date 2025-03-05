@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../common_widgets/common_text_form_field.dart';
+import '../../../../core/common_widgets/common_text_form_field.dart';
 import '../../../../l10n/translate.dart';
 
 class UserProfileWidget extends ConsumerStatefulWidget {
@@ -38,7 +38,7 @@ class _UserProfileWidgetState extends ConsumerState<UserProfileWidget> {
       children: <Widget>[
         Text(getGreeting()),
         Text(context.t.profile_editUsername.toUpperCase()),
-        CommonTextformField(
+        CommonTextFormField(
           useController: true,
           labelText: widget.username ?? '',
           inputHint: context.t.profile_username,

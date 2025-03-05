@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_starter_kit/common_widgets/common_full_width.dart';
+import 'package:flutter_starter_kit/core/common_widgets/common_full_width.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../utils/localized_pump.dart';

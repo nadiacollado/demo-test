@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_starter_kit/common_widgets/common_text_form_field.dart';
+import 'package:flutter_starter_kit/core/common_widgets/common_text_form_field.dart';
 import 'package:flutter_starter_kit/features/profile/presentation/user_profile_widget.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -50,7 +50,7 @@ void main() {
         (WidgetTester tester) async {
       await createWidgetUnderTest(tester);
 
-      await tester.enterText(find.byType(CommonTextformField), 'New Username');
+      await tester.enterText(find.byType(CommonTextFormField), 'New Username');
       verify(() => mockUsernameChanged('New Username')).called(1);
     });
 

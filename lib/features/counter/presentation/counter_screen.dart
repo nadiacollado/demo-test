@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../common_widgets/counter_stepper.dart';
+import '../../../core/common_widgets/counter_stepper.dart';
 import '../../../features/counter/presentation/counter_screen_controller.dart';
 import '../../../l10n/translate.dart';
 import '../domain/counter.dart';

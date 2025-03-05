@@ -13,6 +13,8 @@ class FirebaseAuthExceptionHandler {
         status = AuthStatus.wrongPassword;
       case 'email-already-in-use':
         status = AuthStatus.emailAlreadyExists;
+      case 'user-not-found':
+        status = AuthStatus.userNotFound;
       case 'too-many-requests':
         status = AuthStatus.tooManyRequests;
       default:

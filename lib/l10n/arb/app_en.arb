@@ -41,5 +41,15 @@
       }
     }
   },
+  "@_PROFILE": {},
+  "profile_username": "Username",
+  "profile_editUsername": "Edit Username",
+  "profile_save": "Save",
+  "profile_success": "Success",
+  "profile_error": "Error",
+  "profile_successMessage": "Profile updated successfully!",
+  "profile_errorMessage": "Failed to update profile. Please try again.",
+  "profile_ok": "Ok",
+  "profile_hello": "Hello",
   "@_END": {}
 }

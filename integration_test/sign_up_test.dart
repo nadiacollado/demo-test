@@ -26,7 +26,7 @@ void main() {
   });
 
   testWidgets('Sign Up flow - success case', (WidgetTester tester) async {
-    when(() => mockAuthRepository.signUpWithEmailPassword(any(), any()))
+    when(() => mockAuthRepository.createUser(any(), any()))
         .thenAnswer((_) async {
       return AuthStatus.emailNotVerified;
     });
@@ -73,13 +73,12 @@ void main() {
     await tester.tap(createAccountButton);
     await tester.pumpAndSettle();
 
-    verify(() => mockAuthRepository.signUpWithEmailPassword(any(), any()))
-        .called(1);
+    verify(() => mockAuthRepository.createUser(any(), any())).called(1);
     expect(find.byType(EmailVerificationScreen), findsOneWidget);
   });
 
   testWidgets('Sign Up flow - failure case', (WidgetTester tester) async {
-    when(() => mockAuthRepository.signUpWithEmailPassword(any(), any()))
+    when(() => mockAuthRepository.createUser(any(), any()))
         .thenAnswer((_) async {
       return AuthStatus.invalidEmail;
     });
@@ -126,8 +125,7 @@ void main() {
     await tester.tap(createAccountButton);
     await tester.pumpAndSettle();
 
-    verify(() => mockAuthRepository.signUpWithEmailPassword(any(), any()))
-        .called(1);
+    verify(() => mockAuthRepository.createUser(any(), any())).called(1);
     expect(find.text(tester.t.auth_unableToCreateAccount), findsOneWidget);
   });
 }

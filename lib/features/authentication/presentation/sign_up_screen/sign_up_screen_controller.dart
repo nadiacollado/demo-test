@@ -34,7 +34,7 @@ class SignUpScreenController extends _$SignUpScreenController {
     final AsyncValue<AuthStatus> result =
         await AsyncValue.guard<AuthStatus>(() async {
       try {
-        final AuthStatus result = await authRepository.signUpWithEmailPassword(
+        final AuthStatus result = await authRepository.createUser(
           state.email,
           state.password,
         );

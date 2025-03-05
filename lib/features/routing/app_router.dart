@@ -9,12 +9,13 @@ import '../../features/authentication/presentation/sign_up_screen/sign_up_screen
 import '../authentication/presentation/email_verification/email_verification_screen.dart';
 import '../authentication/presentation/forgot_password_screen/forgot_password_screen.dart';
 import '../counter/presentation/counter_screen.dart';
+import '../profile/presentation/user_profile_screen.dart';
 
 part 'app_router.g.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
 
-enum AppRoute { counter, login, signUp, forgotPassword, verifyEmail }
+enum AppRoute { counter, login, signUp, forgotPassword, verifyEmail, profile }
 
 @Riverpod(keepAlive: true)
 GoRouter goRouter(Ref ref) {
@@ -60,6 +61,14 @@ GoRouter goRouter(Ref ref) {
         pageBuilder: (BuildContext context, GoRouterState state) =>
             const NoTransitionPage<dynamic>(
           child: CommonScaffold(CounterScreen()),
+        ),
+      ),
+      GoRoute(
+        path: '/profile',
+        name: AppRoute.profile.name,
+        pageBuilder: (BuildContext context, GoRouterState state) =>
+            const NoTransitionPage<dynamic>(
+          child: CommonScaffold(UserProfileScreen()),
         ),
       ),
     ],

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../core/common_widgets/common_dialog.dart';
 import '../../../core/user/domain/user.dart';
 
 import '../../../l10n/translate.dart';
+import '../../navigation/app_router.dart';
 import 'edit_user_profile_widget.dart';
 import 'user_profile_screen_controller.dart';
 
@@ -62,12 +64,16 @@ class EditUserProfileScreen extends ConsumerWidget {
                       ? context.t.profile_successMessage
                       : context.t.profile_errorMessage;
 
-                  showCommonDialog(
+                  await showCommonDialog(
                     context: context,
                     title: title,
                     content: content,
                     primaryButtonText: context.t.profile_ok,
                   );
+
+                  if (status && context.mounted) {
+                    context.goNamed(AppRoute.profile.name);
+                  }
                 },
               ),
             ),

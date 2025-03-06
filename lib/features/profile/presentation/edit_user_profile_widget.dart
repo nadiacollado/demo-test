@@ -95,6 +95,7 @@ class _EditUserProfileWidgetState extends ConsumerState<EditUserProfileWidget> {
             context.t.profile_bio,
             widget.onBioChanged,
             widget.bio,
+            5,
           ),
           const SizedBox(height: 16),
           SizedBox(
@@ -113,8 +114,9 @@ class _EditUserProfileWidgetState extends ConsumerState<EditUserProfileWidget> {
     String label,
     String hint,
     ValueChanged<String> onChanged,
-    String? initialValue,
-  ) {
+    String? initialValue, [
+    int maxLines = 1,
+  ]) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -128,6 +130,7 @@ class _EditUserProfileWidgetState extends ConsumerState<EditUserProfileWidget> {
           inputHint: hint,
           onChange: onChanged,
           initialValue: initialValue,
+          maxLines: maxLines,
         ),
         const SizedBox(height: 16),
       ],

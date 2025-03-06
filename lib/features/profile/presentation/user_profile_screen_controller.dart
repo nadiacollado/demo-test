@@ -43,7 +43,7 @@ class UserProfileScreenController extends _$UserProfileScreenController {
   Future<bool> saveProfile() async {
     final UserRepository userRepository = ref.read(userRepositoryProvider);
     final Map<String, dynamic> updates = state.getChangedFields();
-    if (updates.isEmpty) return false;
+    if (updates.isEmpty) return true;
 
     try {
       await userRepository.updateUserProfile(updates);

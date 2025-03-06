@@ -10,6 +10,7 @@ class CommonTextFormField extends StatefulWidget {
     this.obscureText = false,
     this.useController = false,
     this.icon,
+    this.maxLines,
   });
 
   final ValueChanged<String> onChange;
@@ -19,6 +20,7 @@ class CommonTextFormField extends StatefulWidget {
   final bool obscureText;
   final bool useController;
   final IconData? icon;
+  final int? maxLines;
 
   @override
   _CommonTextFormFieldState createState() => _CommonTextFormFieldState();
@@ -50,6 +52,8 @@ class _CommonTextFormFieldState extends State<CommonTextFormField> {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      keyboardType: TextInputType.multiline,
+      maxLines: widget.maxLines,
       controller: widget.useController ? _controller : null,
       decoration: InputDecoration(
         labelText: widget.labelText,

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../../../core/common_widgets/common_text_form_field.dart';
 import '../../../../l10n/translate.dart';
-import '../../navigation/app_router.dart';
 
 class EditUserProfileWidget extends ConsumerStatefulWidget {
   const EditUserProfileWidget({
@@ -47,62 +45,81 @@ class EditUserProfileWidget extends ConsumerStatefulWidget {
 class _EditUserProfileWidgetState extends ConsumerState<EditUserProfileWidget> {
   @override
   Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 24),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          _buildField(
+            context.t.profile_editUsername,
+            context.t.profile_username,
+            widget.onUsernameChanged,
+            widget.username,
+          ),
+          _buildField(
+            context.t.profile_editFirstName,
+            context.t.profile_firstName,
+            widget.onFirstNameChanged,
+            widget.firstName,
+          ),
+          _buildField(
+            context.t.profile_editLastName,
+            context.t.profile_lastName,
+            widget.onLastNameChanged,
+            widget.lastName,
+          ),
+          _buildField(
+            context.t.profile_editPronouns,
+            context.t.profile_pronouns,
+            widget.onPronounsChanged,
+            widget.pronouns,
+          ),
+          _buildField(
+            context.t.profile_editAge,
+            context.t.profile_age,
+            widget.onAgeChanged,
+            widget.age,
+          ),
+          _buildField(
+              context.t.profile_editLocation,
+              context.t.profile_location,
+              widget.onLocationChanged,
+              widget.location),
+          const SizedBox(height: 16),
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: widget.onSave,
+              child: Text(context.t.profile_save),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildField(
+    String label,
+    String hint,
+    ValueChanged<String> onChanged,
+    String? initialValue,
+  ) {
     return Column(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      spacing: 16,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        TextButton(
-          onPressed: () => context.goNamed(AppRoute.profile.name),
-          child: Text(context.t.profile_go_to_profile),
+        Text(
+          label.toUpperCase(),
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
-        Text(context.t.profile_editUsername.toUpperCase()),
+        const SizedBox(height: 4),
         CommonTextFormField(
           useController: true,
-          inputHint: context.t.profile_username,
-          onChange: widget.onUsernameChanged,
-          initialValue: widget.username,
+          inputHint: hint,
+          onChange: onChanged,
+          initialValue: initialValue,
         ),
-        Text(context.t.profile_editFirstName.toUpperCase()),
-        CommonTextFormField(
-          useController: true,
-          inputHint: context.t.profile_firstName,
-          onChange: widget.onFirstNameChanged,
-          initialValue: widget.firstName,
-        ),
-        Text(context.t.profile_editLastName.toUpperCase()),
-        CommonTextFormField(
-          useController: true,
-          inputHint: context.t.profile_lastName,
-          onChange: widget.onLastNameChanged,
-          initialValue: widget.lastName,
-        ),
-        Text(context.t.profile_editPronouns.toUpperCase()),
-        CommonTextFormField(
-          useController: true,
-          inputHint: context.t.profile_pronouns,
-          onChange: widget.onPronounsChanged,
-          initialValue: widget.pronouns,
-        ),
-        Text(context.t.profile_editAge.toUpperCase()),
-        CommonTextFormField(
-          useController: true,
-          inputHint: context.t.profile_age,
-          onChange: widget.onAgeChanged,
-          initialValue: widget.age,
-        ),
-        Text(context.t.profile_editLocation.toUpperCase()),
-        CommonTextFormField(
-          useController: true,
-          inputHint: context.t.profile_location,
-          onChange: widget.onLocationChanged,
-          initialValue: widget.location,
-        ),
-        TextButton(
-          onPressed: widget.onSave,
-          child: Text(context.t.profile_save),
-        ),
+        const SizedBox(height: 16),
       ],
     );
   }

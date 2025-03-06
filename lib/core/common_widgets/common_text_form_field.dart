@@ -52,8 +52,10 @@ class _CommonTextFormFieldState extends State<CommonTextFormField> {
   @override
   Widget build(BuildContext context) {
     return TextField(
-      keyboardType: TextInputType.multiline,
-      maxLines: widget.maxLines,
+      keyboardType: widget.maxLines != null && widget.maxLines! > 1
+          ? TextInputType.multiline
+          : TextInputType.text,
+      maxLines: widget.obscureText ? 1 : widget.maxLines,
       controller: widget.useController ? _controller : null,
       decoration: InputDecoration(
         labelText: widget.labelText,

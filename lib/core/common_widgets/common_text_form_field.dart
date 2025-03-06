@@ -30,7 +30,7 @@ class _CommonTextFormFieldState extends State<CommonTextFormField> {
   @override
   void initState() {
     super.initState();
-    _controller = TextEditingController(text: widget.initialValue ?? '');
+    _controller = TextEditingController(text: widget.initialValue);
   }
 
   @override

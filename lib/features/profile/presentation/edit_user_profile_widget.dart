@@ -82,10 +82,11 @@ class _EditUserProfileWidgetState extends ConsumerState<EditUserProfileWidget> {
             widget.age,
           ),
           _buildField(
-              context.t.profile_editLocation,
-              context.t.profile_location,
-              widget.onLocationChanged,
-              widget.location),
+            context.t.profile_editLocation,
+            context.t.profile_location,
+            widget.onLocationChanged,
+            widget.location,
+          ),
           const SizedBox(height: 16),
           SizedBox(
             width: double.infinity,

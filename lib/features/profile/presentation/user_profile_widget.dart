@@ -30,30 +30,78 @@ class UserProfileWidget extends ConsumerStatefulWidget {
 
 class _UserProfileWidgetState extends ConsumerState<UserProfileWidget> {
   String getGreeting() {
-    return widget.username != null
-        ? '${context.t.profile_hello} ${widget.username}!'
-        : '${context.t.profile_hello} ${widget.email}!';
+    if (widget.username != null && widget.username!.isNotEmpty) {
+      return '${context.t.profile_hello} ${widget.username}!';
+    } else if (widget.email != null && widget.email!.isNotEmpty) {
+      return '${context.t.profile_hello} ${widget.email}!';
+    }
+    return context.t.profile_hello;
+  }
+
+  Widget _buildUserDetails() {
+    final List<String> details = <String>[
+      if (widget.pronouns?.isNotEmpty ?? false) widget.pronouns!,
+      if (widget.age?.isNotEmpty ?? false) widget.age!,
+      if (widget.location?.isNotEmpty ?? false) widget.location!,
+    ];
+
+    return details.isNotEmpty
+        ? Text(details.join(', '), style: const TextStyle(fontSize: 16))
+        : const SizedBox();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      spacing: 16,
-      children: <Widget>[
-        Text(getGreeting()),
-        if (widget.firstName != null || widget.lastName != null)
-          Text('${widget.firstName ?? ''} ${widget.lastName ?? ''}'),
-        if (widget.pronouns != null) Text(widget.pronouns!),
-        if (widget.age != null) Text(widget.age!),
-        if (widget.location != null) Text(widget.location!),
-        TextButton(
-          onPressed: () => context.goNamed(AppRoute.editProfile.name),
-          child: Text(context.t.profile_edit_profile),
-        ),
-      ],
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          if (widget.username == null || widget.username!.isEmpty)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 16),
+              child: Text(
+                getGreeting(),
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+            ),
+          Container(
+            width: 120,
+            height: 150,
+            decoration: BoxDecoration(
+              color: Colors.grey[300],
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Icon(Icons.person, size: 50, color: Colors.grey[600]),
+          ),
+          const SizedBox(height: 12),
+          if (widget.username != null && widget.username!.isNotEmpty)
+            Text(
+              widget.username!,
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+          _buildUserDetails(),
+          const SizedBox(height: 16),
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: () => context.goNamed(AppRoute.editProfile.name),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue[300],
+                foregroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(4),
+                ),
+              ),
+              child: Text(
+                context.t.profile_edit_profile.toUpperCase(),
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

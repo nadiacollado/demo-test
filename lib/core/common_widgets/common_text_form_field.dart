@@ -5,7 +5,8 @@ class CommonTextFormField extends StatefulWidget {
     super.key,
     required this.onChange,
     required this.inputHint,
-    required this.labelText,
+    this.labelText,
+    this.initialValue,
     this.obscureText = false,
     this.useController = false,
     this.icon,
@@ -13,7 +14,8 @@ class CommonTextFormField extends StatefulWidget {
 
   final ValueChanged<String> onChange;
   final String inputHint;
-  final String labelText;
+  final String? labelText;
+  final String? initialValue;
   final bool obscureText;
   final bool useController;
   final IconData? icon;
@@ -28,14 +30,14 @@ class _CommonTextFormFieldState extends State<CommonTextFormField> {
   @override
   void initState() {
     super.initState();
-    _controller = TextEditingController(text: widget.labelText);
+    _controller = TextEditingController(text: widget.initialValue ?? '');
   }
 
   @override
   void didUpdateWidget(CommonTextFormField oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (widget.labelText != oldWidget.labelText) {
-      _controller.text = widget.labelText;
+    if (widget.initialValue != oldWidget.initialValue) {
+      _controller.text = widget.initialValue ?? '';
     }
   }
 

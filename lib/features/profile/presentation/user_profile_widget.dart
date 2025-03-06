@@ -10,9 +10,19 @@ class UserProfileWidget extends ConsumerStatefulWidget {
     super.key,
     this.username,
     this.email,
+    this.firstName,
+    this.lastName,
+    this.age,
+    this.location,
+    this.pronouns,
   });
   final String? username;
   final String? email;
+  final String? firstName;
+  final String? lastName;
+  final String? age;
+  final String? location;
+  final String? pronouns;
 
   @override
   ConsumerState<UserProfileWidget> createState() => _UserProfileWidgetState();
@@ -34,6 +44,11 @@ class _UserProfileWidgetState extends ConsumerState<UserProfileWidget> {
       spacing: 16,
       children: <Widget>[
         Text(getGreeting()),
+        if (widget.firstName != null || widget.lastName != null)
+          Text('${widget.firstName ?? ''} ${widget.lastName ?? ''}'),
+        if (widget.pronouns != null) Text(widget.pronouns!),
+        if (widget.age != null) Text(widget.age!),
+        if (widget.location != null) Text(widget.location!),
         TextButton(
           onPressed: () => context.goNamed(AppRoute.editProfile.name),
           child: Text(context.t.profile_edit_profile),

@@ -8,6 +8,7 @@ void main() {
   group('UserProfileWidget', () {
     const String testUser = 'testuser@example.com';
     const String testUsername = 'Test User';
+
     Future<Widget> createWidgetUnderTest(WidgetTester tester) async {
       await tester.localizedPump(
         const UserProfileWidget(
@@ -18,12 +19,21 @@ void main() {
       return tester.firstWidget(find.byType(UserProfileWidget));
     }
 
-    testWidgets('renders username and email correctly',
+    testWidgets('renders email greeting when no username is provided',
         (WidgetTester tester) async {
-      const String testUsername = 'Test User';
+      await tester.localizedPump(
+        const UserProfileWidget(
+          email: testUser,
+        ),
+      );
+
+      expect(find.textContaining(testUser), findsOneWidget);
+    });
+
+    testWidgets('renders username when provided', (WidgetTester tester) async {
       await createWidgetUnderTest(tester);
 
-      expect(find.text('Hello $testUsername!'), findsOneWidget);
+      expect(find.text(testUsername), findsOneWidget);
     });
   });
 }

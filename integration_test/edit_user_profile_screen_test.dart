@@ -53,10 +53,250 @@ void main() {
 
     await tester.pumpAndSettle();
 
-    await tester.enterText(find.byType(TextField), 'newUser');
+    final Finder usernameField = find.byWidgetPredicate(
+      (Widget widget) =>
+          widget is TextField &&
+          widget.decoration?.hintText == tester.t.profile_username,
+    );
+
+    await tester.enterText(usernameField, 'newUser');
 
     final Finder saveButton = find.text(tester.t.profile_save);
+
     await tester.pumpAndSettle();
+    await tester.ensureVisible(saveButton);
+    await tester.tap(saveButton);
+    await tester.pumpAndSettle();
+
+    verify(() => mockController.saveProfile()).called(1);
+  });
+
+  testWidgets('Updates firstName and calls saveProfile()',
+      (WidgetTester tester) async {
+    const User testUser =
+        User(email: 'test@example.com', firstName: 'Old First Name');
+
+    when(() => mockUserRepository.updateUserProfile(any()))
+        .thenAnswer((_) async {});
+    when(() => mockController.getUser())
+        .thenAnswer((_) => Stream<User?>.value(testUser));
+    when(() => mockController.saveProfile()).thenAnswer((_) async => true);
+
+    await tester.localizedPump(
+      const EditUserProfileScreen(),
+      overrides: <Override>[
+        userRepositoryProvider.overrideWithValue(mockUserRepository),
+        userProfileScreenControllerProvider.overrideWith(() => mockController),
+      ],
+    );
+
+    await tester.pumpAndSettle();
+
+    final Finder firstNameField = find.byWidgetPredicate(
+      (Widget widget) =>
+          widget is TextField &&
+          widget.decoration?.hintText == tester.t.profile_firstName,
+    );
+
+    await tester.enterText(firstNameField, 'New First Name');
+
+    final Finder saveButton = find.text(tester.t.profile_save);
+
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(saveButton);
+    await tester.tap(saveButton);
+    await tester.pumpAndSettle();
+
+    verify(() => mockController.saveProfile()).called(1);
+  });
+
+  testWidgets('Updates lastName and calls saveProfile()',
+      (WidgetTester tester) async {
+    const User testUser =
+        User(email: 'test@example.com', lastName: 'Old Last Name');
+
+    when(() => mockUserRepository.updateUserProfile(any()))
+        .thenAnswer((_) async {});
+    when(() => mockController.getUser())
+        .thenAnswer((_) => Stream<User?>.value(testUser));
+    when(() => mockController.saveProfile()).thenAnswer((_) async => true);
+
+    await tester.localizedPump(
+      const EditUserProfileScreen(),
+      overrides: <Override>[
+        userRepositoryProvider.overrideWithValue(mockUserRepository),
+        userProfileScreenControllerProvider.overrideWith(() => mockController),
+      ],
+    );
+
+    await tester.pumpAndSettle();
+
+    final Finder lastNameField = find.byWidgetPredicate(
+      (Widget widget) =>
+          widget is TextField &&
+          widget.decoration?.hintText == tester.t.profile_lastName,
+    );
+
+    await tester.enterText(lastNameField, 'New Last Name');
+
+    final Finder saveButton = find.text(tester.t.profile_save);
+
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(saveButton);
+    await tester.tap(saveButton);
+    await tester.pumpAndSettle();
+
+    verify(() => mockController.saveProfile()).called(1);
+  });
+
+  testWidgets('Updates pronouns and calls saveProfile()',
+      (WidgetTester tester) async {
+    const User testUser =
+        User(email: 'test@example.com', pronouns: 'Old Pronouns');
+
+    when(() => mockUserRepository.updateUserProfile(any()))
+        .thenAnswer((_) async {});
+    when(() => mockController.getUser())
+        .thenAnswer((_) => Stream<User?>.value(testUser));
+    when(() => mockController.saveProfile()).thenAnswer((_) async => true);
+
+    await tester.localizedPump(
+      const EditUserProfileScreen(),
+      overrides: <Override>[
+        userRepositoryProvider.overrideWithValue(mockUserRepository),
+        userProfileScreenControllerProvider.overrideWith(() => mockController),
+      ],
+    );
+
+    await tester.pumpAndSettle();
+
+    final Finder pronounsField = find.byWidgetPredicate(
+      (Widget widget) =>
+          widget is TextField &&
+          widget.decoration?.hintText == tester.t.profile_pronouns,
+    );
+
+    await tester.enterText(pronounsField, 'New Pronouns');
+
+    final Finder saveButton = find.text(tester.t.profile_save);
+
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(saveButton);
+    await tester.tap(saveButton);
+    await tester.pumpAndSettle();
+
+    verify(() => mockController.saveProfile()).called(1);
+  });
+
+  testWidgets('Updates age and calls saveProfile()',
+      (WidgetTester tester) async {
+    const User testUser = User(email: 'test@example.com', age: '25');
+
+    when(() => mockUserRepository.updateUserProfile(any()))
+        .thenAnswer((_) async {});
+    when(() => mockController.getUser())
+        .thenAnswer((_) => Stream<User?>.value(testUser));
+    when(() => mockController.saveProfile()).thenAnswer((_) async => true);
+
+    await tester.localizedPump(
+      const EditUserProfileScreen(),
+      overrides: <Override>[
+        userRepositoryProvider.overrideWithValue(mockUserRepository),
+        userProfileScreenControllerProvider.overrideWith(() => mockController),
+      ],
+    );
+
+    await tester.pumpAndSettle();
+
+    final Finder ageField = find.byWidgetPredicate(
+      (Widget widget) =>
+          widget is TextField &&
+          widget.decoration?.hintText == tester.t.profile_age,
+    );
+
+    await tester.enterText(ageField, '30');
+
+    final Finder saveButton = find.text(tester.t.profile_save);
+
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(saveButton);
+    await tester.tap(saveButton);
+    await tester.pumpAndSettle();
+
+    verify(() => mockController.saveProfile()).called(1);
+  });
+
+  testWidgets('Updates location and calls saveProfile()',
+      (WidgetTester tester) async {
+    const User testUser =
+        User(email: 'test@example.com', location: 'Old Location');
+
+    when(() => mockUserRepository.updateUserProfile(any()))
+        .thenAnswer((_) async {});
+    when(() => mockController.getUser())
+        .thenAnswer((_) => Stream<User?>.value(testUser));
+    when(() => mockController.saveProfile()).thenAnswer((_) async => true);
+
+    await tester.localizedPump(
+      const EditUserProfileScreen(),
+      overrides: <Override>[
+        userRepositoryProvider.overrideWithValue(mockUserRepository),
+        userProfileScreenControllerProvider.overrideWith(() => mockController),
+      ],
+    );
+
+    await tester.pumpAndSettle();
+
+    final Finder locationField = find.byWidgetPredicate(
+      (Widget widget) =>
+          widget is TextField &&
+          widget.decoration?.hintText == tester.t.profile_location,
+    );
+
+    await tester.enterText(locationField, 'New Location');
+
+    final Finder saveButton = find.text(tester.t.profile_save);
+
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(saveButton);
+    await tester.tap(saveButton);
+    await tester.pumpAndSettle();
+
+    verify(() => mockController.saveProfile()).called(1);
+  });
+
+  testWidgets('Updates bio and calls saveProfile()',
+      (WidgetTester tester) async {
+    const User testUser = User(email: 'test@example.com', bio: 'Old Bio');
+
+    when(() => mockUserRepository.updateUserProfile(any()))
+        .thenAnswer((_) async {});
+    when(() => mockController.getUser())
+        .thenAnswer((_) => Stream<User?>.value(testUser));
+    when(() => mockController.saveProfile()).thenAnswer((_) async => true);
+
+    await tester.localizedPump(
+      const EditUserProfileScreen(),
+      overrides: <Override>[
+        userRepositoryProvider.overrideWithValue(mockUserRepository),
+        userProfileScreenControllerProvider.overrideWith(() => mockController),
+      ],
+    );
+
+    await tester.pumpAndSettle();
+
+    final Finder bioField = find.byWidgetPredicate(
+      (Widget widget) =>
+          widget is TextField &&
+          widget.decoration?.hintText == tester.t.profile_bio,
+    );
+
+    await tester.enterText(bioField, 'New Bio');
+
+    final Finder saveButton = find.text(tester.t.profile_save);
+
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(saveButton);
     await tester.tap(saveButton);
     await tester.pumpAndSettle();
 
@@ -82,6 +322,7 @@ void main() {
     await tester.pumpAndSettle();
 
     final Finder saveButton = find.text(tester.t.profile_save);
+
     await tester.pumpAndSettle();
     await tester.tap(saveButton);
     await tester.pumpAndSettle();

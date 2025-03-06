@@ -16,10 +16,34 @@ class UserProfileScreenController extends _$UserProfileScreenController {
     state = state.copyWith(username: username);
   }
 
+  void updateFirstName(String firstName) {
+    state = state.copyWith(firstName: firstName);
+  }
+
+  void updateLastName(String lastName) {
+    state = state.copyWith(lastName: lastName);
+  }
+
+  void updateAge(String age) {
+    state = state.copyWith(age: age);
+  }
+
+  void updateLocation(String location) {
+    state = state.copyWith(location: location);
+  }
+
+  void updatePronouns(String pronouns) {
+    state = state.copyWith(pronouns: pronouns);
+  }
+
+  void updateBio(String bio) {
+    state = state.copyWith(bio: bio);
+  }
+
   Future<bool> saveProfile() async {
     final UserRepository userRepository = ref.read(userRepositoryProvider);
     final Map<String, dynamic> updates = state.getChangedFields();
-    if (updates.isEmpty) return false;
+    if (updates.isEmpty) return true;
 
     try {
       await userRepository.updateUserProfile(updates);

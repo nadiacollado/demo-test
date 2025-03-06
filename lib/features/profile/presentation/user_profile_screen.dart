@@ -36,6 +36,12 @@ class UserProfileScreen extends ConsumerWidget {
               child: UserProfileWidget(
                 email: user?.email,
                 username: user?.username,
+                firstName: user?.firstName,
+                lastName: user?.lastName,
+                age: user?.age,
+                location: user?.location,
+                pronouns: user?.pronouns,
+                bio: user?.bio,
               ),
             ),
           );

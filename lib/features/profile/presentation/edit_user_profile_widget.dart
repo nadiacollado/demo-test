@@ -1,22 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../../../core/common_widgets/common_text_form_field.dart';
 import '../../../../l10n/translate.dart';
-import '../../navigation/app_router.dart';
 
 class EditUserProfileWidget extends ConsumerStatefulWidget {
   const EditUserProfileWidget({
     super.key,
     required this.onUsernameChanged,
+    required this.onFirstNameChanged,
+    required this.onLastNameChanged,
+    required this.onPronounsChanged,
+    required this.onAgeChanged,
+    required this.onLocationChanged,
+    required this.onBioChanged,
     required this.onSave,
     this.username,
     this.email,
+    this.firstName,
+    this.lastName,
+    this.age,
+    this.location,
+    this.pronouns,
+    this.bio,
   });
   final ValueChanged<String> onUsernameChanged;
+  final ValueChanged<String> onFirstNameChanged;
+  final ValueChanged<String> onLastNameChanged;
+  final ValueChanged<String> onPronounsChanged;
+  final ValueChanged<String> onAgeChanged;
+  final ValueChanged<String> onLocationChanged;
+  final ValueChanged<String> onBioChanged;
   final String? username;
   final String? email;
+  final String? firstName;
+  final String? lastName;
+  final String? age;
+  final String? location;
+  final String? pronouns;
+  final String? bio;
   final VoidCallback onSave;
 
   @override
@@ -27,27 +49,90 @@ class EditUserProfileWidget extends ConsumerStatefulWidget {
 class _EditUserProfileWidgetState extends ConsumerState<EditUserProfileWidget> {
   @override
   Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          _buildField(
+            context.t.profile_editUsername,
+            context.t.profile_username,
+            widget.onUsernameChanged,
+            widget.username,
+          ),
+          _buildField(
+            context.t.profile_editFirstName,
+            context.t.profile_firstName,
+            widget.onFirstNameChanged,
+            widget.firstName,
+          ),
+          _buildField(
+            context.t.profile_editLastName,
+            context.t.profile_lastName,
+            widget.onLastNameChanged,
+            widget.lastName,
+          ),
+          _buildField(
+            context.t.profile_editPronouns,
+            context.t.profile_pronouns,
+            widget.onPronounsChanged,
+            widget.pronouns,
+          ),
+          _buildField(
+            context.t.profile_editAge,
+            context.t.profile_age,
+            widget.onAgeChanged,
+            widget.age,
+          ),
+          _buildField(
+            context.t.profile_editLocation,
+            context.t.profile_location,
+            widget.onLocationChanged,
+            widget.location,
+          ),
+          _buildField(
+            context.t.profile_editBio,
+            context.t.profile_bio,
+            widget.onBioChanged,
+            widget.bio,
+            5,
+          ),
+          const SizedBox(height: 16),
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: widget.onSave,
+              child: Text(context.t.profile_save),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildField(
+    String label,
+    String hint,
+    ValueChanged<String> onChanged,
+    String? initialValue, [
+    int maxLines = 1,
+  ]) {
     return Column(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      spacing: 16,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        TextButton(
-          onPressed: () => context.goNamed(AppRoute.profile.name),
-          child: Text(context.t.profile_go_to_profile),
+        Text(
+          label.toUpperCase(),
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
-        Text(context.t.profile_editUsername.toUpperCase()),
+        const SizedBox(height: 4),
         CommonTextFormField(
           useController: true,
-          labelText: widget.username ?? '',
-          inputHint: context.t.profile_username,
-          onChange: widget.onUsernameChanged,
+          inputHint: hint,
+          onChange: onChanged,
+          initialValue: initialValue,
+          maxLines: maxLines,
         ),
-        TextButton(
-          onPressed: widget.onSave,
-          child: Text(context.t.profile_save),
-        ),
+        const SizedBox(height: 16),
       ],
     );
   }

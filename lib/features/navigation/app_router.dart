@@ -23,7 +23,7 @@ enum AppRoute {
   forgotPassword('forgotPassword'),
   verifyEmail('verifyEmail'),
   profile('/profile'),
-  editProfile('/editProfile'),
+  editProfile('editProfile'),
   ;
 
   const AppRoute(this.path);
@@ -85,14 +85,16 @@ GoRouter goRouter(Ref ref) {
             const NoTransitionPage<dynamic>(
           child: CommonScaffold(UserProfileScreen()),
         ),
-      ),
-      GoRoute(
-        path: AppRoute.editProfile.path,
-        name: AppRoute.editProfile.name,
-        pageBuilder: (BuildContext context, GoRouterState state) =>
-            const NoTransitionPage<dynamic>(
-          child: CommonScaffold(EditUserProfileScreen()),
-        ),
+        routes: <RouteBase>[
+          GoRoute(
+            path: AppRoute.editProfile.path,
+            name: AppRoute.editProfile.name,
+            pageBuilder: (BuildContext context, GoRouterState state) =>
+                const NoTransitionPage<dynamic>(
+              child: CommonScaffold(EditUserProfileScreen()),
+            ),
+          ),
+        ],
       ),
     ],
   );

@@ -15,6 +15,7 @@ class UserProfileWidget extends ConsumerStatefulWidget {
     this.age,
     this.location,
     this.pronouns,
+    this.bio,
   });
   final String? username;
   final String? email;
@@ -23,6 +24,7 @@ class UserProfileWidget extends ConsumerStatefulWidget {
   final String? age;
   final String? location;
   final String? pronouns;
+  final String? bio;
 
   @override
   ConsumerState<UserProfileWidget> createState() => _UserProfileWidgetState();
@@ -82,6 +84,7 @@ class _UserProfileWidgetState extends ConsumerState<UserProfileWidget> {
               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           _buildUserDetails(),
+          if (widget.bio != null && widget.bio!.isNotEmpty) Text(widget.bio!),
           const SizedBox(height: 16),
           SizedBox(
             width: double.infinity,

@@ -13,6 +13,7 @@ class EditUserProfileWidget extends ConsumerStatefulWidget {
     required this.onPronounsChanged,
     required this.onAgeChanged,
     required this.onLocationChanged,
+    required this.onBioChanged,
     required this.onSave,
     this.username,
     this.email,
@@ -21,6 +22,7 @@ class EditUserProfileWidget extends ConsumerStatefulWidget {
     this.age,
     this.location,
     this.pronouns,
+    this.bio,
   });
   final ValueChanged<String> onUsernameChanged;
   final ValueChanged<String> onFirstNameChanged;
@@ -28,6 +30,7 @@ class EditUserProfileWidget extends ConsumerStatefulWidget {
   final ValueChanged<String> onPronounsChanged;
   final ValueChanged<String> onAgeChanged;
   final ValueChanged<String> onLocationChanged;
+  final ValueChanged<String> onBioChanged;
   final String? username;
   final String? email;
   final String? firstName;
@@ -35,6 +38,7 @@ class EditUserProfileWidget extends ConsumerStatefulWidget {
   final String? age;
   final String? location;
   final String? pronouns;
+  final String? bio;
   final VoidCallback onSave;
 
   @override
@@ -86,6 +90,12 @@ class _EditUserProfileWidgetState extends ConsumerState<EditUserProfileWidget> {
             context.t.profile_location,
             widget.onLocationChanged,
             widget.location,
+          ),
+          _buildField(
+            context.t.profile_editBio,
+            context.t.profile_bio,
+            widget.onBioChanged,
+            widget.bio,
           ),
           const SizedBox(height: 16),
           SizedBox(

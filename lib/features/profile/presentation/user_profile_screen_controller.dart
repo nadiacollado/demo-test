@@ -36,6 +36,10 @@ class UserProfileScreenController extends _$UserProfileScreenController {
     state = state.copyWith(pronouns: pronouns);
   }
 
+  void updateBio(String bio) {
+    state = state.copyWith(bio: bio);
+  }
+
   Future<bool> saveProfile() async {
     final UserRepository userRepository = ref.read(userRepositoryProvider);
     final Map<String, dynamic> updates = state.getChangedFields();

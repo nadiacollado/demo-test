@@ -42,12 +42,14 @@ class EditUserProfileScreen extends ConsumerWidget {
                 age: user?.age,
                 location: user?.location,
                 pronouns: user?.pronouns,
+                bio: user?.bio,
                 onUsernameChanged: controller.updateUsername,
                 onFirstNameChanged: controller.updateFirstName,
                 onLastNameChanged: controller.updateLastName,
                 onPronounsChanged: controller.updatePronouns,
                 onAgeChanged: controller.updateAge,
                 onLocationChanged: controller.updateLocation,
+                onBioChanged: controller.updateBio,
                 onSave: () async {
                   final bool status = await controller.saveProfile();
                   if (!context.mounted) return;

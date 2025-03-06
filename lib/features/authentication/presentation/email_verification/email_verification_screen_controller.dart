@@ -10,6 +10,7 @@ class EmailVerificationScreenController
     extends _$EmailVerificationScreenController {
   @override
   FutureOr<void> build() {}
+
   Future<AsyncValue<AuthStatus>> sendVerificationEmailAddress() async {
     final AuthRepository authRepository = ref.read(authRepositoryProvider);
 

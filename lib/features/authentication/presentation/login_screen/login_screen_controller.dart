@@ -1,15 +1,19 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../data/firebase_auth_repository.dart';
-import '../../domain/auth_status.dart';
+import '../../application/auth_state_notifier.dart';
 import '../../domain/login_form_state.dart';
 
 part 'login_screen_controller.g.dart';
 
 @riverpod
 class LoginScreenController extends _$LoginScreenController {
+  late final AuthStateNotifier _authStateNotifier;
+
   @override
-  LoginFormState build() => const LoginFormState();
+  LoginFormState build() {
+    _authStateNotifier = ref.watch(authStateNotifierProvider.notifier);
+    return const LoginFormState();
+  }
 
   void updateEmail(String email) {
     state = state.copyWith(
@@ -23,24 +27,14 @@ class LoginScreenController extends _$LoginScreenController {
     );
   }
 
-  Future<AsyncValue<AuthStatus>> signInWithEmailPassword() async {
-    final AuthRepository authRepository = ref.read(authRepositoryProvider);
+  Future<void> signInWithEmailPassword() async {
     state = state.copyWith(isLoading: true);
 
-    final AsyncValue<AuthStatus> result =
-        await AsyncValue.guard<AuthStatus>(() async {
-      try {
-        final AuthStatus result = await authRepository.signInWithEmailPassword(
-          state.email,
-          state.password,
-        );
-        return result;
-      } catch (e) {
-        return AuthStatus.unknown;
-      } finally {
-        state = state.copyWith(isLoading: false);
-      }
-    });
-    return result;
+    await _authStateNotifier.signInWithEmailPassword(
+      state.email,
+      state.password,
+    );
+
+    state = state.copyWith(isLoading: false);
   }
 }

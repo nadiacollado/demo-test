@@ -20,6 +20,16 @@ class AuthRepository {
   Stream<User?> authStateChanges() => _auth.authStateChanges();
   User? get currentUser => _auth.currentUser;
 
+  Future<AuthStatus> isEmailVerified(User user) async {
+    final User? user = _auth.currentUser;
+    final bool isEmailVerified =
+        await _emailVerificationService.isEmailVerified(user);
+
+    return isEmailVerified
+        ? AuthStatus.authenticated
+        : AuthStatus.emailNotVerified;
+  }
+
   Future<AuthStatus> signInWithEmailPassword(
     String email,
     String password,
@@ -87,14 +97,22 @@ class AuthRepository {
     if (user != null && !user.emailVerified) {
       try {
         await user.sendEmailVerification();
-        _status = AuthStatus.successful;
-      } on FirebaseAuthException catch (e) {
-        _status = FirebaseAuthExceptionHandler.handleAuthException(e);
-      } catch (e) {
-        _status = AuthStatus.unknown;
+        return AuthStatus.successful;
+      } on FirebaseAuthException catch (e, stackTrace) {
+        logger.error(
+          message: 'FirebaseAuthException $e',
+          stack: stackTrace,
+        );
+        return FirebaseAuthExceptionHandler.handleAuthException(e);
+      } catch (e, stackTrace) {
+        logger.error(
+          message: 'Send Verification Error $e',
+          stack: stackTrace,
+        );
+        return AuthStatus.unknown;
       }
     }
-    return _status;
+    return AuthStatus.unknown;
   }
 
   Future<void> signOut() async {

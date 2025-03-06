@@ -45,8 +45,8 @@ class _SignUpState extends ConsumerState<SignUpScreen> {
         showCommonDialog(
           context: context,
           title: context.t.auth_unableToCreateAccount,
-          content: 'Unexpected Error',
-          primaryButtonText: 'Dismiss',
+          content: context.t.global_genericErrorTitle,
+          primaryButtonText: context.t.dialog_dismiss,
         );
       },
       loading: () {},
@@ -59,28 +59,36 @@ class _SignUpState extends ConsumerState<SignUpScreen> {
     final SignUpScreenController controller =
         ref.read(signUpScreenControllerProvider.notifier);
 
-    return Center(
-      child: SingleChildScrollView(
-        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: SignUpWidget(
-            isCreateAccountDisabled: state.isSignUpDisabled,
-            onCreateAccount: () {
-              if (!state.isLoading) {
-                _onSignUp();
-              }
-            },
-            onEmailChanged: (String value) =>
-                setState(() => controller.updateEmail(value)),
-            onPasswordChanged: (String value) =>
-                setState(() => controller.updatePassword(value)),
-            onConfirmedPasswordChanged: (String value) =>
-                setState(() => controller.updateConfirmPassword(value)),
-            onLogin: () => context.goNamed(AppRoute.login.name),
+    return Stack(
+      children: <Widget>[
+        Center(
+          child: SingleChildScrollView(
+            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: SignUpWidget(
+                isCreateAccountDisabled: state.isSignUpDisabled,
+                onCreateAccount: () {
+                  if (!state.isLoading) {
+                    _onSignUp();
+                  }
+                },
+                onEmailChanged: (String value) =>
+                    setState(() => controller.updateEmail(value)),
+                onPasswordChanged: (String value) =>
+                    setState(() => controller.updatePassword(value)),
+                onConfirmedPasswordChanged: (String value) =>
+                    setState(() => controller.updateConfirmPassword(value)),
+                onLogin: () => context.goNamed(AppRoute.login.name),
+              ),
+            ),
           ),
         ),
-      ),
+        if (state.isLoading)
+          const Center(
+            child: CircularProgressIndicator(),
+          ),
+      ],
     );
   }
 }

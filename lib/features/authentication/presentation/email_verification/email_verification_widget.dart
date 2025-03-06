@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../l10n/translate.dart';
+import '../../application/auth_state_notifier.dart';
 
 class EmailVerificationWidget extends ConsumerWidget {
   const EmailVerificationWidget({super.key, required this.onSendEmail});
@@ -10,6 +11,9 @@ class EmailVerificationWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final AuthStateNotifier notifier =
+        ref.watch(authStateNotifierProvider.notifier);
+
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -39,6 +43,10 @@ class EmailVerificationWidget extends ConsumerWidget {
                 child: Text(context.t.auth_resend_email),
               ),
             ],
+          ),
+          TextButton(
+            child: const Text('Sign Out'),
+            onPressed: () => notifier.signOut(),
           ),
         ],
       ),

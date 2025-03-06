@@ -4,6 +4,9 @@ import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../core/common_widgets/common_scaffold.dart';
+import '../authentication/application/auth_state_notifier.dart';
+import '../authentication/domain/auth_state.dart';
+import '../authentication/domain/auth_status.dart';
 import '../authentication/presentation/email_verification/email_verification_screen.dart';
 import '../authentication/presentation/forgot_password_screen/forgot_password_screen.dart';
 import '../authentication/presentation/login_screen/login_screen.dart';
@@ -21,7 +24,7 @@ enum AppRoute {
   login('/auth'),
   signUp('signUp'),
   forgotPassword('forgotPassword'),
-  verifyEmail('verifyEmail'),
+  verifyEmail('/verifyEmail'),
   profile('/profile'),
   editProfile('editProfile'),
   ;
@@ -32,6 +35,7 @@ enum AppRoute {
 
 @Riverpod(keepAlive: true)
 GoRouter goRouter(Ref ref) {
+  final AsyncValue<AuthState> authState = ref.watch(authStateNotifierProvider);
   return GoRouter(
     initialLocation: AppRoute.login.path,
     navigatorKey: _rootNavigatorKey,
@@ -60,15 +64,15 @@ GoRouter goRouter(Ref ref) {
               child: CommonScaffold(ForgotPasswordScreen()),
             ),
           ),
-          GoRoute(
-            path: AppRoute.verifyEmail.path,
-            name: AppRoute.verifyEmail.name,
-            pageBuilder: (BuildContext context, GoRouterState state) =>
-                const NoTransitionPage<dynamic>(
-              child: CommonScaffold(EmailVerificationScreen()),
-            ),
-          ),
         ],
+      ),
+      GoRoute(
+        path: AppRoute.verifyEmail.path,
+        name: AppRoute.verifyEmail.name,
+        pageBuilder: (BuildContext context, GoRouterState state) =>
+            const NoTransitionPage<dynamic>(
+          child: CommonScaffold(EmailVerificationScreen()),
+        ),
       ),
       GoRoute(
         path: AppRoute.counter.path,
@@ -97,5 +101,31 @@ GoRouter goRouter(Ref ref) {
         ],
       ),
     ],
+    // ignore: body_might_complete_normally_nullable
+    redirect: (BuildContext context, GoRouterState state) {
+      final String? pathToRedirect = authState.when(
+        data: (AuthState authState) {
+          if (authState.status == AuthStatus.authenticated) {
+            if (state.uri.path == AppRoute.login.path ||
+                state.uri.path == AppRoute.signUp.path) {
+              return AppRoute.profile.path;
+            }
+          }
+          if (authState.status == AuthStatus.emailNotVerified) {
+            if (state.uri.path != AppRoute.verifyEmail.path) {
+              return AppRoute.verifyEmail.path;
+            }
+          }
+          return null;
+        },
+        error: (Object error, StackTrace stack) {
+          return null;
+        },
+        loading: () {
+          return null;
+        },
+      );
+      if (pathToRedirect != null) return pathToRedirect;
+    },
   );
 }

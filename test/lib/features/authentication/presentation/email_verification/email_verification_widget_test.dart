@@ -24,7 +24,7 @@ void main() {
 
   testWidgets('renders EmailVerificationWidget', (WidgetTester tester) async {
     const String expectedText =
-        'Please verify your email address. A confirmation link has been sent to your email.';
+        'Please verify your email address. A confirmation link has been sent to your email. Once verified, sign in again to continue.';
     const String expectedButtonText = 'Resend Email';
     final Finder iconFinder = find.byType(Icon);
 

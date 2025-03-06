@@ -84,7 +84,12 @@ class _UserProfileWidgetState extends ConsumerState<UserProfileWidget> {
               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           _buildUserDetails(),
-          if (widget.bio != null && widget.bio!.isNotEmpty) Text(widget.bio!),
+          const SizedBox(height: 12),
+          if (widget.bio != null && widget.bio!.isNotEmpty)
+            Text(
+              widget.bio!,
+              style: const TextStyle(fontSize: 16),
+            ),
           const SizedBox(height: 16),
           SizedBox(
             width: double.infinity,

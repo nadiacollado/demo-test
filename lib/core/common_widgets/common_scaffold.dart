@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../features/authentication/application/auth_state_notifier.dart';
+import '../../features/authentication/domain/auth_state.dart';
+import '../../features/authentication/domain/auth_status.dart';
 import '../../features/navigation/presentation/nav_drawer.dart';
 import '../../l10n/translate.dart';
 import '../theme/theme_controller.dart';
@@ -18,31 +21,36 @@ class CommonScaffold extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final ThemeMode themeMode = ref.watch(themeControllerProvider);
+    final AsyncValue<AuthState> authState =
+        ref.watch(authStateNotifierProvider);
+    final bool isAuthenticated =
+        authState.value?.status == AuthStatus.authenticated;
 
     return Scaffold(
-        appBar: AppBar(
-          title: Text(title ?? context.t.global_title),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(
-                switch (themeMode) {
-                  ThemeMode.light => Icons.dark_mode,
-                  ThemeMode.dark => Icons.brightness_auto,
-                  ThemeMode.system => Icons.light_mode,
-                },
-              ),
-              onPressed: () {
-                ref.read(themeControllerProvider.notifier).toggleTheme();
-              },
-              tooltip: switch (themeMode) {
-                ThemeMode.light => 'Switch to dark mode',
-                ThemeMode.dark => 'Switch to system mode',
-                ThemeMode.system => 'Switch to light mode',
+      appBar: AppBar(
+        title: Text(title ?? context.t.global_title),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              switch (themeMode) {
+                ThemeMode.light => Icons.dark_mode,
+                ThemeMode.dark => Icons.brightness_auto,
+                ThemeMode.system => Icons.light_mode,
               },
             ),
-          ],
-        ),
-        body: body,
-        drawer: const NavDrawer());
+            onPressed: () {
+              ref.read(themeControllerProvider.notifier).toggleTheme();
+            },
+            tooltip: switch (themeMode) {
+              ThemeMode.light => 'Switch to dark mode',
+              ThemeMode.dark => 'Switch to system mode',
+              ThemeMode.system => 'Switch to light mode',
+            },
+          ),
+        ],
+      ),
+      body: body,
+      drawer: isAuthenticated ? const NavDrawer() : null,
+    );
   }
 }

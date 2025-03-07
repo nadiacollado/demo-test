@@ -54,7 +54,7 @@ class NavDrawer extends ConsumerWidget {
                 title: context.t.nav_editProfile,
                 onTap: () => <void>{
                   Navigator.pop(context),
-                  context.goNamed(AppRoute.editProfile.name)
+                  context.goNamed(AppRoute.editProfile.name),
                 },
               ),
               NavDrawerItem(

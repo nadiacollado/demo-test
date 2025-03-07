@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+// ignore_for_file: prefer_mixin
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_starter_kit/features/authentication/application/auth_state_notifier.dart';
 import 'package:flutter_starter_kit/features/authentication/domain/auth_state.dart';
@@ -78,6 +79,7 @@ void main() {
 
     testWidgets('taps home and navigates to home screen',
         (WidgetTester tester) async {
+      // ignore: invalid_use_of_visible_for_overriding_member
       // when(() => mockAuthNotifier.build()).thenAnswer(
       //   (_) async => const AuthState(status: AuthStatus.authenticated),
       // );

@@ -17,10 +17,14 @@
 
 Ensure that you have Dart and Flutter properly installed by following the instructions on the [official Flutter website](https://flutter.dev/docs/get-started/install).
 
-This project requires the following versions or newer:
+This flutter project requires the following versions or newer:
 
 - Dart SDK: >=3.6.0 <4.0.0
 - Flutter: 3.27.1
+
+The new project Setup Script additionally requires the following:
+
+- GitHub CLI: >=2.30.0
 
 Follow the official [Flutter installation guide](https://docs.flutter.dev/get-started/install)
 
@@ -54,7 +58,17 @@ Some Flutter extensions for VS Code include:
 
 ## Creating a New Project
 
-To create a new project, run the following command in your terminal from the starter kit's root directory:
+> [!IMPORTANT]  
+> This script requires the Github CLI to be installed and logged in. Please see the [GitHub CLI docs](https://cli.github.com/) for more information.  
+> You can install it on Mac by running `brew install gh`.
+
+To create a new project, first ensure that dependencies are installed by running the  following command in your terminal from the starter kit's root directory:
+
+```shell
+flutter pub get
+```
+
+Then run the following command in your terminal from the starter kit's root directory:
 
 ```shell
 dart run bin/template/setup.dart
@@ -259,7 +273,7 @@ This project uses the FlexColorScheme package to handle the app's theme.
 
 To customize the theme, you can change the `scheme` in `core/theme/app_theme.dart` to one of the available schemes or create your own. It is recommended to use the [FlexColorScheme Playground](https://rydmike.com/flexcolorscheme/themesplayground-latest/) to experiment and explore the available options and the affects that they have on the theme.
 
-More information about using the theme system in Flutter can be found in the [Flutter Starter Kit Wiki](https://github.com/8thlight/flutter-starter-kit/wiki/How-To-Use-Flutter-Theme).
+More information about using the theme system in Flutter can be found in the [Starter Kit Wiki](https://github.com/8thlight/flutter-starter-kit/wiki/How-To-Use-Flutter-Theme).
 
 ## Running Integration Tests
 

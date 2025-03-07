@@ -152,6 +152,8 @@ class StringReplacer {
     '',
     '.swiftsourceinfo',
     '.swiftdoc',
+    '.xcuserstate',
+    '.md',
   ];
 
   void replaceStringInFile(File entity, String oldString, String newString) {

@@ -300,13 +300,20 @@ void main() {
     await tester.tap(saveButton);
     await tester.pumpAndSettle();
 
+    expect(
+      find.textContaining(tester.t.profile_successMessage),
+      findsOneWidget,
+    );
+
     verify(() => mockController.saveProfile()).called(1);
   });
 
   testWidgets('Displays success dialog on successful save',
       (WidgetTester tester) async {
-    const User testUser = User(email: 'test@example.com', username: 'testUser');
+    const User testUser = User(email: 'test@example.com', bio: 'Old Bio');
 
+    when(() => mockUserRepository.updateUserProfile(any()))
+        .thenAnswer((_) async {});
     when(() => mockController.getUser())
         .thenAnswer((_) => Stream<User?>.value(testUser));
     when(() => mockController.saveProfile()).thenAnswer((_) async => true);
@@ -321,9 +328,18 @@ void main() {
 
     await tester.pumpAndSettle();
 
+    final Finder bioField = find.byWidgetPredicate(
+      (Widget widget) =>
+          widget is TextField &&
+          widget.decoration?.hintText == tester.t.profile_bio,
+    );
+
+    await tester.enterText(bioField, 'New Bio');
+
     final Finder saveButton = find.text(tester.t.profile_save);
 
     await tester.pumpAndSettle();
+    await tester.ensureVisible(saveButton);
     await tester.tap(saveButton);
     await tester.pumpAndSettle();
 
@@ -353,6 +369,8 @@ void main() {
 
     final Finder saveButton = find.text(tester.t.profile_save);
     await tester.pumpAndSettle();
+    await tester.ensureVisible(saveButton);
+
     await tester.tap(saveButton);
     await tester.pumpAndSettle();
 

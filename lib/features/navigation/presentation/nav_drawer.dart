@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../l10n/translate.dart';
+import '../../authentication/application/auth_state_notifier.dart';
 import '../app_router.dart';
 
 class NavDrawer extends ConsumerWidget {
@@ -12,8 +13,10 @@ class NavDrawer extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final AuthStateNotifier authNotifier =
+        ref.watch(authStateNotifierProvider.notifier);
+
     return Stack(
-      clipBehavior: Clip.none,
       children: <Widget>[
         Drawer(
           width: MediaQuery.of(context).size.width * 0.8,
@@ -65,17 +68,33 @@ class NavDrawer extends ConsumerWidget {
                   context.goNamed(AppRoute.editProfile.name);
                 },
               ),
+              ListTile(
+                leading: const Icon(Icons.logout),
+                title: Text(
+                  context.t.nav_logout.toUpperCase(),
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
+                ),
+                onTap: () async {
+                  await authNotifier.signOut();
+
+                  if (context.mounted) Navigator.pop(context);
+                },
+              ),
             ],
           ),
         ),
         Positioned(
-          top: 5,
+          top: 30,
           right: 5,
           child: IconButton(
             icon: const Icon(
               Icons.close,
               color: Colors.white,
-              size: 40,
+              size: 30,
             ),
             onPressed: () {
               Navigator.pop(context);

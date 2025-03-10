@@ -53,6 +53,7 @@ class _EditUserProfileWidgetState extends ConsumerState<EditUserProfileWidget> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Form(
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         key: _formKey,
         child: Column(
           mainAxisSize: MainAxisSize.min,

@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../features/authentication/application/auth_state_notifier.dart';
+import '../../features/authentication/domain/auth_state.dart';
+import '../../features/authentication/domain/auth_status.dart';
+import '../../features/navigation/presentation/nav_drawer.dart';
 import '../../l10n/translate.dart';
 import '../theme/theme_controller.dart';
 
@@ -17,6 +21,10 @@ class CommonScaffold extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final ThemeMode themeMode = ref.watch(themeControllerProvider);
+    final AsyncValue<AuthState> authState =
+        ref.watch(authStateNotifierProvider);
+    final bool isAuthenticated =
+        authState.value?.status == AuthStatus.authenticated;
 
     return Scaffold(
       appBar: AppBar(
@@ -42,6 +50,7 @@ class CommonScaffold extends ConsumerWidget {
         ],
       ),
       body: body,
+      drawer: isAuthenticated ? const NavDrawer() : null,
     );
   }
 }

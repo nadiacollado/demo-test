@@ -66,5 +66,10 @@
   "profile_hello": "Hello",
   "profile_edit_profile": "Edit Profile",
   "profile_go_to_profile": "Go to Profile",
+  "@_NAV": {},
+  "nav_home": "Home",
+  "nav_editProfile": "Edit Profile",
+  "nav_logout": "Log out",
+  "nav_headerTitle": "Menu",
   "@_END": {}
 }

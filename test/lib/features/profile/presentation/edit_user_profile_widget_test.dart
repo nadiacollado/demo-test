@@ -171,5 +171,90 @@ void main() {
 
       verify(() => mockSave()).called(1);
     });
+
+    testWidgets('displays error when invalid age is entered',
+        (WidgetTester tester) async {
+      await createWidgetUnderTest(tester);
+
+      final Finder ageField = find.byWidgetPredicate(
+        (Widget widget) =>
+            widget is TextField &&
+            widget.decoration?.hintText == tester.t.profile_age,
+      );
+
+      await tester.enterText(ageField, 'Error');
+
+      final Finder saveButton = find.text(tester.t.profile_save);
+
+      await tester.ensureVisible(saveButton);
+      await tester.tap(saveButton);
+      await tester.pump();
+
+      expect(find.text(tester.t.profile_ageError), findsOneWidget);
+    });
+
+    testWidgets('displays error when age is below 0',
+        (WidgetTester tester) async {
+      await createWidgetUnderTest(tester);
+
+      final Finder ageField = find.byWidgetPredicate(
+        (Widget widget) =>
+            widget is TextField &&
+            widget.decoration?.hintText == tester.t.profile_age,
+      );
+
+      await tester.enterText(ageField, '-5');
+
+      final Finder saveButton = find.text(tester.t.profile_save);
+
+      await tester.ensureVisible(saveButton);
+      await tester.tap(saveButton);
+      await tester.pump();
+
+      expect(find.text(tester.t.profile_ageError), findsOneWidget);
+    });
+
+    testWidgets('displays error when age is above 120',
+        (WidgetTester tester) async {
+      await createWidgetUnderTest(tester);
+
+      final Finder ageField = find.byWidgetPredicate(
+        (Widget widget) =>
+            widget is TextField &&
+            widget.decoration?.hintText == tester.t.profile_age,
+      );
+
+      await tester.enterText(ageField, '150');
+
+      final Finder saveButton = find.text(tester.t.profile_save);
+
+      await tester.ensureVisible(saveButton);
+      await tester.tap(saveButton);
+      await tester.pump();
+
+      expect(find.text(tester.t.profile_ageError), findsOneWidget);
+    });
+
+    testWidgets('does not display error when age is valid',
+        (WidgetTester tester) async {
+      await createWidgetUnderTest(tester);
+
+      final Finder ageField = find.byWidgetPredicate(
+        (Widget widget) =>
+            widget is TextField &&
+            widget.decoration?.hintText == tester.t.profile_age,
+      );
+
+      await tester.enterText(ageField, '25');
+
+      final Finder saveButton = find.text(tester.t.profile_save);
+
+      await tester.ensureVisible(saveButton);
+      await tester.tap(saveButton);
+
+      await tester.pump();
+
+      expect(find.text(tester.t.profile_ageError), findsNothing);
+    });
   });
 }

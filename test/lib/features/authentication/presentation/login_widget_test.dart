@@ -65,7 +65,9 @@ void main() {
       await createWidgetUnderTest(tester);
 
       await tester.enterText(
-          find.byType(CommonTextFormField).first, 'test@example.com');
+        find.byType(CommonTextFormField).first,
+        'test@example.com',
+      );
       verify(() => mockOnEmailChanged('test@example.com')).called(1);
     });
 
@@ -74,7 +76,9 @@ void main() {
       await createWidgetUnderTest(tester);
 
       await tester.enterText(
-          find.byType(CommonTextFormField).last, 'password123');
+        find.byType(CommonTextFormField).last,
+        'password123',
+      );
       verify(() => mockOnPasswordChanged('password123')).called(1);
     });
 

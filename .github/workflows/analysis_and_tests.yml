@@ -23,6 +23,13 @@ jobs:
         run: cp env_template .env
       - name: build generated code
         run: dart run build_runner build --delete-conflicting-outputs
+      - name: Generate localizations
+        run: flutter gen-l10n
+      - name: Install Widgetbook
+        working-directory: widgetbook
+        run: |
+          flutter pub get
+          flutter pub run build_runner build --delete-conflicting-outputs
       - name: Analyze Dart
         uses: ./.actions/github-actions-analyze-dart
       - name: Analyze Flutter
@@ -41,12 +48,14 @@ jobs:
           channel: stable
           flutter-version-file: pubspec.yaml
       - run: flutter pub get
-      - name: Install lcov
-        run: sudo apt-get install lcov
       - name: create .env
         run: cp env_template .env
-      - name: Build generated code
+      - name: build generated code
         run: dart run build_runner build --delete-conflicting-outputs
+      - name: Generate localizations
+        run: flutter gen-l10n
+      - name: Install lcov
+        run: sudo apt-get install lcov
       - name: Create coverage helper file
         run: |
           file=test/coverage_helper_test.dart

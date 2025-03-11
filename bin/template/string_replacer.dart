@@ -35,6 +35,7 @@ class StringReplacer {
       'linux',
       'web',
       'integration_test',
+      'widgetbook',
     ];
 
     try {

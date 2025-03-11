@@ -7,6 +7,7 @@
 - [Creating a New Project](#creating-a-new-project)
 - [Getting Started](#getting-started)
 - [Running the App](#running-the-app)
+- [Running Widgetbook](#running-widgetbook)
 - [Environment Variables](#environment-variables)
 - [Localizations](#localizations)
 - [Google Cloud Logging](#google-cloud-logging)
@@ -96,6 +97,7 @@ flutter pub get
 ```shell
 dart run build_runner clean
 dart run build_runner build --delete-conflicting-outputs
+flutter gen-l10n
 ```
 
 You will also need the following files for Android and iOS setup:
@@ -142,6 +144,21 @@ See the [flutter-cli docs](https://docs.flutter.dev/reference/flutter-cli) for m
 dart run build_runner clean
 dart run build_runner build --delete-conflicting-outputs
 ```
+
+### Running Widgetbook
+
+The [Widgetbook readme file](./widgetbook/README.md) has more specific information on how to run Widgetbook and how to add new use cases.
+
+To run Widgetbook, navigate to the Widgetbook folder and execute the following command then select the device you want to use:
+
+```bash
+cd widgetbook
+flutter run
+```
+
+This command needs to be run from the `widgetbook` directory to ensure that the correct configuration is loaded.
+
+For more information on Widgetbook, please refer to the [Widgetbook documentation](https://docs.widgetbook.io/index).
 
 ## Environment Variables
 

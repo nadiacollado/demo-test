@@ -32,6 +32,8 @@ migrate_working_dir/
 .pub-cache/
 .pub/
 /build/
+# lib/l10n/arb/*.dart - The Widgetbook guide says to ignore these, 
+# but it may be better not to
 
 # Symbolication related
 app.*.symbols

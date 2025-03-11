@@ -20,8 +20,6 @@ void main() {
   late MockAuthRepository mockAuthRepository;
 
   setUp(() {
-    TestWidgetsFlutterBinding.ensureInitialized();
-
     mockAuthRepository = MockAuthRepository();
   });
 
@@ -37,7 +35,7 @@ void main() {
       overrides: <Override>[
         authRepositoryProvider.overrideWithValue(mockAuthRepository),
       ],
-      initialLocation: '/signUp',
+      initialLocation: '/auth/signUp',
     );
 
     // Enter email
@@ -46,7 +44,7 @@ void main() {
           of: find.byType(CommonTextFormField),
           matching: find.byType(TextField),
         )
-        .at(0);
+        .first;
     await tester.enterText(textFieldFinder, 'test@gmail.com');
 
     // Enter password
@@ -89,7 +87,7 @@ void main() {
       overrides: <Override>[
         authRepositoryProvider.overrideWithValue(mockAuthRepository),
       ],
-      initialLocation: '/signUp',
+      initialLocation: '/auth/signUp',
     );
 
     // Enter email

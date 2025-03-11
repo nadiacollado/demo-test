@@ -36,7 +36,7 @@ extension LocalizedPump on WidgetTester {
     Widget widget, {
     List<Override> overrides = const <Override>[],
     bool useRouter = false,
-    String initialLocation = '/login',
+    String initialLocation = '/auth',
   }) async {
     await pumpWidget(
       ProviderScope(

@@ -67,6 +67,7 @@ class _SignUpState extends ConsumerState<SignUpScreen> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: SignUpWidget(
+                doPasswordsMatch: state.doPasswordsMatch,
                 isCreateAccountDisabled: state.isSignUpDisabled,
                 onCreateAccount: () {
                   if (!state.isLoading) {

@@ -16,6 +16,8 @@ class SignUpFormState {
       confirmPassword.isEmpty ||
       password != confirmPassword;
 
+  bool get doPasswordsMatch => password != confirmPassword;
+
   SignUpFormState copyWith({
     String? email,
     String? password,

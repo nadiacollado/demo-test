@@ -103,7 +103,7 @@ class _UserProfileWidgetState extends ConsumerState<UserProfileWidget> {
                 ),
               ),
               child: Text(
-                context.t.profile_edit_profile.toUpperCase(),
+                context.t.profile_editProfile.toUpperCase(),
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
             ),

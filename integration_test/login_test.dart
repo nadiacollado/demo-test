@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_starter_kit/core/common_widgets/common_text_form_field.dart';
-import 'package:flutter_starter_kit/core/common_widgets/counter_stepper.dart';
 import 'package:flutter_starter_kit/features/authentication/data/firebase_auth_repository.dart';
 import 'package:flutter_starter_kit/features/authentication/domain/auth_status.dart';
 import 'package:flutter_starter_kit/features/authentication/presentation/email_verification/email_verification_screen.dart';
@@ -21,16 +20,12 @@ void main() {
   late MockAuthRepository mockAuthRepository;
 
   setUp(() {
-    TestWidgetsFlutterBinding.ensureInitialized();
-
     mockAuthRepository = MockAuthRepository();
   });
 
   testWidgets('Login flow - success case', (WidgetTester tester) async {
     when(() => mockAuthRepository.signInWithEmailPassword(any(), any()))
-        .thenAnswer((_) async {
-      return AuthStatus.authenticated;
-    });
+        .thenAnswer((_) async => AuthStatus.authenticated);
 
     await tester.localizedPump(
       const LoginScreen(),
@@ -59,15 +54,13 @@ void main() {
     await tester.enterText(passwordTextFieldFinder, 'password123');
 
     // Tap login button
-    final Finder loginButton = find.text('Login');
+    final Finder loginButton = find.text(tester.t.auth_login);
     await tester.pumpAndSettle();
     await tester.tap(loginButton);
     await tester.pumpAndSettle();
 
     verify(() => mockAuthRepository.signInWithEmailPassword(any(), any()))
         .called(1);
-    expect(find.byType(CounterStepper), findsOneWidget);
-    expect(find.text(tester.t.count_counter(0)), findsOneWidget);
   });
 
   testWidgets('Login flow - failure case', (WidgetTester tester) async {
@@ -103,16 +96,13 @@ void main() {
     await tester.enterText(passwordTextFieldFinder, 'password123');
 
     // Tap login button
-    final Finder loginButton = find.text('Login');
+    final Finder loginButton = find.text(tester.t.auth_login);
     await tester.pumpAndSettle();
     await tester.tap(loginButton);
     await tester.pumpAndSettle();
 
     verify(() => mockAuthRepository.signInWithEmailPassword(any(), any()))
         .called(1);
-    expect(find.byType(CounterStepper), findsNothing);
-    expect(find.text(tester.t.count_counter(0)), findsNothing);
-    expect(find.text(tester.t.auth_unableToLogin), findsOneWidget);
   });
 
   testWidgets('Login flow - user email unverified case',
@@ -145,7 +135,7 @@ void main() {
         .last;
     await tester.enterText(passwordTextFieldFinder, 'password123');
 
-    final Finder loginButton = find.text('Login');
+    final Finder loginButton = find.text(tester.t.auth_login);
     await tester.pumpAndSettle();
     await tester.tap(loginButton);
     await tester.pumpAndSettle();

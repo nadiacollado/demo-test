@@ -47,65 +47,76 @@ class EditUserProfileWidget extends ConsumerStatefulWidget {
 }
 
 class _EditUserProfileWidgetState extends ConsumerState<EditUserProfileWidget> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          _buildField(
-            context.t.profile_editUsername,
-            context.t.profile_username,
-            widget.onUsernameChanged,
-            widget.username,
-          ),
-          _buildField(
-            context.t.profile_editFirstName,
-            context.t.profile_firstName,
-            widget.onFirstNameChanged,
-            widget.firstName,
-          ),
-          _buildField(
-            context.t.profile_editLastName,
-            context.t.profile_lastName,
-            widget.onLastNameChanged,
-            widget.lastName,
-          ),
-          _buildField(
-            context.t.profile_editPronouns,
-            context.t.profile_pronouns,
-            widget.onPronounsChanged,
-            widget.pronouns,
-          ),
-          _buildField(
-            context.t.profile_editAge,
-            context.t.profile_age,
-            widget.onAgeChanged,
-            widget.age,
-          ),
-          _buildField(
-            context.t.profile_editLocation,
-            context.t.profile_location,
-            widget.onLocationChanged,
-            widget.location,
-          ),
-          _buildField(
-            context.t.profile_editBio,
-            context.t.profile_bio,
-            widget.onBioChanged,
-            widget.bio,
-            5,
-          ),
-          const SizedBox(height: 16),
-          SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-              onPressed: widget.onSave,
-              child: Text(context.t.profile_save),
+      child: Form(
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        key: _formKey,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            _buildField(
+              context.t.profile_editUsername,
+              context.t.profile_username,
+              widget.onUsernameChanged,
+              widget.username,
             ),
-          ),
-        ],
+            _buildField(
+              context.t.profile_editFirstName,
+              context.t.profile_firstName,
+              widget.onFirstNameChanged,
+              widget.firstName,
+            ),
+            _buildField(
+              context.t.profile_editLastName,
+              context.t.profile_lastName,
+              widget.onLastNameChanged,
+              widget.lastName,
+            ),
+            _buildField(
+              context.t.profile_editPronouns,
+              context.t.profile_pronouns,
+              widget.onPronounsChanged,
+              widget.pronouns,
+            ),
+            _buildField(
+              context.t.profile_editAge,
+              context.t.profile_age,
+              widget.onAgeChanged,
+              widget.age,
+              validator: _validateAge,
+            ),
+            _buildField(
+              context.t.profile_editLocation,
+              context.t.profile_location,
+              widget.onLocationChanged,
+              widget.location,
+            ),
+            _buildField(
+              context.t.profile_editBio,
+              context.t.profile_bio,
+              widget.onBioChanged,
+              widget.bio,
+              maxLines: 5,
+            ),
+            const SizedBox(height: 16),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {
+                  if (_formKey.currentState?.validate() ?? false) {
+                    widget.onSave();
+                  }
+                },
+                child: Text(context.t.profile_save),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -114,9 +125,10 @@ class _EditUserProfileWidgetState extends ConsumerState<EditUserProfileWidget> {
     String label,
     String hint,
     ValueChanged<String> onChanged,
-    String? initialValue, [
+    String? initialValue, {
     int maxLines = 1,
-  ]) {
+    String? Function(String?)? validator,
+  }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -131,9 +143,22 @@ class _EditUserProfileWidgetState extends ConsumerState<EditUserProfileWidget> {
           onChange: onChanged,
           initialValue: initialValue,
           maxLines: maxLines,
+          validator: validator,
         ),
         const SizedBox(height: 16),
       ],
     );
+  }
+
+  String? _validateAge(String? value) {
+    if (value == null || value.isEmpty) {
+      return null;
+    } else {
+      final int? age = int.tryParse(value);
+      if (age == null || age < 0 || age > 120) {
+        return context.t.profile_ageError;
+      }
+    }
+    return null;
   }
 }

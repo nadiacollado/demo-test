@@ -11,6 +11,7 @@ class CommonTextFormField extends StatefulWidget {
     this.useController = false,
     this.icon,
     this.maxLines,
+    this.validator,
   });
 
   final ValueChanged<String> onChange;
@@ -21,6 +22,7 @@ class CommonTextFormField extends StatefulWidget {
   final bool useController;
   final IconData? icon;
   final int? maxLines;
+  final String? Function(String?)? validator;
 
   @override
   _CommonTextFormFieldState createState() => _CommonTextFormFieldState();
@@ -51,7 +53,8 @@ class _CommonTextFormFieldState extends State<CommonTextFormField> {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
+      validator: widget.validator,
       keyboardType: widget.maxLines != null && widget.maxLines! > 1
           ? TextInputType.multiline
           : TextInputType.text,

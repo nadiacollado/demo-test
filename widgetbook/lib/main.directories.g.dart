@@ -13,22 +13,24 @@
 import 'package:widgetbook/widgetbook.dart' as _i1;
 import 'package:widgetbook_workspace/core/common_widgets/common_full_width.dart'
     as _i2;
-import 'package:widgetbook_workspace/core/common_widgets/common_scaffold.dart'
+import 'package:widgetbook_workspace/core/common_widgets/common_public_scaffold.dart'
     as _i3;
-import 'package:widgetbook_workspace/core/common_widgets/common_text_form_field.dart'
+import 'package:widgetbook_workspace/core/common_widgets/common_scaffold.dart'
     as _i4;
-import 'package:widgetbook_workspace/core/common_widgets/counter_stepper.dart'
+import 'package:widgetbook_workspace/core/common_widgets/common_text_form_field.dart'
     as _i5;
-import 'package:widgetbook_workspace/features/authentication/email_verification_widget.dart'
+import 'package:widgetbook_workspace/core/common_widgets/counter_stepper.dart'
     as _i6;
-import 'package:widgetbook_workspace/features/authentication/login_widget.dart'
+import 'package:widgetbook_workspace/features/authentication/email_verification_widget.dart'
     as _i7;
-import 'package:widgetbook_workspace/features/authentication/sign_up_widget.dart'
+import 'package:widgetbook_workspace/features/authentication/login_widget.dart'
     as _i8;
-import 'package:widgetbook_workspace/features/profile/edit_user_profile_widget.dart'
+import 'package:widgetbook_workspace/features/authentication/sign_up_widget.dart'
     as _i9;
-import 'package:widgetbook_workspace/features/profile/user_profile_widget.dart'
+import 'package:widgetbook_workspace/features/profile/edit_user_profile_widget.dart'
     as _i10;
+import 'package:widgetbook_workspace/features/profile/user_profile_widget.dart'
+    as _i11;
 
 final directories = <_i1.WidgetbookNode>[
   _i1.WidgetbookFolder(
@@ -45,24 +47,31 @@ final directories = <_i1.WidgetbookNode>[
             ),
           ),
           _i1.WidgetbookLeafComponent(
-            name: 'CommonScaffold',
+            name: 'CommonPublicScaffold',
             useCase: _i1.WidgetbookUseCase(
               name: 'default',
               builder: _i3.useCaseCommonScaffold,
             ),
           ),
           _i1.WidgetbookLeafComponent(
+            name: 'CommonScaffold',
+            useCase: _i1.WidgetbookUseCase(
+              name: 'default',
+              builder: _i4.useCaseCommonScaffold,
+            ),
+          ),
+          _i1.WidgetbookLeafComponent(
             name: 'CommonTextFormField',
             useCase: _i1.WidgetbookUseCase(
               name: 'default',
-              builder: _i4.useCaseCommonTextFormField,
+              builder: _i5.useCaseCommonTextFormField,
             ),
           ),
           _i1.WidgetbookLeafComponent(
             name: 'CounterStepper',
             useCase: _i1.WidgetbookUseCase(
               name: 'default',
-              builder: _i5.useCaseCounterStepper,
+              builder: _i6.useCaseCounterStepper,
             ),
           ),
         ],
@@ -85,7 +94,7 @@ final directories = <_i1.WidgetbookNode>[
                     name: 'EmailVerificationWidget',
                     useCase: _i1.WidgetbookUseCase(
                       name: 'default',
-                      builder: _i6.useCaseEmailVerificationWidget,
+                      builder: _i7.useCaseEmailVerificationWidget,
                     ),
                   )
                 ],
@@ -97,7 +106,7 @@ final directories = <_i1.WidgetbookNode>[
                     name: 'LoginWidget',
                     useCase: _i1.WidgetbookUseCase(
                       name: 'Login Widget',
-                      builder: _i7.useCaseLoginWidget,
+                      builder: _i8.useCaseLoginWidget,
                     ),
                   )
                 ],
@@ -109,7 +118,7 @@ final directories = <_i1.WidgetbookNode>[
                     name: 'SignUpWidget',
                     useCase: _i1.WidgetbookUseCase(
                       name: 'Sign Up Widget',
-                      builder: _i8.useCaseSignUpWidget,
+                      builder: _i9.useCaseSignUpWidget,
                     ),
                   )
                 ],
@@ -128,14 +137,14 @@ final directories = <_i1.WidgetbookNode>[
                 name: 'EditUserProfileWidget',
                 useCase: _i1.WidgetbookUseCase(
                   name: 'Edit User Profile Widget',
-                  builder: _i9.useCaseEditUserProfileWidget,
+                  builder: _i10.useCaseEditUserProfileWidget,
                 ),
               ),
               _i1.WidgetbookLeafComponent(
                 name: 'UserProfileWidget',
                 useCase: _i1.WidgetbookUseCase(
                   name: 'User Profile Widget',
-                  builder: _i10.useCaseUserProfileWidget,
+                  builder: _i11.useCaseUserProfileWidget,
                 ),
               ),
             ],

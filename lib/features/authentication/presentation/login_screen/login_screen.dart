@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/common_widgets/common_dialog.dart';
+import '../../../../core/common_widgets/common_public_scaffold.dart';
 import '../../../../features/authentication/presentation/login_screen/login_widget.dart';
 import '../../../../l10n/translate.dart';
 import '../../../navigation/app_router.dart';
@@ -65,33 +66,35 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     final LoginScreenController controller =
         ref.read(loginScreenControllerProvider.notifier);
 
-    return Stack(
-      children: <Widget>[
-        SizedBox.expand(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: LoginWidget(
-              isLoginDisabled: state.isLoginDisabled,
-              onLogin: () {
-                if (!state.isLoading) {
-                  _onLogin(controller);
-                }
-              },
-              onEmailChanged: (String value) =>
-                  setState(() => controller.updateEmail(value)),
-              onPasswordChanged: (String value) =>
-                  setState(() => controller.updatePassword(value)),
-              onCreateAccount: () => context.goNamed(AppRoute.signUp.name),
-              onForgotPassword: () =>
-                  context.pushNamed(AppRoute.forgotPassword.name),
+    return CommonPublicScaffold(
+      Stack(
+        children: <Widget>[
+          SizedBox.expand(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: LoginWidget(
+                isLoginDisabled: state.isLoginDisabled,
+                onLogin: () {
+                  if (!state.isLoading) {
+                    _onLogin(controller);
+                  }
+                },
+                onEmailChanged: (String value) =>
+                    setState(() => controller.updateEmail(value)),
+                onPasswordChanged: (String value) =>
+                    setState(() => controller.updatePassword(value)),
+                onCreateAccount: () => context.goNamed(AppRoute.signUp.name),
+                onForgotPassword: () =>
+                    context.pushNamed(AppRoute.forgotPassword.name),
+              ),
             ),
           ),
-        ),
-        if (authState.isLoading)
-          const Center(
-            child: CircularProgressIndicator(),
-          ),
-      ],
+          if (authState.isLoading)
+            const Center(
+              child: CircularProgressIndicator(),
+            ),
+        ],
+      ),
     );
   }
 }

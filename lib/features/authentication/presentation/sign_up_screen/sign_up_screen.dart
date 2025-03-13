@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/common_widgets/common_dialog.dart';
+import '../../../../core/common_widgets/common_public_scaffold.dart';
 import '../../../../features/authentication/presentation/sign_up_screen/sign_up_widget.dart';
 import '../../../../l10n/translate.dart';
 import '../../../navigation/app_router.dart';
@@ -59,37 +60,39 @@ class _SignUpState extends ConsumerState<SignUpScreen> {
     final SignUpScreenController controller =
         ref.read(signUpScreenControllerProvider.notifier);
 
-    return Stack(
-      children: <Widget>[
-        Center(
-          child: SingleChildScrollView(
-            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: SignUpWidget(
-                doPasswordsMatch: state.doPasswordsMatch,
-                isCreateAccountDisabled: state.isSignUpDisabled,
-                onCreateAccount: () {
-                  if (!state.isLoading) {
-                    _onSignUp();
-                  }
-                },
-                onEmailChanged: (String value) =>
-                    setState(() => controller.updateEmail(value)),
-                onPasswordChanged: (String value) =>
-                    setState(() => controller.updatePassword(value)),
-                onConfirmedPasswordChanged: (String value) =>
-                    setState(() => controller.updateConfirmPassword(value)),
-                onLogin: () => context.goNamed(AppRoute.login.name),
+    return CommonPublicScaffold(
+      Stack(
+        children: <Widget>[
+          Center(
+            child: SingleChildScrollView(
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: SignUpWidget(
+                  doPasswordsMatch: state.doPasswordsMatch,
+                  isCreateAccountDisabled: state.isSignUpDisabled,
+                  onCreateAccount: () {
+                    if (!state.isLoading) {
+                      _onSignUp();
+                    }
+                  },
+                  onEmailChanged: (String value) =>
+                      setState(() => controller.updateEmail(value)),
+                  onPasswordChanged: (String value) =>
+                      setState(() => controller.updatePassword(value)),
+                  onConfirmedPasswordChanged: (String value) =>
+                      setState(() => controller.updateConfirmPassword(value)),
+                  onLogin: () => context.goNamed(AppRoute.login.name),
+                ),
               ),
             ),
           ),
-        ),
-        if (state.isLoading)
-          const Center(
-            child: CircularProgressIndicator(),
-          ),
-      ],
+          if (state.isLoading)
+            const Center(
+              child: CircularProgressIndicator(),
+            ),
+        ],
+      ),
     );
   }
 }

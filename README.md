@@ -12,6 +12,7 @@
 - [Localizations](#localizations)
 - [Google Cloud Logging](#google-cloud-logging)
 - [Running Integration Tests](#running-integration-tests)
+- [Retool](#retool)
 - [Additional Documentation](#additional-documentation)
 
 ## Requirements
@@ -63,7 +64,7 @@ Some Flutter extensions for VS Code include:
 > This script requires the Github CLI to be installed and logged in. Please see the [GitHub CLI docs](https://cli.github.com/) for more information.  
 > You can install it on Mac by running `brew install gh`.
 
-To create a new project, first ensure that dependencies are installed by running the  following command in your terminal from the starter kit's root directory:
+To create a new project, first ensure that dependencies are installed by running the following command in your terminal from the starter kit's root directory:
 
 ```shell
 flutter pub get
@@ -317,6 +318,60 @@ Use flutter drive when:
 - You need to run tests on a real device or emulator (instead of a simulated test environment).
 - You need to profile performance metrics, such as frame rendering times and memory usage.
 - You want to test background behavior or deep linking in a separate process.
+
+## Retool
+
+[Retool](https://retool.com/) is a low-code platform that allows developers to build internal tools quickly by connecting to databases, APIs, and third party services. It provides a drag-and-drop interface to create dashboards, admin panels, and other business apps without extensive front-end development.
+
+### Steps to Integrate Retool with Firebase
+
+1. Set up a Retool account
+
+   - Go to Retool, sign up for a free or paid account.
+   - Create a new app inside Retool.
+
+2. Connect Firebase to Retool
+
+   - In Retool, navigate to Resources > Create New > Firebase.
+   - Generate a Service Account JSON Key from the Firebase console:
+     - Go to Project Settings > Service accounts.
+     - Click Generate new private key, download and store securely.
+   - In Retool, navigate to Resources > Create New > Firebase. Upload private key where requested.
+   - Save and test the connection.
+
+3. Query Firebase Data in Retool
+
+   - Inside your Retool app, navigate to Code tab in side panel.
+   - In code panel, click on add symbol, then resource query.
+   - Select the Firebase resource you created.
+   - Use Firestore queries to fetch and manipulate data.
+   - Bind query results to UI components like tables, charts, and forms.
+
+   Example Firestore Query in Retool:
+
+```javascript
+      const database = db.firestore();
+      const usersRef = database.collection("users");
+
+      const querySnapshot = await usersRef.get();
+
+      const users = querySnapshot.docs
+      .map((doc) => {
+        const data = doc.data();
+        return {
+          id: doc.id,
+          ...data,
+        };
+      })
+      .filter(user => user.age >= 25 && user.age <= 55);
+
+      return users;
+```
+
+4. Display & Manage Data
+   - Drag UI components (tables, forms, charts) onto your Retool dashboard.
+   - Use Firebase queries to list, edit, and delete data.
+   - Add action buttons to trigger updates in your Firestore database.
 
 ## Additional Documentation
 

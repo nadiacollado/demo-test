@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../core/common_widgets/common_public_scaffold.dart';
 import '../../core/common_widgets/common_scaffold.dart';
 import '../authentication/application/auth_state_notifier.dart';
 import '../authentication/domain/auth_state.dart';
@@ -45,7 +46,7 @@ GoRouter goRouter(Ref ref) {
         name: AppRoute.login.name,
         pageBuilder: (BuildContext context, GoRouterState state) =>
             const NoTransitionPage<dynamic>(
-          child: CommonScaffold(LoginScreen()),
+          child: CommonPublicScaffold(LoginScreen()),
         ),
         routes: <RouteBase>[
           GoRoute(
@@ -53,7 +54,7 @@ GoRouter goRouter(Ref ref) {
             name: AppRoute.signUp.name,
             pageBuilder: (BuildContext context, GoRouterState state) =>
                 const NoTransitionPage<dynamic>(
-              child: CommonScaffold(SignUpScreen()),
+              child: CommonPublicScaffold(SignUpScreen()),
             ),
           ),
           GoRoute(
@@ -61,7 +62,7 @@ GoRouter goRouter(Ref ref) {
             name: AppRoute.forgotPassword.name,
             pageBuilder: (BuildContext context, GoRouterState state) =>
                 const NoTransitionPage<dynamic>(
-              child: CommonScaffold(ForgotPasswordScreen()),
+              child: CommonPublicScaffold(ForgotPasswordScreen()),
             ),
           ),
         ],
@@ -71,7 +72,7 @@ GoRouter goRouter(Ref ref) {
         name: AppRoute.verifyEmail.name,
         pageBuilder: (BuildContext context, GoRouterState state) =>
             const NoTransitionPage<dynamic>(
-          child: CommonScaffold(EmailVerificationScreen()),
+          child: CommonPublicScaffold(EmailVerificationScreen()),
         ),
       ),
       GoRoute(

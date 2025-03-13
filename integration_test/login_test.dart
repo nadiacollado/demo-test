@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_starter_kit/core/common_widgets/common_text_form_field.dart';
@@ -21,6 +22,8 @@ void main() {
 
   setUp(() {
     mockAuthRepository = MockAuthRepository();
+
+    Firebase.initializeApp();
   });
 
   testWidgets('Login flow - success case', (WidgetTester tester) async {

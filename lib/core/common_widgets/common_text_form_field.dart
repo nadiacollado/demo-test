@@ -30,11 +30,13 @@ class CommonTextFormField extends StatefulWidget {
 
 class _CommonTextFormFieldState extends State<CommonTextFormField> {
   late TextEditingController _controller;
+  late bool _isObscured;
 
   @override
   void initState() {
     super.initState();
     _controller = TextEditingController(text: widget.initialValue);
+    _isObscured = widget.obscureText;
   }
 
   @override
@@ -58,15 +60,26 @@ class _CommonTextFormFieldState extends State<CommonTextFormField> {
       keyboardType: widget.maxLines != null && widget.maxLines! > 1
           ? TextInputType.multiline
           : TextInputType.text,
-      maxLines: widget.obscureText ? 1 : widget.maxLines,
+      maxLines: _isObscured ? 1 : widget.maxLines,
       controller: widget.useController ? _controller : null,
       decoration: InputDecoration(
         labelText: widget.labelText,
         hintText: widget.inputHint,
         prefixIcon: widget.icon != null ? Icon(widget.icon) : null,
+        suffixIcon: widget.obscureText
+            ? IconButton(
+                icon:
+                    Icon(_isObscured ? Icons.visibility : Icons.visibility_off),
+                onPressed: () {
+                  setState(() {
+                    _isObscured = !_isObscured;
+                  });
+                },
+              )
+            : null,
         border: const OutlineInputBorder(),
       ),
-      obscureText: widget.obscureText,
+      obscureText: _isObscured,
       onChanged: widget.onChange,
     );
   }

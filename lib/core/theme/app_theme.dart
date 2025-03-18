@@ -24,9 +24,10 @@ abstract final class AppTheme {
       interactionEffects: true,
       tintedDisabledControls: true,
       useM2StyleDividerInM3: true,
-      inputDecoratorSchemeColor: SchemeColor.surfaceContainerLow,
+      inputDecoratorSchemeColor: SchemeColor.onSurface,
       inputDecoratorIsFilled: true,
       inputDecoratorBorderType: FlexInputBorderType.outline,
+      inputDecoratorBackgroundAlpha: 0,
       alignedDropdown: true,
       appBarBackgroundSchemeColor: SchemeColor.primary,
       navigationRailUseIndicator: true,
@@ -35,6 +36,7 @@ abstract final class AppTheme {
     visualDensity: FlexColorScheme.comfortablePlatformDensity,
     cupertinoOverrideTheme: const CupertinoThemeData(applyThemeToAll: true),
   );
+
   // The defined dark theme.
   static ThemeData dark = FlexThemeData.dark(
     scheme: FlexScheme.blue,
@@ -44,9 +46,10 @@ abstract final class AppTheme {
       tintedDisabledControls: true,
       blendOnColors: true,
       useM2StyleDividerInM3: true,
-      inputDecoratorSchemeColor: SchemeColor.surfaceContainerLow,
+      inputDecoratorSchemeColor: SchemeColor.onSurface,
       inputDecoratorIsFilled: true,
       inputDecoratorBorderType: FlexInputBorderType.outline,
+      inputDecoratorBackgroundAlpha: 0,
       alignedDropdown: true,
       appBarBackgroundSchemeColor: SchemeColor.primaryContainer,
       navigationRailUseIndicator: true,

@@ -37,6 +37,10 @@ jobs:
   unit_tests:
     name: Unit Tests with Coverage
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      issues: write
+      contents: read
     steps:
       - name: Checkout code
         uses: actions/checkout@v4

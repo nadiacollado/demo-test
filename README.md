@@ -1,5 +1,7 @@
 # Flutter Starter Kit
 
+> This Flutter app relies on a separate backend repository for handling authentication. Please refer to the backend repo [here](https://github.com/8thlight/flutter-starter-kit-backend).
+
 ## Table of Contents
 
 - [Requirements](#requirements)

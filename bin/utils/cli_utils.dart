@@ -1,4 +1,5 @@
 import 'dart:io' as io;
+import './general_utils.dart';
 
 abstract class ProcessManager {
   Future<io.ProcessResult> run(
@@ -79,6 +80,39 @@ class CliUtils {
       command,
       arguments,
       workingDirectory: workingDirectory,
+    );
+  }
+
+  Future<void> commitChanges(String commitMessage) async {
+    final String repoRoot = getRepositoryRoot();
+
+    await runCommand(
+      'git',
+      arguments: <String>[
+        'add',
+        '.',
+      ],
+      workingDirectory: repoRoot,
+    );
+
+    await runCommand(
+      'git',
+      arguments: <String>[
+        'commit',
+        '-m',
+        '"$commitMessage"',
+        '--no-verify',
+      ],
+      workingDirectory: repoRoot,
+    );
+  }
+
+  Future<void> pushChanges() async {
+    final String repoRoot = getRepositoryRoot();
+    await runCommand(
+      'git',
+      arguments: <String>['push', '-u', 'origin', 'main', '--no-verify'],
+      workingDirectory: repoRoot,
     );
   }
 }

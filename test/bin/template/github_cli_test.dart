@@ -15,6 +15,11 @@ void main() {
     late MockCliUtils mockCliUtils;
     late MockTermUtils mockTermUtils;
 
+    const String testOrg = 'test-org';
+    const String testRepo = 'test-repo';
+    const String testFullName = '$testOrg/$testRepo';
+    const String testPath = '/test/path';
+
     setUp(() {
       mockCliUtils = MockCliUtils();
       mockTermUtils = MockTermUtils();
@@ -239,7 +244,9 @@ https://github.com/cli/cli/releases/tag/v2.0.0''',
           ),
         ).thenReturn('personal account: testuser');
 
-        final String result = await githubCli.confirmOrganization('testuser');
+        githubCli.username = 'testuser';
+
+        final String result = await githubCli.confirmOrganization();
         expect(result, equals('testuser'));
       });
 
@@ -259,8 +266,285 @@ https://github.com/cli/cli/releases/tag/v2.0.0''',
           ),
         ).thenReturn('org1');
 
-        final String result = await githubCli.confirmOrganization('testuser');
+        githubCli.username = 'testuser';
+
+        final String result = await githubCli.confirmOrganization();
         expect(result, equals('org1'));
+      });
+    });
+
+    group('createRepository', () {
+      setUp(() {
+        githubCli.repoName = 'test-repo';
+        githubCli.organization = 'test-org';
+      });
+
+      group('validateCreateRepository', () {
+        test('calls exitWithError when repoName is empty', () {
+          githubCli.repoName = '';
+          when(() => mockTermUtils.exitWithError(any()))
+              .thenAnswer((_) => throw Exception('Exit called'));
+
+          expect(
+            () => githubCli.validateCreateRepository(Repo.frontEnd),
+            throwsException,
+          );
+
+          verify(
+            () => mockTermUtils.exitWithError(
+              'repoName is empty. Ensure the app name is set properly',
+            ),
+          ).called(1);
+        });
+
+        test('calls exitWithError when organization is empty', () {
+          githubCli.organization = '';
+          when(() => mockTermUtils.exitWithError(any()))
+              .thenAnswer((_) => throw Exception('Exit called'));
+
+          expect(
+            () => githubCli.validateCreateRepository(Repo.frontEnd),
+            throwsException,
+          );
+
+          verify(
+            () => mockTermUtils.exitWithError(
+              'organization is empty. Ensure the organization is set properly',
+            ),
+          ).called(1);
+        });
+
+        test(
+            'does not call exitWithError when repoName and organization are not empty',
+            () {
+          expect(
+            () => githubCli.validateCreateRepository(Repo.frontEnd),
+            returnsNormally,
+          );
+
+          verifyNever(() => mockTermUtils.exitWithError(any()));
+        });
+      });
+      group('doesRepositoryExist', () {
+        test('returns true if repository exists', () async {
+          when(
+            () => mockCliUtils.runCommand(
+              'gh',
+              arguments: <String>['repo', 'view', testFullName],
+            ),
+          ).thenAnswer((_) async => '');
+
+          final bool result = await githubCli.doesRepositoryExist(testFullName);
+          expect(result, isTrue);
+        });
+
+        test('returns false if repository does not exist', () async {
+          when(
+            () => mockCliUtils.runCommand(
+              'gh',
+              arguments: <String>['repo', 'view', testFullName],
+            ),
+          ).thenThrow(
+            CliException(
+              command: 'gh',
+              arguments: <String>['repo', 'view', testFullName],
+              errorOutput: 'repository not found',
+              exitCode: 1,
+            ),
+          );
+
+          when(() => mockTermUtils.tPrint(FontCodes.red, any()))
+              .thenReturn(null);
+
+          final bool result = await githubCli.doesRepositoryExist(testFullName);
+          expect(result, isFalse);
+          verify(
+            () => mockTermUtils.tPrint(
+              FontCodes.green,
+              'Repository "$testFullName" does not exist.',
+            ),
+          ).called(1);
+        });
+      });
+
+      group('runCreateRepo', () {
+        test('calls runCommand with correct arguments', () async {
+          when(
+            () => mockCliUtils.runCommand(
+              'gh',
+              arguments: <String>['repo', 'create', testFullName, '--private'],
+            ),
+          ).thenAnswer((_) async => '');
+
+          when(() => mockTermUtils.tPrint(FontCodes.green, any()))
+              .thenReturn(null);
+
+          await githubCli.runCreateRepo(testFullName);
+
+          verify(
+            () => mockCliUtils.runCommand(
+              'gh',
+              arguments: <String>['repo', 'create', testFullName, '--private'],
+            ),
+          ).called(1);
+
+          verify(
+            () => mockTermUtils.tPrint(
+              FontCodes.green,
+              'Repository "$testFullName" created.',
+            ),
+          ).called(1);
+        });
+
+        test('throws CliException when runCommand fails', () async {
+          final CliException exception = CliException(
+            command: 'gh',
+            arguments: <String>['repo', 'create', testFullName, '--private'],
+            errorOutput: 'failed to create repo',
+            exitCode: 1,
+          );
+
+          when(
+            () => mockCliUtils.runCommand(
+              'gh',
+              arguments: <String>['repo', 'create', testFullName, '--private'],
+            ),
+          ).thenThrow(exception);
+
+          when(() => mockTermUtils.exitWithError(any()))
+              .thenAnswer((_) => throw Exception('Exit called'));
+
+          expect(
+            () async => githubCli.runCreateRepo(testFullName),
+            throwsException,
+          );
+        });
+      });
+
+      group('changeLocalOrigin', () {
+        test('calls runCommand with correct arguments', () async {
+          when(
+            () => mockCliUtils.runCommand(
+              'git',
+              arguments: <String>['remote', 'rm', 'origin'],
+              workingDirectory: testPath,
+            ),
+          ).thenAnswer((_) async => '');
+
+          when(
+            () => mockCliUtils.runCommand(
+              'git',
+              arguments: <String>[
+                'remote',
+                'add',
+                'origin',
+                'https://github.com/$testFullName.git',
+              ],
+              workingDirectory: testPath,
+            ),
+          ).thenAnswer((_) async => '');
+
+          when(() => mockTermUtils.tPrint(FontCodes.green, any()))
+              .thenReturn(null);
+
+          await githubCli.changeLocalOrigin(testFullName, rootDir: testPath);
+
+          verify(
+            () => mockCliUtils.runCommand(
+              'git',
+              arguments: <String>['remote', 'rm', 'origin'],
+              workingDirectory: testPath,
+            ),
+          ).called(1);
+
+          verify(
+            () => mockCliUtils.runCommand(
+              'git',
+              arguments: <String>[
+                'remote',
+                'add',
+                'origin',
+                'https://github.com/$testFullName.git',
+              ],
+              workingDirectory: testPath,
+            ),
+          ).called(1);
+
+          verify(
+            () => mockTermUtils.tPrint(
+              FontCodes.green,
+              'Remote origin added to repository "$testFullName".',
+            ),
+          ).called(1);
+        });
+      });
+
+      group('createNewRepo', () {
+        test(
+            'calls runCreateRepo, changeLocalOrigin, and pushChanges on success',
+            () async {
+          when(() => mockCliUtils.pushChanges()).thenAnswer((_) async => '');
+          when(() => mockTermUtils.tPrint(FontCodes.green, any()))
+              .thenReturn(null);
+          when(
+            () => mockCliUtils.runCommand(
+              'gh',
+              arguments: any(named: 'arguments'),
+              workingDirectory: any(named: 'workingDirectory'),
+            ),
+          ).thenAnswer((_) async => '');
+          when(
+            () => mockCliUtils.runCommand(
+              'git',
+              arguments: any(named: 'arguments'),
+              workingDirectory: any(named: 'workingDirectory'),
+            ),
+          ).thenAnswer((_) async => '');
+
+          await githubCli.createNewRepo(
+            Repo.frontEnd,
+            testFullName,
+            rootDir: testPath,
+          );
+
+          verify(() => mockCliUtils.pushChanges()).called(1);
+          verify(
+            () => mockTermUtils.tPrint(
+              FontCodes.green,
+              'Repository "$testFullName" created successfully.',
+            ),
+          ).called(1);
+          verify(
+            () => mockCliUtils.runCommand(
+              'gh',
+              arguments: <String>[
+                'repo',
+                'create',
+                testFullName,
+                '--private',
+              ],
+            ),
+          ).called(1);
+          verify(
+            () => mockCliUtils.runCommand(
+              'git',
+              arguments: <String>['remote', 'rm', 'origin'],
+              workingDirectory: testPath,
+            ),
+          ).called(1);
+          verify(
+            () => mockCliUtils.runCommand(
+              'git',
+              arguments: <String>[
+                'remote',
+                'add',
+                'origin',
+                'https://github.com/$testFullName.git',
+              ],
+              workingDirectory: testPath,
+            ),
+          ).called(1);
+        });
       });
     });
   });

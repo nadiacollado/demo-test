@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:args/args.dart';
 
+import '../utils/general_utils.dart';
 import '../utils/terminal_utils.dart';
 import 'folder_mover.dart';
 import 'github_cli.dart';
@@ -17,10 +18,8 @@ void main(List<String> args) async {
   _setupIntroduction(term);
 
   final GithubCli githubCli = GithubCli();
-  final String username = await githubCli.confirmGitHubUser();
-
-  // ignore: unused_local_variable - This will be used soon
-  final String organization = await githubCli.confirmOrganization(username);
+  await githubCli.confirmGitHubUser();
+  await githubCli.confirmOrganization();
 
   String appName = argResults['app-name'] as String? ?? '';
   if (appName == '') {
@@ -29,11 +28,15 @@ void main(List<String> args) async {
     );
   }
 
+  githubCli.repoName = toKebabCase(appName);
+
   final StringReplacer replacer = StringReplacer();
-  replacer.updateAppName(appName);
+  await replacer.updateAppName(appName);
 
   final FolderMover folderMover = FolderMover();
-  folderMover.move('workflows', '../../.github/workflows');
+  await folderMover.move('workflows', '../../.github/workflows');
+
+  await githubCli.createRepository(Repo.frontEnd);
 }
 
 void _setupIntroduction(TermUtils term) {

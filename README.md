@@ -80,6 +80,8 @@ dart run bin/template/setup.dart
 
 This script will replace the name of this project with the name of the project you want to create, and prepare this repository to be your new project.
 
+This script is only designed to be ran once, if you wish to re-run the script, please reset your local repo to the Flutter Starter Kit main branch
+
 ## Getting Started
 
 1. Before you can begin to run the app. You must create `.env`. See [Environment Variables](#environment-variables) for further details.

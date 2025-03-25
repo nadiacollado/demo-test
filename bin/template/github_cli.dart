@@ -1,5 +1,17 @@
 import '../utils/cli_utils.dart';
+import '../utils/general_utils.dart';
 import '../utils/terminal_utils.dart';
+
+enum Repo {
+  frontEnd(label: 'Front End'),
+  backEnd(label: 'Back End');
+
+  const Repo({
+    required this.label,
+  });
+
+  final String label;
+}
 
 class GithubCli {
   GithubCli({
@@ -11,6 +23,12 @@ class GithubCli {
   final CliUtils _cliUtils;
   final TermUtils _termUtils;
 
+  String username = '';
+  String organization = '';
+  String validatedFrontEndRepoFullName = '';
+  String validatedBackEndRepoFullName = '';
+  String repoName = '';
+
   Future<String> confirmGitHubUser() async {
     final String username = await getUsername();
     final bool isConfirmed = _termUtils.tPrintYesNoQuestion(
@@ -21,6 +39,8 @@ class GithubCli {
         'Please log in to the GitHub CLI with the user you wish to use by running: gh auth login',
       );
     }
+
+    this.username = username;
 
     return username;
   }
@@ -78,7 +98,7 @@ class GithubCli {
     }
   }
 
-  Future<String> confirmOrganization(String username) async {
+  Future<String> confirmOrganization() async {
     final List<String> orgNames = await getOrganizations();
 
     final String personalAccount = 'personal account: $username';
@@ -97,6 +117,130 @@ class GithubCli {
     final String accountToUse =
         (organization == personalAccount) ? username : organization;
 
+    this.organization = accountToUse;
+
     return accountToUse;
+  }
+
+  Future<void> createRepository(Repo repo) async {
+    validateCreateRepository(repo);
+
+    late final String newRepoName;
+
+    switch (repo) {
+      case Repo.frontEnd:
+        newRepoName = repoName;
+      case Repo.backEnd:
+        newRepoName = '$repoName-backend';
+    }
+
+    final String repoFullName = '$organization/$newRepoName';
+
+    if (await doesRepositoryExist(repoFullName)) {
+      _termUtils.exitWithError('Repository "$repoFullName" already exists.');
+    }
+
+    await createNewRepo(repo, repoFullName);
+  }
+
+  void validateCreateRepository(Repo repo) {
+    if (repoName.isEmpty) {
+      _termUtils.exitWithError(
+        'repoName is empty. Ensure the app name is set properly',
+      );
+    }
+    if (organization.isEmpty) {
+      _termUtils.exitWithError(
+        'organization is empty. Ensure the organization is set properly',
+      );
+    }
+  }
+
+  Future<bool> doesRepositoryExist(String repoFullName) async {
+    try {
+      await _cliUtils
+          .runCommand('gh', arguments: <String>['repo', 'view', repoFullName]);
+    } on CliException catch (e) {
+      if (e.exitCode != 0) {
+        _termUtils.tPrint(
+          FontCodes.green,
+          'Repository "$repoFullName" does not exist.',
+        );
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  Future<void> createNewRepo(
+    Repo repo,
+    String newRepoName, {
+    String? rootDir,
+  }) async {
+    _termUtils.tPrint(
+      FontCodes.green,
+      'Creating repository with name "$newRepoName"',
+    );
+
+    try {
+      await runCreateRepo(newRepoName);
+      await changeLocalOrigin(newRepoName, rootDir: rootDir);
+      await _cliUtils.pushChanges();
+
+      _termUtils.tPrint(
+        FontCodes.green,
+        'Repository "$newRepoName" created successfully.',
+      );
+      switch (repo) {
+        case Repo.frontEnd:
+          validatedFrontEndRepoFullName = newRepoName;
+        case Repo.backEnd:
+          validatedBackEndRepoFullName = newRepoName;
+      }
+    } on CliException catch (e) {
+      _termUtils.exitWithError(
+        'Failed to create repository "$newRepoName". Error: $e',
+      );
+    }
+  }
+
+  Future<void> runCreateRepo(String newRepoName) async {
+    await _cliUtils.runCommand(
+      'gh',
+      arguments: <String>['repo', 'create', newRepoName, '--private'],
+    );
+
+    _termUtils.tPrint(FontCodes.green, 'Repository "$newRepoName" created.');
+  }
+
+  Future<void> changeLocalOrigin(String newRepoName, {String? rootDir}) async {
+    final String repoRoot = rootDir ?? getRepositoryRoot();
+
+    await _cliUtils.runCommand(
+      'git',
+      arguments: <String>[
+        'remote',
+        'rm',
+        'origin',
+      ],
+      workingDirectory: repoRoot,
+    );
+
+    await _cliUtils.runCommand(
+      'git',
+      arguments: <String>[
+        'remote',
+        'add',
+        'origin',
+        'https://github.com/$newRepoName.git',
+      ],
+      workingDirectory: repoRoot,
+    );
+
+    _termUtils.tPrint(
+      FontCodes.green,
+      'Remote origin added to repository "$newRepoName".',
+    );
   }
 }

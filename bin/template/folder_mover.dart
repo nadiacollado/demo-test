@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import '../utils/cli_utils.dart';
 import '../utils/path_utils.dart';
 import '../utils/terminal_utils.dart';
 
@@ -7,17 +8,20 @@ class FolderMover {
   FolderMover({
     final TermUtils? termUtils,
     final PathUtils? pathUtils,
+    final CliUtils? cliUtils,
   })  : term = termUtils ?? TermUtils(),
-        path = pathUtils ?? PathUtils();
+        path = pathUtils ?? PathUtils(),
+        cli = cliUtils ?? CliUtils();
 
   final TermUtils term;
   final PathUtils path;
+  final CliUtils cli;
 
-  void move(
+  Future<void> move(
     String sourceFolder,
     String destinationFolder, {
     Directory? workingDirectory,
-  }) {
+  }) async {
     try {
       final Directory currentDir = workingDirectory ??
           Directory(path.dirname(Platform.script.toFilePath()));
@@ -32,6 +36,10 @@ class FolderMover {
           getDirectory(currentDir, destinationFolder);
 
       moveDirectoryContents(sourceDirectory, destinationDirectory);
+
+      final String commitMessage = 'Moved $sourceFolder to $destinationFolder';
+      await cli.commitChanges(commitMessage);
+
       term.tPrint(
         FontCodes.green,
         'Moved directory: $sourceFolder to $destinationFolder',

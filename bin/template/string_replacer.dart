@@ -1,3 +1,4 @@
+import '../utils/cli_utils.dart';
 import '../utils/general_utils.dart';
 import '../utils/io_utils.dart';
 import '../utils/path_utils.dart';
@@ -8,13 +9,16 @@ class StringReplacer {
     final TermUtils? termUtils,
     final IoUtils? ioUtils,
     final PathUtils? pathUtils,
+    final CliUtils? cliUtils,
   })  : term = termUtils ?? TermUtils(),
         io = ioUtils ?? IoUtils(),
-        path = pathUtils ?? PathUtils();
+        path = pathUtils ?? PathUtils(),
+        cli = cliUtils ?? CliUtils();
 
   final TermUtils term;
   final IoUtils io;
   final PathUtils path;
+  final CliUtils cli;
 
   Future<void> updateAppName(String newAppName) async {
     final String newInternalName = internalName(newAppName);
@@ -64,7 +68,14 @@ class StringReplacer {
           }
         },
       );
-      term.tPrint(FontCodes.green, 'App name updated successfully');
+      final String commitMessage =
+          'Changed app name from Flutter Starter Kit to $newAppName';
+      await cli.commitChanges(commitMessage);
+
+      term.tPrint(
+        FontCodes.green,
+        'App name updated and committed successfully',
+      );
     } catch (error) {
       term.tPrint(FontCodes.red, '❌ An error occurred:', bold: true);
       term.tPrint(FontCodes.normal, '$error');
@@ -210,19 +221,5 @@ class StringReplacer {
       );
       return false;
     }
-  }
-
-  String getRepositoryRoot() {
-    Directory currentDir = io.directory(path.current);
-
-    while (currentDir.path != path.separator) {
-      final Directory gitDir = io.directory(path.join(currentDir.path, '.git'));
-      if (gitDir.existsSync()) {
-        return currentDir.path;
-      }
-      currentDir = currentDir.parent;
-    }
-
-    throw Exception('Could not find git repository root');
   }
 }

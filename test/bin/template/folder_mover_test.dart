@@ -5,6 +5,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:path/path.dart' as p;
 
 import '../../../bin/template/folder_mover.dart';
+import '../../../bin/utils/cli_utils.dart';
 import '../../../bin/utils/path_utils.dart';
 import '../../../bin/utils/terminal_utils.dart';
 
@@ -12,11 +13,14 @@ class MockTermUtils extends Mock implements TermUtils {}
 
 class MockPathUtils extends Mock implements PathUtils {}
 
+class MockCliUtils extends Mock implements CliUtils {}
+
 void main() {
   group('FolderMover', () {
     late FolderMover folderMover;
     late MockTermUtils term;
     late MockPathUtils pathUtils;
+    late MockCliUtils cliUtils;
     late Directory sourceDir;
     late Directory destDir;
 
@@ -25,7 +29,12 @@ void main() {
     setUp(() {
       term = MockTermUtils();
       pathUtils = MockPathUtils();
-      folderMover = FolderMover(termUtils: term, pathUtils: pathUtils);
+      cliUtils = MockCliUtils();
+      folderMover = FolderMover(
+        termUtils: term,
+        pathUtils: pathUtils,
+        cliUtils: cliUtils,
+      );
 
       sourceDir = Directory.systemTemp.createTempSync();
       destDir = Directory.systemTemp.createTempSync();
@@ -85,8 +94,9 @@ void main() {
           .thenReturn(p.join(destDir.path, fileName));
 
       when(() => term.tPrint(FontCodes.green, any())).thenReturn(null);
+      when(() => cliUtils.commitChanges(any())).thenAnswer((_) async {});
 
-      folderMover.move(
+      await folderMover.move(
         sourceDir.path,
         destDir.path,
         workingDirectory: Directory(p.current),

@@ -3,6 +3,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:path/path.dart' as p;
 
 import '../../../bin/template/string_replacer.dart';
+import '../../../bin/utils/cli_utils.dart';
 import '../../../bin/utils/io_utils.dart';
 import '../../../bin/utils/path_utils.dart';
 import '../../../bin/utils/terminal_utils.dart';
@@ -13,6 +14,8 @@ class MockFileUtils extends Mock implements IoUtils {}
 
 class MockPathUtils extends Mock implements PathUtils {}
 
+class MockCliUtils extends Mock implements CliUtils {}
+
 class MockFile extends Mock implements File {}
 
 void main() {
@@ -21,6 +24,7 @@ void main() {
     late MockTermUtils term;
     late MockFileUtils io;
     late MockPathUtils path;
+    late MockCliUtils cli;
     late Directory tempDir;
 
     const String oldStr = 'old';
@@ -39,10 +43,12 @@ void main() {
       term = MockTermUtils();
       io = MockFileUtils();
       path = MockPathUtils();
+      cli = MockCliUtils();
       replacer = StringReplacer(
         termUtils: term,
         ioUtils: io,
         pathUtils: path,
+        cliUtils: cli,
       );
       tempDir = Directory.systemTemp.createTempSync();
 
@@ -86,32 +92,6 @@ void main() {
         replacer.replaceAllOccurrencesInFolder(missingDirStr, oldStr, newStr),
         throwsA(isA<Exception>()),
       );
-    });
-
-    test('getRepositoryRoot finds the git repository root', () {
-      final Directory gitDir = Directory(p.join(tempDir.path, '.git'));
-      gitDir.createSync();
-
-      when(() => path.current).thenReturn(tempDir.path);
-      when(() => io.directory(tempDir.path)).thenReturn(tempDir);
-      when(() => path.separator).thenReturn('/');
-      when(() => path.join(tempDir.path, '.git')).thenReturn(gitDir.path);
-      when(() => io.directory(gitDir.path)).thenReturn(gitDir);
-
-      final String root = replacer.getRepositoryRoot();
-      expect(root, tempDir.path);
-    });
-
-    test(
-        'getRepositoryRoot throws exception if git repository root is not found',
-        () {
-      const String dirStr = '/';
-
-      when(() => path.current).thenReturn(dirStr);
-      when(() => io.directory(any())).thenReturn(Directory(dirStr));
-      when(() => path.separator).thenReturn(dirStr);
-
-      expect(() => replacer.getRepositoryRoot(), throwsA(isA<Exception>()));
     });
 
     test(

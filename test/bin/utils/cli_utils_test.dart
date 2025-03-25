@@ -3,6 +3,7 @@ import 'dart:io' as io;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import '../../../bin/utils/cli_utils.dart';
+import '../../../bin/utils/general_utils.dart';
 
 class MockProcessManager extends Mock implements ProcessManager {}
 
@@ -107,6 +108,39 @@ void main() {
             'test',
             <String>['arg1', 'arg2'],
             workingDirectory: '/test/dir',
+          ),
+        ).called(1);
+      });
+    });
+
+    group('commitChanges', () {
+      const String testCommitMessage = 'Test commit message';
+      final String workingDir = getRepositoryRoot();
+
+      test('runs git add and commit with correct parameters', () async {
+        when(
+          () => processManager.run(
+            any(),
+            any(),
+            workingDirectory: any(named: 'workingDirectory'),
+          ),
+        ).thenAnswer((_) async => io.ProcessResult(0, 0, '', ''));
+
+        await cliUtils.commitChanges(testCommitMessage);
+
+        verify(
+          () => processManager.run(
+            'git',
+            <String>['add', '.'],
+            workingDirectory: workingDir,
+          ),
+        ).called(1);
+
+        verify(
+          () => processManager.run(
+            'git',
+            <String>['commit', '-m', '"$testCommitMessage"', '--no-verify'],
+            workingDirectory: workingDir,
           ),
         ).called(1);
       });

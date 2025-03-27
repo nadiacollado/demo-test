@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import '../utils/cli_utils.dart';
 import '../utils/general_utils.dart';
 import '../utils/terminal_utils.dart';
@@ -72,10 +74,8 @@ class GithubCli {
         arguments: <String>['org', 'list'],
       );
 
-      final List<String> lines = result
-          .split('\n')
-          .where((String line) => line.trim().isNotEmpty)
-          .toList();
+      final List<String> lines =
+          result.split('\n').where((String line) => line.trim().isNotEmpty).toList();
 
       final List<String> orgNames = lines
           .where(
@@ -114,17 +114,14 @@ class GithubCli {
       extraNote: note,
     );
 
-    final String accountToUse =
-        (organization == personalAccount) ? username : organization;
+    final String accountToUse = (organization == personalAccount) ? username : organization;
 
     this.organization = accountToUse;
 
     return accountToUse;
   }
 
-  Future<void> createRepository(Repo repo) async {
-    validateCreateRepository(repo);
-
+  Future<void> createRepository(Repo repo, {String? rootDir}) async {
     late final String newRepoName;
 
     switch (repo) {
@@ -136,11 +133,7 @@ class GithubCli {
 
     final String repoFullName = '$organization/$newRepoName';
 
-    if (await doesRepositoryExist(repoFullName)) {
-      _termUtils.exitWithError('Repository "$repoFullName" already exists.');
-    }
-
-    await createNewRepo(repo, repoFullName);
+    await createNewRepo(repo, repoFullName, rootDir: rootDir);
   }
 
   void validateCreateRepository(Repo repo) {
@@ -156,10 +149,21 @@ class GithubCli {
     }
   }
 
-  Future<bool> doesRepositoryExist(String repoFullName) async {
+  Future<bool> doesRepositoryExist(Repo repo) async {
+    validateCreateRepository(repo);
+    late final String newRepoName;
+
+    switch (repo) {
+      case Repo.frontEnd:
+        newRepoName = repoName;
+      case Repo.backEnd:
+        newRepoName = '$repoName-backend';
+    }
+
+    final String repoFullName = '$organization/$newRepoName';
+
     try {
-      await _cliUtils
-          .runCommand('gh', arguments: <String>['repo', 'view', repoFullName]);
+      await _cliUtils.runCommand('gh', arguments: <String>['repo', 'view', repoFullName]);
     } on CliException catch (e) {
       if (e.exitCode != 0) {
         _termUtils.tPrint(
@@ -169,29 +173,18 @@ class GithubCli {
         return false;
       }
     }
-
     return true;
   }
 
-  Future<void> createNewRepo(
-    Repo repo,
-    String newRepoName, {
-    String? rootDir,
-  }) async {
-    _termUtils.tPrint(
-      FontCodes.green,
-      'Creating repository with name "$newRepoName"',
-    );
+  Future<void> createNewRepo(Repo repo, String newRepoName, {String? rootDir}) async {
+    _termUtils.tPrint(FontCodes.green, 'Creating repository with name "$newRepoName"');
 
     try {
       await runCreateRepo(newRepoName);
       await changeLocalOrigin(newRepoName, rootDir: rootDir);
-      await _cliUtils.pushChanges();
+      await _cliUtils.pushChanges(rootDir: rootDir);
 
-      _termUtils.tPrint(
-        FontCodes.green,
-        'Repository "$newRepoName" created successfully.',
-      );
+      _termUtils.tPrint(FontCodes.green, 'Repository "$newRepoName" created successfully.');
       switch (repo) {
         case Repo.frontEnd:
           validatedFrontEndRepoFullName = newRepoName;
@@ -199,9 +192,7 @@ class GithubCli {
           validatedBackEndRepoFullName = newRepoName;
       }
     } on CliException catch (e) {
-      _termUtils.exitWithError(
-        'Failed to create repository "$newRepoName". Error: $e',
-      );
+      _termUtils.exitWithError('Failed to create repository "$newRepoName". Error: $e');
     }
   }
 
@@ -242,5 +233,44 @@ class GithubCli {
       FontCodes.green,
       'Remote origin added to repository "$newRepoName".',
     );
+  }
+
+  Future<String> cloneBackendRepo({Directory? backendRepoDir}) async {
+    try {
+      final String frontendRepoRoot = getRepositoryRoot();
+      final Directory frontendRepoDir = Directory(frontendRepoRoot);
+      final Directory mainDir = frontendRepoDir.parent;
+
+      final String backendRepoPath = '${mainDir.path}/flutter-starter-kit-backend';
+
+      _termUtils.tPrint(
+        FontCodes.green,
+        'Cloning backend repo into: ${mainDir.path}',
+      );
+
+      await _cliUtils.runCommand(
+        'git',
+        arguments: <String>['clone', 'https://github.com/8thlight/flutter-starter-kit-backend'],
+        workingDirectory: mainDir.path,
+      );
+
+      backendRepoDir ??= Directory(backendRepoPath);
+      if (!backendRepoDir.existsSync()) {
+        throw Exception('Failed to clone backend repository into $backendRepoPath.');
+      }
+
+      _termUtils.tPrint(
+        FontCodes.green,
+        'Backend repository cloned successfully.',
+      );
+
+      return backendRepoPath;
+    } catch (e) {
+      _termUtils.tPrint(
+        FontCodes.red,
+        'Error cloning backend repo: $e',
+      );
+      rethrow;
+    }
   }
 }

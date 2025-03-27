@@ -27,8 +27,15 @@ void main(List<String> args) async {
       'Enter your new app name in title case (e.g. Flutter Starter Kit): ',
     );
   }
-
   githubCli.repoName = toKebabCase(appName);
+
+  if (await githubCli.doesRepositoryExist(Repo.frontEnd)) {
+    term.exitWithError('Frontend repository name already exists.');
+  }
+
+  if (await githubCli.doesRepositoryExist(Repo.backEnd)) {
+    term.exitWithError('Backend repository name already exists.');
+  }
 
   final StringReplacer replacer = StringReplacer();
   await replacer.updateAppName(appName);
@@ -37,25 +44,29 @@ void main(List<String> args) async {
   await folderMover.move('workflows', '../../.github/workflows');
 
   await githubCli.createRepository(Repo.frontEnd);
+
+  String rootDir;
+
+  try {
+    rootDir = await githubCli.cloneBackendRepo();
+  } catch (e) {
+    term.exitWithError('Failed to clone backend repository.');
+  }
+
+  await githubCli.createRepository(Repo.backEnd, rootDir: rootDir);
 }
 
 void _setupIntroduction(TermUtils term) {
   term.tNewLine();
 
-  term.tPrint(
-    FontCodes.green,
-    'Welcome to the Flutter Starter Kit setup script!',
-  );
+  term.tPrint(FontCodes.green, 'Welcome to the Flutter Starter Kit setup script!');
 
   term.tPrint(
     FontCodes.normal,
     'This script will help you setup your new Flutter project with the Flutter Starter Kit template.',
   );
 
-  term.tPrint(
-    FontCodes.normal,
-    'You must have the Github CLI installed to use this script.',
-  );
+  term.tPrint(FontCodes.normal, 'You must have the Github CLI installed to use this script.');
 
   term.tNewLine();
 }

@@ -1,5 +1,5 @@
-import 'package:flutter_starter_kit/core/user/domain/user.dart';
-import 'package:flutter_starter_kit/features/profile/domain/user_profile_form_state.dart';
+import 'package:demo_test/core/user/domain/user.dart';
+import 'package:demo_test/features/profile/domain/user_profile_form_state.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

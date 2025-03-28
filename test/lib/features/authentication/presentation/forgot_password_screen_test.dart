@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_starter_kit/core/common_widgets/common_text_form_field.dart';
-import 'package:flutter_starter_kit/features/authentication/presentation/forgot_password_screen/forgot_password_screen.dart';
+import 'package:demo_test/core/common_widgets/common_text_form_field.dart';
+import 'package:demo_test/features/authentication/presentation/forgot_password_screen/forgot_password_screen.dart';
 
 import 'package:flutter_test/flutter_test.dart';
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_starter_kit/features/profile/presentation/user_profile_widget.dart';
+import 'package:demo_test/features/profile/presentation/user_profile_widget.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../../../utils/localized_pump.dart';

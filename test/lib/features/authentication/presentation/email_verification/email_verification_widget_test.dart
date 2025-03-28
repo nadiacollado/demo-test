@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_starter_kit/features/authentication/presentation/email_verification/email_verification_widget.dart';
+import 'package:demo_test/features/authentication/presentation/email_verification/email_verification_widget.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_starter_kit/core/common_widgets/common_text_form_field.dart';
-import 'package:flutter_starter_kit/features/authentication/data/firebase_auth_repository.dart';
-import 'package:flutter_starter_kit/features/authentication/domain/auth_status.dart';
-import 'package:flutter_starter_kit/features/authentication/presentation/email_verification/email_verification_screen.dart';
-import 'package:flutter_starter_kit/features/authentication/presentation/sign_up_screen/sign_up_screen.dart';
+import 'package:demo_test/core/common_widgets/common_text_form_field.dart';
+import 'package:demo_test/features/authentication/data/firebase_auth_repository.dart';
+import 'package:demo_test/features/authentication/domain/auth_status.dart';
+import 'package:demo_test/features/authentication/presentation/email_verification/email_verification_screen.dart';
+import 'package:demo_test/features/authentication/presentation/sign_up_screen/sign_up_screen.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:mocktail/mocktail.dart';

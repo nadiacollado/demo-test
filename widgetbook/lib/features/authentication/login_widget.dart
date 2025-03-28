@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_starter_kit/widgets.dart' show LoginWidget;
+import 'package:demo_test/widgets.dart' show LoginWidget;
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 

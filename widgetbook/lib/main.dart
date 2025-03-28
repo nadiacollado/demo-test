@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
-import 'package:flutter_starter_kit/l10n/arb/app_localizations.dart';
-import 'package:flutter_starter_kit/core/theme/app_theme.dart';
-import 'package:flutter_starter_kit/core/theme/theme_controller.dart';
+import 'package:demo_test/l10n/arb/app_localizations.dart';
+import 'package:demo_test/core/theme/app_theme.dart';
+import 'package:demo_test/core/theme/theme_controller.dart';
 
 import 'main.directories.g.dart';
 

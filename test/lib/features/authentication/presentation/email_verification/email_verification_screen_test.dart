@@ -1,9 +1,9 @@
 // ignore_for_file: prefer_mixin
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_starter_kit/features/authentication/domain/auth_status.dart';
-import 'package:flutter_starter_kit/features/authentication/presentation/email_verification/email_verification_screen.dart';
-import 'package:flutter_starter_kit/features/authentication/presentation/email_verification/email_verification_screen_controller.dart';
+import 'package:demo_test/features/authentication/domain/auth_status.dart';
+import 'package:demo_test/features/authentication/presentation/email_verification/email_verification_screen.dart';
+import 'package:demo_test/features/authentication/presentation/email_verification/email_verification_screen_controller.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 

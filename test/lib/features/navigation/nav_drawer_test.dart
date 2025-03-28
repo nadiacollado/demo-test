@@ -1,9 +1,9 @@
 // ignore_for_file: prefer_mixin
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_starter_kit/features/authentication/application/auth_state_notifier.dart';
-import 'package:flutter_starter_kit/features/authentication/domain/auth_state.dart';
-import 'package:flutter_starter_kit/features/navigation/presentation/nav_drawer.dart';
+import 'package:demo_test/features/authentication/application/auth_state_notifier.dart';
+import 'package:demo_test/features/authentication/domain/auth_state.dart';
+import 'package:demo_test/features/navigation/presentation/nav_drawer.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 

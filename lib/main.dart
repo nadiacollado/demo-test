@@ -39,7 +39,7 @@ Future<void> main() async {
       level: event.level,
       message: event.lines.join('\n'),
     );
-    debugPrint('Flutter Starter Kit will log output to Cloud Logging');
+    debugPrint('Demo Test will log output to Cloud Logging');
   });
 
   FlutterError.onError = (FlutterErrorDetails errorDetails) {

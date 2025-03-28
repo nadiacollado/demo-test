@@ -1,6 +1,6 @@
 {
-    "name": "flutter_starter_kit",
-    "short_name": "flutter_starter_kit",
+    "name": "demo_test",
+    "short_name": "demo_test",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

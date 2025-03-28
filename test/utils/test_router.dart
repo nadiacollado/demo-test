@@ -1,14 +1,14 @@
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_starter_kit/core/common_widgets/common_scaffold.dart';
-import 'package:flutter_starter_kit/features/authentication/presentation/email_verification/email_verification_screen.dart';
-import 'package:flutter_starter_kit/features/authentication/presentation/forgot_password_screen/forgot_password_screen.dart';
-import 'package:flutter_starter_kit/features/authentication/presentation/login_screen/login_screen.dart';
-import 'package:flutter_starter_kit/features/authentication/presentation/sign_up_screen/sign_up_screen.dart';
-import 'package:flutter_starter_kit/features/counter/presentation/counter_screen.dart';
-import 'package:flutter_starter_kit/features/navigation/app_router.dart';
-import 'package:flutter_starter_kit/features/profile/presentation/edit_user_profile_screen.dart';
-import 'package:flutter_starter_kit/features/profile/presentation/user_profile_screen.dart';
+import 'package:demo_test/core/common_widgets/common_scaffold.dart';
+import 'package:demo_test/features/authentication/presentation/email_verification/email_verification_screen.dart';
+import 'package:demo_test/features/authentication/presentation/forgot_password_screen/forgot_password_screen.dart';
+import 'package:demo_test/features/authentication/presentation/login_screen/login_screen.dart';
+import 'package:demo_test/features/authentication/presentation/sign_up_screen/sign_up_screen.dart';
+import 'package:demo_test/features/counter/presentation/counter_screen.dart';
+import 'package:demo_test/features/navigation/app_router.dart';
+import 'package:demo_test/features/profile/presentation/edit_user_profile_screen.dart';
+import 'package:demo_test/features/profile/presentation/user_profile_screen.dart';
 import 'package:go_router/go_router.dart';
 
 final ProviderFamily<GoRouter, String> testRouterProvider =

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_starter_kit/core/common_widgets/common_text_form_field.dart';
-import 'package:flutter_starter_kit/features/authentication/presentation/sign_up_screen/sign_up_widget.dart';
+import 'package:demo_test/core/common_widgets/common_text_form_field.dart';
+import 'package:demo_test/features/authentication/presentation/sign_up_screen/sign_up_widget.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 

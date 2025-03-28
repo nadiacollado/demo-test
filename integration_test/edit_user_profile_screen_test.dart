@@ -2,11 +2,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_starter_kit/core/user/data/user_repository.dart';
-import 'package:flutter_starter_kit/core/user/domain/user.dart';
-import 'package:flutter_starter_kit/features/profile/domain/user_profile_form_state.dart';
-import 'package:flutter_starter_kit/features/profile/presentation/edit_user_profile_screen.dart';
-import 'package:flutter_starter_kit/features/profile/presentation/user_profile_screen_controller.dart';
+import 'package:demo_test/core/user/data/user_repository.dart';
+import 'package:demo_test/core/user/domain/user.dart';
+import 'package:demo_test/features/profile/domain/user_profile_form_state.dart';
+import 'package:demo_test/features/profile/presentation/edit_user_profile_screen.dart';
+import 'package:demo_test/features/profile/presentation/user_profile_screen_controller.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
